@@ -49,6 +49,10 @@
 
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#b1936b" />
+     
+  <!-- ÍCONES PARA INSTALAÇÃO -->
+  <link rel="icon" type="image/png" href="assets/logo_wrjoias.png" />
+  <link rel="apple-touch-icon" href="assets/logo_wrjoias.png" />
   </head>
   <
   <body class="bg-bgSoft text-textDark">
@@ -60,15 +64,11 @@
         onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
       >
         <div class="relative">
-          <div
-            class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000"
-          ></div>
-          <div
-            class="relative h-12 w-12 md:h-14 lg:h-16 md:w-14 lg:w-16 rounded-full border-2 border-white shadow-xl bg-gradient-to-br from-amber-200 to-yellow-600 flex items-center justify-center text-white font-black text-2xl"
-          >
-            WRJ
-          </div>
-        </div>
+  <div class="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000"></div>
+  <div class="relative h-12 w-12 md:h-14 lg:h-16 md:w-14 lg:w-16 rounded-full border-2 border-white shadow-xl bg-white flex items-center justify-center overflow-hidden">
+    <img src="assets/logo_wrjoias.png" alt="WRJ Joias" class="w-full h-full object-cover rounded-full" />
+  </div>
+</div>
         <div class="flex flex-col leading-tight">
           <h1
             class="font-black text-2xl md:text-3xl lg:text-4xl text-primary tracking-tighter font-serif"
@@ -164,15 +164,15 @@
       <div
         class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50"
       >
-        <div class="flex flex-col">
-          <span
-            class="text-primary font-black text-xl tracking-tighter font-serif"
-            >WRJ</span
-          ><span
-            class="text-[10px] text-accent font-bold uppercase tracking-widest"
-            >Menu</span
-          >
-        </div>
+        <div class="flex items-center gap-3">
+  <div class="h-10 w-10 rounded-full overflow-hidden bg-white shadow-sm">
+    <img src="assets/logo_wrjoias.png" alt="WRJ Joias" class="w-full h-full object-cover" />
+  </div>
+  <div class="flex flex-col">
+    <span class="text-primary font-black text-xl tracking-tighter font-serif">WRJ</span>
+    <span class="text-[10px] text-accent font-bold uppercase tracking-widest">Menu</span>
+  </div>
+</div>
         <button
           id="close-mobile-menu"
           class="h-10 w-10 flex items-center justify-center rounded-full bg-white shadow-sm text-primary"
