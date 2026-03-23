@@ -4,19 +4,18 @@
   "description": "Joias e Acessórios de Luxo",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#faf7f2",
   "theme_color": "#b1936b",
-  "orientation": "portrait",
+  "background_color": "#faf7f2",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
+      "src": "assets/logo_wrjoias.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
-      "sizes": "512x512",
+      "src": "assets/logo_wrjoias.png",
+      "sizes": "192x192",
       "type": "image/png"
     }
   ]
