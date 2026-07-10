@@ -1,4 +1,3 @@
-// script.js
 // CONFIGURAÇÕES
 const PRODUCTS_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlzX4j6lQhRTjlXLISjyeSlT9Bs2sl0pWOboXfnkVz4rKtWYCpjtE2QC92B5bHbeT1i_jDHc5X3D5k/pub?gid=197993066&single=true&output=csv";
@@ -17,19 +16,6 @@ let categoriesSwiper = null;
 let subtotal = 0;
 const FRETE_GRATIS_VALOR = 3500;
 const TAXA_FRETE = 15;
-
-const coresMap = {
-  cristal: "#e0e0e0",
-  vermelho: "#ff0000",
-  azul: "#0000ff",
-  rosa: "#ff69b4",
-  preto: "#000000",
-  esmeralda: "#50c878",
-  aqua: "#7fffd4",
-  saphire: "#0f52ba",
-  verde: "#00ff00",
-  sortidos: "linear-gradient(45deg, #ff0000, #00ff00, #0000ff)",
-};
 
 function normalizar(texto) {
   if (!texto) return "";
@@ -94,10 +80,10 @@ function updateCart() {
   subtotal = 0;
 
   cart.forEach((item) => {
-    subtotal += item.price * item.quantity;
+    subtotal += item.price;
     const div = document.createElement("div");
     div.className =
-      "flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-white p-3 rounded-2xl mb-2 border";
+      "flex flex-col sm:flex-row items-start sm:items-center gap-3 bg-white p-3 rounded-2xl mb-2 border border-primary/10";
     div.innerHTML = `
       <img src="${driveImg(item.img)}" class="w-14 h-14 rounded-xl object-cover flex-shrink-0">
       <div class="flex-1 w-full">
@@ -108,12 +94,10 @@ function updateCart() {
             : ""
         }
         <div class="flex justify-between items-center mt-2">
-          <p class="font-black text-primary text-sm">R$ ${(
-            item.price * item.quantity
-          )
+          <p class="font-black text-primary text-sm">R$ ${item.price
             .toFixed(2)
             .replace(".", ",")}</p>
-          <div class="flex gap-2 bg-slate-100 px-2 py-1 rounded-lg">
+          <div class="flex gap-2 bg-primary/5 px-2 py-1 rounded-lg">
             <button onclick="changeQty('${item.id}', -1)" class="text-xs font-bold text-primary w-6 h-6 rounded-full hover:bg-primary/10">-</button>
             <span class="text-xs font-bold w-6 text-center">${
               item.quantity
@@ -153,7 +137,6 @@ function updateCart() {
       .replace(".", ",")}`;
   }
 
-  // Botão Limpar Sacola - sempre visível quando há itens
   if (clearBtn) {
     if (cart.length === 0) {
       clearBtn.classList.add("hidden");
@@ -173,10 +156,16 @@ window.removeCartItem = function (id) {
   }).showToast();
 };
 
+// ============================================
+// FUNÇÃO CHANGE QTY CORRIGIDA
+// ============================================
 window.changeQty = function (id, delta) {
   const item = cart.find((i) => i.id === id);
   if (!item) return;
+  
+  // Calcular o preço unitário
   const precoUnitario = item.price / item.quantity;
+  
   if (delta > 0) {
     item.quantity++;
     item.price = precoUnitario * item.quantity;
@@ -191,19 +180,28 @@ window.changeQty = function (id, delta) {
   updateCart();
 };
 
-function addToCart(id, name, price, img, baseId, ref) {
+// ============================================
+// FUNÇÃO ADD TO CART CORRIGIDA
+// ============================================
+function addToCart(id, name, price, img, baseId, ref, quantity) {
+  // Se quantity não foi passado, usa 1 como padrão
+  const qty = quantity || 1;
+  
+  // Calcular o preço unitário (preço total / quantidade)
+  const precoUnitario = price / qty;
+  
   const existing = cart.find((i) => i.id === id);
   if (existing) {
-    const precoUnitario = existing.price / existing.quantity;
-    existing.quantity++;
+    // Se já existe, soma a quantidade e recalcula o preço total
+    existing.quantity += qty;
     existing.price = precoUnitario * existing.quantity;
   } else {
     cart.push({
       id,
       name,
-      price,
+      price: price, // preço total (preço unitário * quantidade)
       img,
-      quantity: 1,
+      quantity: qty,
       baseId: baseId,
       ref: ref,
     });
@@ -211,7 +209,7 @@ function addToCart(id, name, price, img, baseId, ref) {
   Toastify({
     text: `${name.substring(0, 30)} adicionado!`,
     duration: 2000,
-    style: { background: "#b1936b" },
+    style: { background: "#2f6b4f" },
   }).showToast();
   updateCart();
 }
@@ -287,7 +285,7 @@ async function finalizarPedidoDireto() {
     Toastify({
       text: "Pedido enviado! Estoque atualizado. Aguarde nosso contato.",
       duration: 4000,
-      style: { background: "#27ae60" },
+      style: { background: "#1f4d38" },
     }).showToast();
   } catch (error) {
     Toastify({
@@ -325,14 +323,12 @@ function gerarConteudoPDF() {
       item.ref ? `<br><small>Ref: ${item.ref}</small>` : ""
     }</td><td style="padding: 8px 5px; text-align: center;">${
       item.quantity
-    }</td><td style="padding: 8px 5px; text-align: right;">R$ ${(
-      item.price * item.quantity
-    )
+    }</td><td style="padding: 8px 5px; text-align: right;">R$ ${item.price
       .toFixed(2)
       .replace(".", ",")}</td></tr>`;
   });
 
-  return `<div class="pdf-preview-content" id="pdf-content-to-print"><div class="pdf-header"><h2>WRJ JOIAS</h2><p>Joias e Acessórios de Luxo</p><p style="font-size: 10px;">Pedido gerado em ${dataAtual} às ${horaAtual}</p></div><div class="pdf-client-info"><p><strong>👤 Cliente:</strong> ${nomeCliente.toUpperCase()}</p><p><strong>📍 Endereço:</strong> ${endereco}</p></div><table class="pdf-items-table" style="width: 100%; border-collapse: collapse;"><thead><tr><th style="background: #f8f5f0; padding: 10px 5px;">#</th><th style="background: #f8f5f0; padding: 10px 5px;">Produto</th><th style="background: #f8f5f0; padding: 10px 5px; text-align: center;">Qtd</th><th style="background: #f8f5f0; padding: 10px 5px; text-align: right;">Valor</th></tr></thead><tbody>${itensHTML}</tbody></table><div class="pdf-total"><p>Subtotal: R$ ${subtotal
+  return `<div class="pdf-preview-content" id="pdf-content-to-print"><div class="pdf-header"><h2>WRJ JOIAS</h2><p>Joias e Acessórios de Luxo</p><p style="font-size: 10px;">Pedido gerado em ${dataAtual} às ${horaAtual}</p></div><div class="pdf-client-info"><p><strong>👤 Cliente:</strong> ${nomeCliente.toUpperCase()}</p><p><strong>📍 Endereço:</strong> ${endereco}</p></div><table class="pdf-items-table" style="width: 100%; border-collapse: collapse;"><thead><tr><th style="background: #eef4ef; padding: 10px 5px;">#</th><th style="background: #eef4ef; padding: 10px 5px;">Produto</th><th style="background: #eef4ef; padding: 10px 5px; text-align: center;">Qtd</th><th style="background: #eef4ef; padding: 10px 5px; text-align: right;">Valor</th></tr></thead><tbody>${itensHTML}</tbody></table><div class="pdf-total"><p>Subtotal: R$ ${subtotal
     .toFixed(2)
     .replace(".", ",")}</p><p>Frete: ${freteTexto}</p><p style="font-size: 18px; margin-top: 10px;"><strong>TOTAL: R$ ${totalFinal
     .toFixed(2)
@@ -379,7 +375,7 @@ async function downloadPDF() {
   Toastify({
     text: "Gerando PDF...",
     duration: 2000,
-    style: { background: "#b1936b" },
+    style: { background: "#2f6b4f" },
   }).showToast();
   try {
     const canvas = await html2canvas(element, {
@@ -402,7 +398,7 @@ async function downloadPDF() {
     Toastify({
       text: "PDF baixado!",
       duration: 3000,
-      style: { background: "#27ae60" },
+      style: { background: "#1f4d38" },
     }).showToast();
   } catch (error) {
     Toastify({
@@ -454,7 +450,7 @@ async function enviarPDFWhatsApp() {
     Toastify({
       text: "Pedido enviado! Estoque atualizado.",
       duration: 4000,
-      style: { background: "#27ae60" },
+      style: { background: "#1f4d38" },
     }).showToast();
     cart = [];
     updateCart();
@@ -509,12 +505,12 @@ function renderProducts(products) {
     const estoque = parseInt(p["Saldo Estoque"]) || 0;
     if (estoque <= 0) return;
     const card = document.createElement("div");
-    card.className = "bg-white rounded-3xl overflow-hidden border shadow-sm";
-    card.innerHTML = `<div class="relative aspect-square bg-slate-50"><img src="${driveImg(
+    card.className = "bg-white rounded-3xl overflow-hidden border border-primary/10 shadow-card";
+    card.innerHTML = `<div class="relative aspect-square bg-bgSoft"><img src="${driveImg(
       p["Imagem"]
     )}" class="w-full h-full object-cover">${
       estoque <= 3
-        ? '<div class="absolute bottom-2 right-2 bg-orange-500 text-white text-[8px] font-bold px-2 py-1 rounded">ÚLTIMAS</div>'
+        ? '<div class="absolute bottom-2 right-2 bg-gold text-white text-[8px] font-bold px-2 py-1 rounded">ÚLTIMAS</div>'
         : ""
     }</div><div class="p-4"><h3 class="font-bold text-sm">${
       p["Nome do Produto"]
@@ -528,7 +524,7 @@ function renderProducts(products) {
       "Nome do Produto"
     ].replace(/'/g, "\\'")}", "${p["referencia"] || ""}", ${p["Preço"]}, "${p[
       "Imagem"
-    ]}")' class="w-full mt-3 py-2 rounded-xl font-bold text-xs bg-primary text-white hover:bg-accent">Escolher Opções</button></div>`;
+    ]}")' class="w-full mt-3 py-2 rounded-xl font-bold text-xs bg-primary text-white hover:bg-primaryDark">Escolher Opções</button></div>`;
     container.appendChild(card);
   });
 }
@@ -545,7 +541,7 @@ function renderDestaques(products) {
   destaques.forEach((p) => {
     const slide = document.createElement("div");
     slide.className = "swiper-slide";
-    slide.innerHTML = `<div class="bg-white rounded-3xl overflow-hidden border shadow-lg h-full flex flex-col"><div class="relative h-48 bg-slate-50 flex items-center justify-center"><img src="${driveImg(
+    slide.innerHTML = `<div class="bg-white rounded-3xl overflow-hidden border border-primary/10 shadow-soft h-full flex flex-col"><div class="relative h-48 bg-bgSoft flex items-center justify-center"><img src="${driveImg(
       p["Imagem"]
     )}" class="max-h-full max-w-full object-contain"><span class="absolute top-2 left-2 bg-primary text-white text-[10px] px-2 py-1 rounded">Destaque</span></div><div class="p-4 flex-1"><h3 class="font-bold text-sm">${
       p["Nome do Produto"]
@@ -559,7 +555,7 @@ function renderDestaques(products) {
       "Nome do Produto"
     ].replace(/'/g, "\\'")}", "${p["referencia"] || ""}", ${p["Preço"]}, "${p[
       "Imagem"
-    ]}")' class="w-full mt-3 py-2 rounded-xl font-bold text-xs bg-primary text-white">Comprar</button></div></div>`;
+    ]}")' class="w-full mt-3 py-2 rounded-xl font-bold text-xs bg-primary text-white hover:bg-primaryDark">Comprar</button></div></div>`;
     container.appendChild(slide);
   });
   if (destaquesSwiper) destaquesSwiper.destroy();
@@ -710,94 +706,177 @@ function initCategoriesSwiper() {
   });
 }
 
+// ============================================
+// FUNÇÕES DO MODAL DE CORES E QUANTIDADE
+// ============================================
+
 window.openSizeSelector = function (id, name, ref, price, img) {
+  console.log("Abrindo seletor para:", id, name);
+  
   const p = allProducts.find(
     (prod) => prod["ID"].toString() === id.toString()
   );
-  if (!p) return;
-  tempProduct = { id: p["ID"], name, price, img, ref: ref };
+  if (!p) {
+    console.error("Produto não encontrado:", id);
+    return;
+  }
+  
+  tempProduct = { 
+    id: p["ID"], 
+    name: name, 
+    price: price, 
+    img: img, 
+    ref: ref 
+  };
   selectedColor = "";
+  
+  // Atualizar informações do produto
   document.getElementById("size-product-name").innerText = name;
-  document.getElementById("size-product-ref").innerText = ref
-    ? `Ref: ${ref}`
-    : "";
-  document.getElementById("size-product-price").innerText = `R$ ${price
-    .toFixed(2)
-    .replace(".", ",")} cada`;
+  document.getElementById("size-product-ref").innerText = ref ? `Ref: ${ref}` : "";
+  document.getElementById("size-product-price").innerText = `R$ ${price.toFixed(2).replace(".", ",")} cada`;
+  
+  // Limpar container de cores
   const colorContainer = document.getElementById("colors-container");
   colorContainer.innerHTML = "";
-  if (p["Cores"] && p["Cores"].trim()) {
-    p["Cores"].split(",").forEach((cor) => {
-      const nomeCor = cor.trim();
-      const corHex = coresMap[nomeCor.toLowerCase()] || "#cbd5e1";
+  
+  // Verificar se o produto tem cores
+  const coresDisponiveis = p["Cores"] ? p["Cores"].split(",").map(c => c.trim()).filter(c => c) : [];
+  
+  if (coresDisponiveis.length > 0) {
+    console.log("Cores disponíveis:", coresDisponiveis);
+    
+    // Criar botões com o NOME da cor
+    coresDisponiveis.forEach((nomeCor) => {
       const btn = document.createElement("button");
-      btn.className =
-        "w-10 h-10 rounded-full border-2 border-white shadow-sm ring-2 ring-slate-100 hover:ring-primary transition-all";
-      btn.style.background = corHex;
-      btn.title = nomeCor;
-      btn.onclick = () => selectColor(nomeCor);
+      btn.className = "color-name-btn";
+      btn.innerText = nomeCor.toUpperCase();
+      btn.setAttribute("data-cor", nomeCor.toLowerCase());
+      btn.onclick = function() {
+        selectColor(nomeCor);
+      };
       colorContainer.appendChild(btn);
     });
+    
     document.getElementById("color-step").classList.remove("hidden");
+    document.getElementById("modal-step-title").innerText = "Selecione a Cor";
   } else {
+    // Se não tem cores, vai direto para quantidade
     selectedColor = "Todas as cores";
     document.getElementById("color-step").classList.add("hidden");
     document.getElementById("size-step").classList.remove("hidden");
-    document.getElementById("modal-step-title").innerText =
-      "Selecione a Quantidade";
+    document.getElementById("modal-step-title").innerText = "Selecione a Quantidade";
   }
+  
+  // Configurar opções de quantidade
   const optionsContainer = document.getElementById("options-container");
   optionsContainer.innerHTML = "";
+  
   let quantidades = [];
-  if (p["Quantidade"] && p["Quantidade"].trim())
+  if (p["Quantidade"] && p["Quantidade"].trim()) {
     quantidades = p["Quantidade"]
       .split(",")
       .map((q) => parseInt(q.trim()))
-      .filter((q) => !isNaN(q));
-  if (quantidades.length === 0) quantidades = [5, 10, 15, 20, 25, 30];
+      .filter((q) => !isNaN(q) && q > 0);
+  }
+  
+  if (quantidades.length === 0) {
+    quantidades = [5, 10, 15, 20, 25, 30];
+  }
+  
   quantidades.forEach((qtd) => {
     const btn = document.createElement("button");
-    btn.className =
-      "py-2 border rounded-xl font-bold text-xs hover:bg-primary hover:text-white transition";
+    btn.className = "qty-option-btn";
     btn.innerText = qtd;
-    btn.onclick = () => finishSelection(qtd);
+    btn.onclick = function() {
+      finishSelection(qtd);
+    };
     optionsContainer.appendChild(btn);
   });
+  
+  // Mostrar modal
   document.getElementById("size-modal").classList.remove("hidden");
   document.getElementById("size-modal").classList.add("flex");
 };
 
 function selectColor(cor) {
+  console.log("Cor selecionada:", cor);
   selectedColor = cor;
+  
+  // Remover seleção anterior
+  document.querySelectorAll('.color-name-btn').forEach(el => {
+    el.classList.remove('selected');
+  });
+  
+  // Marcar a cor selecionada
+  document.querySelectorAll('.color-name-btn').forEach(btn => {
+    if (btn.innerText.toLowerCase() === cor.toLowerCase()) {
+      btn.classList.add('selected');
+    }
+  });
+  
+  // Avançar para o passo de quantidade
   document.getElementById("color-step").classList.add("hidden");
   document.getElementById("size-step").classList.remove("hidden");
-  document.getElementById("modal-step-title").innerText =
-    "Selecione a Quantidade";
+  document.getElementById("modal-step-title").innerText = "Selecione a Quantidade";
 }
 
+// ============================================
+// FUNÇÃO FINISH SELECTION CORRIGIDA
+// ============================================
 function finishSelection(quantidade) {
-  if (!tempProduct) return;
+  console.log("Finalizando com:", selectedColor, quantidade);
+  
+  if (!tempProduct) {
+    alert("Erro: produto não selecionado");
+    return;
+  }
+  
+  if (!selectedColor || selectedColor === "") {
+    alert("Por favor, selecione uma cor!");
+    return;
+  }
+  
   const corFinal = selectedColor || "Todas as cores";
   const uniqueId = `${tempProduct.id}-${corFinal}-${quantidade}-${Date.now()}`;
   const fullName = `${tempProduct.name} - ${corFinal}`;
   const totalPrice = tempProduct.price * quantidade;
+  
+  // Passa a quantidade como último parâmetro
   addToCart(
     uniqueId,
     fullName,
     totalPrice,
     tempProduct.img,
     tempProduct.id,
-    tempProduct.ref
+    tempProduct.ref,
+    quantidade
   );
+  
   closeSizeModal();
 }
 
 window.closeSizeModal = function () {
   document.getElementById("size-modal").classList.add("hidden");
   document.getElementById("size-modal").classList.remove("flex");
+  
+  // Limpar seleção
   selectedColor = "";
   tempProduct = null;
+  
+  // Resetar botões
+  document.querySelectorAll('.color-name-btn').forEach(el => {
+    el.classList.remove('selected');
+  });
+  
+  // Voltar para o passo de cores
+  document.getElementById("color-step").classList.remove("hidden");
+  document.getElementById("size-step").classList.add("hidden");
+  document.getElementById("modal-step-title").innerText = "Selecione a Cor";
 };
+
+// ============================================
+// BANNER HERO
+// ============================================
 
 async function carregarBannerHero() {
   try {
@@ -819,7 +898,7 @@ async function carregarBannerHero() {
       slide.className = "swiper-slide relative";
       slide.innerHTML = `<img src="${driveImg(
         img
-      )}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-black/30"></div><div class="relative h-full flex items-center justify-center text-center text-white px-4"><div><h2 class="text-3xl md:text-5xl font-bold mb-4">${titulo}</h2><a href="${btnLink}" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-accent">${btnText}</a></div></div>`;
+      )}" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-accent/70 via-accent/20 to-transparent"></div><div class="relative h-full flex items-center justify-center text-center text-white px-4"><div><h2 class="text-3xl md:text-5xl font-bold mb-4 font-serif">${titulo}</h2><a href="${btnLink}" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-bold hover:bg-primaryDark transition">${btnText}</a></div></div>`;
       wrapper.appendChild(slide);
     });
     if (heroSwiper) heroSwiper.destroy();
@@ -833,7 +912,10 @@ async function carregarBannerHero() {
   }
 }
 
-// Event Listeners
+// ============================================
+// EVENT LISTENERS
+// ============================================
+
 document.querySelectorAll(".filtro-menu-btn").forEach((btn) =>
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -924,7 +1006,10 @@ mobileOverlay?.addEventListener("click", () => {
   mobileOverlay.classList.add("hidden");
 });
 
-// Inicialização
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
+
 window.onload = () => {
   loadProducts();
   carregarBannerHero();
