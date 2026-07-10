@@ -1,4 +1,3 @@
-/* styles.css */
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -12,7 +11,7 @@ h3,
   display: none;
 }
 .glass {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(246, 248, 245, 0.9);
   backdrop-filter: blur(10px);
 }
 
@@ -26,17 +25,18 @@ h3,
   left: 0;
   background: white;
   min-width: 220px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 28px -8px rgba(15, 47, 34, 0.2);
   border-radius: 12px;
   padding: 8px 0;
   z-index: 99999 !important;
   margin-top: 8px;
+  border: 1px solid rgba(47, 107, 79, 0.08);
 }
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 .dropdown-menu a {
-  color: #333;
+  color: #182420;
   padding: 10px 20px;
   text-decoration: none;
   display: block;
@@ -45,10 +45,12 @@ h3,
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;
+  transition: all 0.2s;
 }
 .dropdown-menu a:hover {
-  background: #f8f5f0;
-  color: #b1936b;
+  background: #f0f5f1;
+  color: #2f6b4f;
+  padding-left: 24px;
 }
 
 header {
@@ -72,15 +74,16 @@ header {
   width: 100%;
   padding: 12px 20px;
   border-radius: 50px;
-  border: 1px solid #e2e8f0;
-  background: white;
+  border: 1px solid rgba(47, 107, 79, 0.15);
+  background: #f6f8f5;
   font-size: 14px;
   outline: none;
   transition: all 0.3s;
 }
 .search-container .search-input:focus {
-  border-color: #b1936b;
-  box-shadow: 0 0 0 3px rgba(177, 147, 107, 0.2);
+  border-color: #2f6b4f;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(47, 107, 79, 0.15);
 }
 
 #custom-quantity {
@@ -95,23 +98,23 @@ header {
 .ref-text {
   font-size: 12px;
   font-weight: 600;
-  color: #4a2c2c;
-  background: #f8f5f0;
+  color: #1f4d38;
+  background: #eef4ef;
   display: inline-block;
   padding: 2px 10px;
   border-radius: 12px;
   margin-bottom: 6px;
-  border: 1px solid #b1936b;
+  border: 1px solid #2f6b4f;
   letter-spacing: 0.3px;
 }
 
 .selected-color-name {
-  background: #f3f4f6;
+  background: #eef4ef;
   border-radius: 20px;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: bold;
-  color: #1e293b;
+  color: #182420;
   margin-bottom: 16px;
   display: inline-block;
   width: auto;
@@ -135,6 +138,15 @@ header {
 .destaquesSwiper .swiper-wrapper {
   align-items: stretch;
 }
+.destaquesSwiper .swiper-slide > div,
+#produtos-container > div {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.destaquesSwiper .swiper-slide > div:hover,
+#produtos-container > div:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -12px rgba(15, 47, 34, 0.22);
+}
 
 .categoriesSwiper {
   width: 100%;
@@ -147,9 +159,10 @@ header {
 .category-slide-btn {
   white-space: nowrap;
   transition: all 0.3s ease;
+  color: #182420;
 }
 .category-slide-btn:hover {
-  color: #b1936b;
+  color: #2f6b4f;
   transform: translateY(-2px);
 }
 .categoriesSwiper .swiper-button-next,
@@ -158,13 +171,13 @@ header {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(15, 47, 34, 0.15);
 }
 .categoriesSwiper .swiper-button-next:after,
 .categoriesSwiper .swiper-button-prev:after {
   font-size: 14px;
   font-weight: bold;
-  color: #b1936b;
+  color: #2f6b4f;
 }
 
 @keyframes scaleIn {
@@ -194,41 +207,108 @@ header {
   animation: breathe 3s infinite ease-in-out;
 }
 
-.color-item {
+/* ========================================== */
+/* ESTILOS PARA BOTÕES DE CORES COM NOME      */
+/* ========================================== */
+
+#colors-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.color-item:hover {
-  transform: scale(1.05);
-}
-.color-swatch {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s;
-}
-.color-swatch:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-.color-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #4a2c2c;
-  background: #f9f3ea;
-  padding: 4px 10px;
-  border-radius: 20px;
-  text-align: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
-/* Estilo para o PDF Preview */
+.color-name-btn {
+  padding: 10px 24px;
+  border: 2px solid #d1d9d4;
+  border-radius: 12px;
+  background: white;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #182420;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.color-name-btn:hover {
+  border-color: #2f6b4f;
+  background: #f0f5f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.15);
+}
+
+.color-name-btn.selected {
+  border-color: #2f6b4f;
+  background: #2f6b4f;
+  color: white;
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ========================================== */
+/* ESTILOS PARA BOTÕES DE QUANTIDADE          */
+/* ========================================== */
+
+.qty-option-btn {
+  padding: 10px 0;
+  border: 2px solid rgba(47, 107, 79, 0.15);
+  border-radius: 12px;
+  background: white;
+  font-weight: 700;
+  font-size: 14px;
+  color: #182420;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.qty-option-btn:hover {
+  border-color: #2f6b4f;
+  background: #2f6b4f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.2);
+}
+
+/* ========================================== */
+/* RESPONSIVIDADE                             */
+/* ========================================== */
+
+@media (max-width: 640px) {
+  .cart-item-mobile {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .cart-item-actions {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  #cart-modal .bg-white {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  
+  .color-name-btn {
+    padding: 8px 16px;
+    font-size: 11px;
+    min-width: 60px;
+  }
+  
+  .qty-option-btn {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+}
+
+/* ========================================== */
+/* PDF PREVIEW                                */
+/* ========================================== */
+
 .pdf-preview-content {
   background: white;
   padding: 30px;
@@ -238,21 +318,21 @@ header {
 }
 .pdf-header {
   text-align: center;
-  border-bottom: 2px solid #b1936b;
+  border-bottom: 2px solid #2f6b4f;
   padding-bottom: 15px;
   margin-bottom: 20px;
 }
 .pdf-header h2 {
-  color: #b1936b;
+  color: #2f6b4f;
   font-size: 24px;
   margin-bottom: 5px;
 }
 .pdf-header p {
-  color: #6b5a4a;
+  color: #5c6b63;
   font-size: 12px;
 }
 .pdf-client-info {
-  background: #f8f5f0;
+  background: #eef4ef;
   padding: 15px;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -268,54 +348,40 @@ header {
 }
 .pdf-items-table th,
 .pdf-items-table td {
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8e4;
   padding: 10px 5px;
   text-align: left;
   font-size: 12px;
 }
 .pdf-items-table th {
-  background: #f8f5f0;
+  background: #eef4ef;
   font-weight: 600;
-  color: #4a2c2c;
+  color: #1f4d38;
 }
 .pdf-total {
   text-align: right;
-  border-top: 2px solid #b1936b;
+  border-top: 2px solid #2f6b4f;
   padding-top: 15px;
   margin-top: 10px;
 }
 .pdf-total p {
   font-size: 16px;
   font-weight: bold;
-  color: #b1936b;
+  color: #2f6b4f;
 }
 .pdf-footer {
   text-align: center;
   margin-top: 30px;
   padding-top: 15px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #e2e8e4;
   font-size: 10px;
   color: #999;
 }
 
-/* Responsividade para o carrinho */
-@media (max-width: 640px) {
-  .cart-item-mobile {
-    flex-direction: column;
-    align-items: flex-start !important;
-  }
-  .cart-item-actions {
-    width: 100%;
-    justify-content: space-between;
-    margin-top: 8px;
-  }
-  #cart-modal .bg-white {
-    max-width: 95%;
-    margin: 0 auto;
-  }
-}
+/* ========================================== */
+/* BOTÃO LIMPAR SACOLA                        */
+/* ========================================== */
 
-/* Botão Limpar Sacola sempre visível quando há itens */
 #clear-cart-btn {
   display: block;
   width: 100%;
@@ -337,4 +403,73 @@ header {
 }
 #clear-cart-btn.hidden {
   display: none;
+}
+
+
+
+/* ========================================== */
+/* ESTILOS PARA BOTÕES DE CORES COM NOME      */
+/* ========================================== */
+
+#colors-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-name-btn {
+  padding: 10px 24px;
+  border: 2px solid #d1d9d4;
+  border-radius: 12px;
+  background: white;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #182420;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.color-name-btn:hover {
+  border-color: #2f6b4f;
+  background: #f0f5f1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.15);
+}
+
+.color-name-btn.selected {
+  border-color: #2f6b4f;
+  background: #2f6b4f;
+  color: white;
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ========================================== */
+/* ESTILOS PARA BOTÕES DE QUANTIDADE          */
+/* ========================================== */
+
+.qty-option-btn {
+  padding: 10px 0;
+  border: 2px solid rgba(47, 107, 79, 0.15);
+  border-radius: 12px;
+  background: white;
+  font-weight: 700;
+  font-size: 14px;
+  color: #182420;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.qty-option-btn:hover {
+  border-color: #2f6b4f;
+  background: #2f6b4f;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(47, 107, 79, 0.2);
 }
