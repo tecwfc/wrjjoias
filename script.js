@@ -1,8 +1,4 @@
 // ============================================
-// WRJ JOIAS - SCRIPT COMPLETO
-// ============================================
-
-// ============================================
 // CONFIGURAÇÕES
 // ============================================
 const PLANILHA_ID = "1AL1_DDF9dOO-qS_fnEBoz94687lYp7rqIVLFnUT7ch8";
@@ -480,7 +476,7 @@ function renderDestaques(products) {
 }
 
 // ============================================
-// ZOOM DIRETO (FORA DO MODAL DE CORES) - CORRIGIDO
+// ZOOM DIRETO - APENAS IMAGENS DO PRODUTO CLICADO
 // ============================================
 function abrirZoomDireto(imagem) {
     console.log("🔍 Abrindo zoom para imagem:", imagem);
@@ -498,34 +494,103 @@ function abrirZoomDireto(imagem) {
     const imagemExibir = driveImg(imagem);
     console.log("📸 Imagem para exibir:", imagemExibir);
     
-    // 🔥 COLETAR TODAS AS IMAGENS DA PÁGINA
-    imagensZoom = [];
+    // 🔥 ENCONTRAR O PRODUTO QUE FOI CLICADO
+    // Procura o elemento pai mais próximo que contém as informações do produto
+    let elementoClicado = null;
+    let produtoId = null;
+    let produtoNome = null;
     
-    // Buscar imagens dos cards de produtos
-    document.querySelectorAll('#produtos-container img, #destaques-container img, .product-gallery .main-image').forEach(el => {
-        const src = el.getAttribute('src');
-        if (src && src !== 'https://via.placeholder.com/400?text=Sem+Imagem' && src !== '') {
-            // Evitar duplicatas
-            if (!imagensZoom.includes(src)) {
-                imagensZoom.push(src);
+    // Tenta encontrar qual produto foi clicado
+    const allImages = document.querySelectorAll('#produtos-container img, #destaques-container img, .main-image');
+    for (const el of allImages) {
+        if (el.getAttribute('src') === imagemExibir || el.getAttribute('src') === imagem) {
+            elementoClicado = el;
+            break;
+        }
+    }
+    
+    // Se encontrou a imagem, tenta encontrar o ID do produto
+    if (elementoClicado) {
+        // Procura o card do produto
+        let card = elementoClicado.closest('.bg-white.rounded-3xl, .swiper-slide, .product-gallery');
+        if (card) {
+            // Tenta encontrar o botão de comprar que tem o ID do produto
+            const btn = card.querySelector('button[onclick*="openSizeSelector"]');
+            if (btn) {
+                const onclickAttr = btn.getAttribute('onclick');
+                // Extrai o ID do produto do onclick
+                const match = onclickAttr.match(/openSizeSelector\("([^"]+)"|'([^']+)'/);
+                if (match) {
+                    produtoId = match[1] || match[2];
+                    console.log("🔍 ID do produto encontrado:", produtoId);
+                }
+            }
+            
+            // Tenta pegar o nome do produto
+            const nomeEl = card.querySelector('h3, .font-bold');
+            if (nomeEl) {
+                produtoNome = nomeEl.textContent.trim();
             }
         }
-    });
+    }
     
-    // 🔥 SE NÃO ENCONTROU IMAGENS, USAR A IMAGEM CLICADA
+    // 🔥 COLETAR APENAS IMAGENS DO MESMO PRODUTO
+    imagensZoom = [];
+    
+    if (produtoId) {
+        // Se encontrou o ID, busca imagens apenas desse produto
+        // Procura no array allProducts
+        const produto = allProducts.find(p => String(p.ID) === String(produtoId));
+        if (produto) {
+            // Adiciona a imagem principal do produto
+            const imgPrincipal = driveImg(produto.Imagem);
+            if (imgPrincipal && !imagensZoom.includes(imgPrincipal)) {
+                imagensZoom.push(imgPrincipal);
+            }
+            
+            // 🔥 Se o produto tiver múltiplas imagens (campo Imagens separadas por vírgula)
+            if (produto.Imagens && produto.Imagens.includes(',')) {
+                const imagensMultiplas = produto.Imagens.split(',').map(i => driveImg(i.trim()));
+                imagensMultiplas.forEach(imgSrc => {
+                    if (imgSrc && !imagensZoom.includes(imgSrc)) {
+                        imagensZoom.push(imgSrc);
+                    }
+                });
+            }
+        }
+    }
+    
+    // 🔥 Se não encontrou imagens específicas, usa a imagem clicada
     if (imagensZoom.length === 0) {
-        imagensZoom = [imagemExibir];
+        // Tenta pegar imagens do mesmo card
+        if (elementoClicado) {
+            let card = elementoClicado.closest('.bg-white.rounded-3xl, .swiper-slide, .product-gallery, .group');
+            if (card) {
+                // Busca todas as imagens dentro do mesmo card
+                card.querySelectorAll('img').forEach(el => {
+                    const src = el.getAttribute('src');
+                    if (src && src !== 'https://via.placeholder.com/400?text=Sem+Imagem' && src !== '') {
+                        if (!imagensZoom.includes(src)) {
+                            imagensZoom.push(src);
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Se ainda não tem imagens, usa a imagem clicada
+        if (imagensZoom.length === 0) {
+            imagensZoom = [imagemExibir];
+        }
     }
     
     // 🔥 ENCONTRAR O ÍNDICE DA IMAGEM CLICADA
     zoomIndex = imagensZoom.indexOf(imagemExibir);
     if (zoomIndex === -1) {
-        // Se não encontrou, adicionar no início
-        imagensZoom.unshift(imagemExibir);
         zoomIndex = 0;
     }
     
-    console.log("📸 Imagens disponíveis:", imagensZoom);
+    console.log("📸 Imagens do produto:", imagensZoom);
     
     // 🔥 EXIBIR IMAGEM
     img.src = imagensZoom[zoomIndex];
