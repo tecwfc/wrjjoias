@@ -395,6 +395,11 @@
             </div>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
+            <!-- 🔥 BOTÃO PARA PÁGINA PÚBLICA -->
+            <a href="index.html" target="_blank"
+                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg transition text-xs font-medium flex items-center gap-1">
+                <i class="fas fa-globe"></i> <span class="hidden sm:inline">Ver Site</span>
+            </a>
             <span class="text-[10px] text-gray-500 hidden md:inline" id="data-atual"></span>
             <button onclick="carregarProdutos()"
                 class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg transition text-xs font-medium">
@@ -902,7 +907,7 @@
             return lines;
         }
 
-       
+
         // ============================================
         // 🔥 FUNÇÃO PARA CHAMAR A API (JSONP)
         // ============================================
@@ -1010,7 +1015,7 @@
             document.getElementById('total-categorias').innerText = categoriasCache.length;
         }
 
-              // ============================================
+        // ============================================
         // CARREGAR PRODUTOS (CORRIGIDO)
         // ============================================
         async function carregarProdutos() {
@@ -1096,6 +1101,7 @@
                 atualizarGraficos();
 
                 console.log(`✅ ${produtos.length} produtos carregados`);
+                console.log("📊 Tabela renderizada com " + produtos.length + " produtos");
 
             } catch (error) {
                 console.error("❌ Erro ao carregar produtos:", error);
@@ -1118,25 +1124,88 @@
             }
         }
 
+// ============================================
+// BOTÃO ATUALIZAR COM DELAY
+// ============================================
+async function atualizarProdutos() {
+    const btn = document.querySelector('button[onclick="carregarProdutos()"]') || 
+                document.querySelector('#btn-atualizar');
+    const originalHTML = btn ? btn.innerHTML : '';
+    
+    if (btn) {
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Carregando...';
+        btn.disabled = true;
+    }
+    
+    try {
+        await carregarProdutos();
+        
+        // 🔥 FORÇA RECARGA DO DATATABLE
+        setTimeout(() => {
+            if ($.fn.DataTable.isDataTable('#produtosTable')) {
+                $('#produtosTable').DataTable().destroy();
+            }
+            renderizarTabela();
+        }, 100);
+        
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-check mr-1"></i> Atualizado!';
+            btn.classList.add('bg-green-100', 'text-green-700');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                btn.classList.remove('bg-green-100', 'text-green-700');
+            }, 2000);
+        }
+    } catch (error) {
+        console.error("❌ Erro ao atualizar:", error);
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Erro!';
+            btn.classList.add('bg-red-100', 'text-red-700');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                btn.classList.remove('bg-red-100', 'text-red-700');
+            }, 3000);
+        }
+    }
+}
         // ============================================
-        // RENDERIZAR TABELA
+        // RENDERIZAR TABELA (CORRIGIDO)
         // ============================================
         function renderizarTabela() {
             const tbody = document.getElementById("produtos-tbody");
+            if (!tbody) return;
             tbody.innerHTML = "";
 
             if (produtos.length === 0) {
                 tbody.innerHTML = `
-                    <tr>
-                        <td colspan="10" class="text-center py-6 text-gray-400 text-sm">
-                            <i class="fas fa-box-open text-2xl block mb-2"></i>
-                            Nenhum produto encontrado.
-                        </td>
-                    </tr>
-                `;
+            <tr>
+                <td colspan="10" class="text-center py-6 text-gray-400 text-sm">
+                    <i class="fas fa-box-open text-2xl block mb-2"></i>
+                    Nenhum produto encontrado.
+                </td>
+            </tr>
+        `;
+                // 🔥 Mesmo vazio, recria o DataTable
+                if ($.fn.DataTable.isDataTable('#produtosTable')) {
+                    $('#produtosTable').DataTable().clear().destroy();
+                }
+                dataTableInstance = $('#produtosTable').DataTable({
+                    responsive: true,
+                    pageLength: 25,
+                    order: [[0, 'asc']],
+                    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
+                    columnDefs: [
+                        { responsivePriority: 1, targets: [0, 2, 4, 9] },
+                        { responsivePriority: 2, targets: [3, 5, 6] },
+                        { responsivePriority: 3, targets: [1, 7, 8] }
+                    ]
+                });
                 return;
             }
 
+            // 🔥 CONSTRÓI AS LINHAS DA TABELA
             produtos.forEach(p => {
                 const estoque = parseInt(p["Saldo Estoque"]) || 0;
                 const status = estoque <= 0 ? 'bg-red-100 text-red-700' : (estoque <= 3 ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700');
@@ -1144,37 +1213,37 @@
 
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td class="font-bold text-xs">${p.ID}</td>
-                    <td>
-                        <img src="${imgSrc}" 
-                             class="w-8 h-8 rounded object-cover" 
-                             alt="${p["Nome do Produto"]}"
-                             onerror="this.src='${SVG_PLACEHOLDER}'">
-                    </td>
-                    <td class="text-xs font-medium">${p["Nome do Produto"]}</td>
-                    <td class="text-xs">${p.referencia}</td>
-                    <td class="text-xs font-bold text-primary">R$ ${parseFloat(p.Preço || 0).toFixed(2).replace(".", ",")}</td>
-                    <td><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${p.Categoria}</span></td>
-                    <td><span class="badge-estoque ${status} text-[10px]">${estoque}</span></td>
-                    <td class="text-center">${p.Disponível === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
-                    <td class="text-center">${p.Destaque === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : ''}</td>
-                    <td>
-                        <div class="flex gap-1">
-                         
-<button onclick="editarProduto('${p.ID}')" class="text-blue-600 hover:text-blue-800 p-1 rounded text-xs">
-    <i class="fas fa-pen"></i>
-</button>
-                            <button onclick="excluirProduto('${p.ID}')" class="text-red-500 hover:text-red-700 p-1 rounded text-xs"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </td>
-                `;
+            <td class="font-bold text-xs">${p.ID}</td>
+            <td>
+                <img src="${imgSrc}" 
+                     class="w-8 h-8 rounded object-cover" 
+                     alt="${p["Nome do Produto"]}"
+                     onerror="this.src='${SVG_PLACEHOLDER}'">
+            </td>
+            <td class="text-xs font-medium">${p["Nome do Produto"]}</td>
+            <td class="text-xs">${p.referencia}</td>
+            <td class="text-xs font-bold text-primary">R$ ${parseFloat(p.Preço || 0).toFixed(2).replace(".", ",")}</td>
+            <td><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${p.Categoria}</span></td>
+            <td><span class="badge-estoque ${status} text-[10px]">${estoque}</span></td>
+            <td class="text-center">${p.Disponível === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
+            <td class="text-center">${p.Destaque === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : ''}</td>
+            <td>
+                <div class="flex gap-1">
+                    <button onclick="editarProduto('${p.ID}')" class="text-blue-600 hover:text-blue-800 p-1 rounded text-xs"><i class="fas fa-pen"></i></button>
+                    <button onclick="excluirProduto('${p.ID}')" class="text-red-500 hover:text-red-700 p-1 rounded text-xs"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </td>
+        `;
                 tbody.appendChild(tr);
             });
 
+            // 🔥 DESTROI E RECRIA O DATATABLE
             if ($.fn.DataTable.isDataTable('#produtosTable')) {
                 $('#produtosTable').DataTable().clear().destroy();
             }
-            dataTableInstance = $('#produtosTable').DataTable({
+
+            // 🔥 LIMPA O CACHE DO DATATABLE
+            $('#produtosTable').DataTable({
                 responsive: true,
                 pageLength: 25,
                 order: [[0, 'asc']],
@@ -1183,8 +1252,15 @@
                     { responsivePriority: 1, targets: [0, 2, 4, 9] },
                     { responsivePriority: 2, targets: [3, 5, 6] },
                     { responsivePriority: 3, targets: [1, 7, 8] }
-                ]
+                ],
+                // 🔥 FORÇA REDRAW
+                drawCallback: function () {
+                    console.log("📊 Tabela redesenhada com " + produtos.length + " produtos");
+                }
             });
+
+            dataTableInstance = $('#produtosTable').DataTable();
+            console.log("✅ DataTable recriado com " + produtos.length + " produtos");
         }
 
         // ============================================
@@ -1414,92 +1490,92 @@
         });
 
         // ============================================
-// SALVAR PRODUTO (COM SOMA DE ESTOQUE)
-// ============================================
-document.getElementById('formProduto').onsubmit = async (e) => {
-    e.preventDefault();
+        // SALVAR PRODUTO (COM SOMA DE ESTOQUE)
+        // ============================================
+        document.getElementById('formProduto').onsubmit = async (e) => {
+            e.preventDefault();
 
-    const idEdicao = document.getElementById('editID').value;
-    const nome = document.getElementById('Nome do Produto').value.trim();
-    const referencia = document.getElementById('referencia').value.trim();
-    const preco = document.getElementById('Preço').value.replace(',', '.');
-    const quantidade = document.getElementById('Quantidade').value.trim();
-    const categoria = document.getElementById('Categoria').value;
-    const cores = document.getElementById('Cores').value.trim();
-    const tamanho = document.getElementById('Tamanho').value.trim();
-    const imagem = document.getElementById('Imagem').value.trim();
-    const disponivel = document.getElementById('Disponível').checked ? 'sim' : 'nao';
-    const destaque = document.getElementById('Destaque').checked ? 'sim' : 'nao';
-    const estoque = parseInt(document.getElementById('Saldo Estoque').value) || 0;
+            const idEdicao = document.getElementById('editID').value;
+            const nome = document.getElementById('Nome do Produto').value.trim();
+            const referencia = document.getElementById('referencia').value.trim();
+            const preco = document.getElementById('Preço').value.replace(',', '.');
+            const quantidade = document.getElementById('Quantidade').value.trim();
+            const categoria = document.getElementById('Categoria').value;
+            const cores = document.getElementById('Cores').value.trim();
+            const tamanho = document.getElementById('Tamanho').value.trim();
+            const imagem = document.getElementById('Imagem').value.trim();
+            const disponivel = document.getElementById('Disponível').checked ? 'sim' : 'nao';
+            const destaque = document.getElementById('Destaque').checked ? 'sim' : 'nao';
+            const estoque = parseInt(document.getElementById('Saldo Estoque').value) || 0;
 
-    if (!nome) {
-        alert('Preencha o Nome do Produto');
-        return;
-    }
-    if (!categoria) {
-        alert('Selecione ou adicione uma Categoria');
-        return;
-    }
-    if (!preco || parseFloat(preco) <= 0) {
-        alert('Preencha um Preço válido');
-        return;
-    }
-
-    const dados = {
-        ID: idEdicao || '',
-        "Nome do Produto": nome,
-        referencia: referencia,
-        Preço: parseFloat(preco) || 0,
-        Quantidade: quantidade,
-        Categoria: categoria,
-        Cores: cores,
-        Tamanho: tamanho,
-        Imagem: imagem,
-        Disponível: disponivel,
-        Destaque: destaque,
-        "Saldo Estoque": estoque
-    };
-
-    const tipo = idEdicao ? "atualizar" : "cadastrar";
-
-    const btnSubmit = document.querySelector('#formProduto button[type="submit"]');
-    const textoOriginal = btnSubmit.innerHTML;
-    btnSubmit.disabled = true;
-    btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Salvando...';
-
-    try {
-        const result = await chamarAPI(tipo, { produto: dados });
-
-        if (result.success) {
-            // 🔥 MOSTRA MENSAGEM DETALHADA
-            let mensagem = result.message || 'Produto salvo com sucesso!';
-            
-            // 🔥 SE FOI UMA ATUALIZAÇÃO (SOMA DE ESTOQUE)
-            if (result.acao === 'atualizado') {
-                mensagem = `✅ Produto atualizado! Estoque: ${result.estoque_anterior} + ${result.estoque_adicionado} = ${result.estoque_novo}`;
+            if (!nome) {
+                alert('Preencha o Nome do Produto');
+                return;
             }
-            
-            alert(mensagem);
-            
-            if (!idEdicao) {
-                document.getElementById('formProduto').reset();
-                document.getElementById('ID').value = '';
-                document.getElementById('Disponível').checked = true;
-                document.getElementById('Saldo Estoque').value = 0;
+            if (!categoria) {
+                alert('Selecione ou adicione uma Categoria');
+                return;
             }
-            fecharModal('modalProduto');
-            setTimeout(() => carregarProdutos(), 2000);
-        } else {
-            alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
-        }
-    } catch (error) {
-        console.error("Erro ao salvar:", error);
-        alert('❌ Erro ao salvar produto: ' + error.message);
-    } finally {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = textoOriginal;
-    }
-};
+            if (!preco || parseFloat(preco) <= 0) {
+                alert('Preencha um Preço válido');
+                return;
+            }
+
+            const dados = {
+                ID: idEdicao || '',
+                "Nome do Produto": nome,
+                referencia: referencia,
+                Preço: parseFloat(preco) || 0,
+                Quantidade: quantidade,
+                Categoria: categoria,
+                Cores: cores,
+                Tamanho: tamanho,
+                Imagem: imagem,
+                Disponível: disponivel,
+                Destaque: destaque,
+                "Saldo Estoque": estoque
+            };
+
+            const tipo = idEdicao ? "atualizar" : "cadastrar";
+
+            const btnSubmit = document.querySelector('#formProduto button[type="submit"]');
+            const textoOriginal = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Salvando...';
+
+            try {
+                const result = await chamarAPI(tipo, { produto: dados });
+
+                if (result.success) {
+                    // 🔥 MOSTRA MENSAGEM DETALHADA
+                    let mensagem = result.message || 'Produto salvo com sucesso!';
+
+                    // 🔥 SE FOI UMA ATUALIZAÇÃO (SOMA DE ESTOQUE)
+                    if (result.acao === 'atualizado') {
+                        mensagem = `✅ Produto atualizado! Estoque: ${result.estoque_anterior} + ${result.estoque_adicionado} = ${result.estoque_novo}`;
+                    }
+
+                    alert(mensagem);
+
+                    if (!idEdicao) {
+                        document.getElementById('formProduto').reset();
+                        document.getElementById('ID').value = '';
+                        document.getElementById('Disponível').checked = true;
+                        document.getElementById('Saldo Estoque').value = 0;
+                    }
+                    fecharModal('modalProduto');
+                    setTimeout(() => carregarProdutos(), 2000);
+                } else {
+                    alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
+                }
+            } catch (error) {
+                console.error("Erro ao salvar:", error);
+                alert('❌ Erro ao salvar produto: ' + error.message);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = textoOriginal;
+            }
+        };
         // ============================================
         // EDITAR PRODUTO - CORRIGIDO
         // ============================================
