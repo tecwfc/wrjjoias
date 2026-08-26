@@ -105,7 +105,7 @@
         .modal-content {
             background: white;
             border-radius: 16px;
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
             max-height: 95vh;
             overflow-y: auto;
@@ -118,12 +118,15 @@
             max-width: 600px;
         }
 
+        .modal-content-vendas {
+            max-width: 1200px;
+        }
+
         @keyframes modalFadeIn {
             from {
                 transform: scale(0.95) translateY(20px);
                 opacity: 0;
             }
-
             to {
                 transform: scale(1) translateY(0);
                 opacity: 1;
@@ -228,6 +231,73 @@
             border-radius: 10px;
         }
 
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .btn-group button {
+            flex: 1;
+            min-width: 80px;
+            font-size: 12px;
+            padding: 8px 12px;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .btn-group button {
+                font-size: 10px;
+                padding: 6px 8px;
+                min-width: 60px;
+            }
+        }
+
+        .badge-estoque {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 4px !important;
+            padding: 2px 10px !important;
+            border-radius: 9999px !important;
+            font-weight: 700 !important;
+            font-size: 11px !important;
+            border: 1.5px solid transparent !important;
+            transition: all 0.2s ease !important;
+            white-space: nowrap !important;
+            min-width: 40px !important;
+            justify-content: center !important;
+        }
+
+        .badge-estoque.bg-red-100 {
+            background: #fee2e2 !important;
+            color: #991b1b !important;
+            border-color: #f87171 !important;
+        }
+
+        .badge-estoque.bg-yellow-100 {
+            background: #fef9c3 !important;
+            color: #92400e !important;
+            border-color: #fbbf24 !important;
+            animation: pulse-stock 1.5s ease-in-out infinite;
+        }
+
+        .badge-estoque.bg-blue-100 {
+            background: #dbeafe !important;
+            color: #1e40af !important;
+            border-color: #60a5fa !important;
+        }
+
+        .badge-estoque.bg-green-100 {
+            background: #dcfce7 !important;
+            color: #166534 !important;
+            border-color: #86efac !important;
+        }
+
+        @keyframes pulse-stock {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
         .status-pago {
             color: #16a34a;
             background: #dcfce7;
@@ -258,123 +328,112 @@
             display: inline-block;
         }
 
+        /* Filtros */
+        .filtros-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            background: #f8faf8;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .filtros-container label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .filtros-container input,
+        .filtros-container select {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 12px;
+            outline: none;
+            background: white;
+        }
+
+        .filtros-container input:focus,
+        .filtros-container select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(47, 107, 79, 0.15);
+        }
+
+        .filtros-actions {
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .filtros-actions button {
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-filtrar {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-filtrar:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-limpar {
+            background: #e5e7eb;
+            color: #4b5563;
+        }
+
+        .btn-limpar:hover {
+            background: #d1d5db;
+        }
+
+        .vendas-table th {
+            background: #f0f5f1 !important;
+            color: var(--primary) !important;
+            font-size: 10px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         @media (max-width: 640px) {
             .card-dashboard .value {
                 font-size: 20px;
             }
-
             .card-dashboard {
                 padding: 12px;
             }
-
             .card-dashboard .icon {
                 width: 36px;
                 height: 36px;
                 font-size: 16px;
             }
-
             .modal-content {
                 max-width: 100%;
                 border-radius: 12px;
                 max-height: 98vh;
             }
-
-            .modal-content .p-6 {
-                padding: 16px !important;
-            }
-
-            table.dataTable thead th {
-                font-size: 11px;
-                padding: 6px 4px !important;
-            }
-
-            table.dataTable tbody td {
-                font-size: 11px;
-                padding: 6px 4px !important;
-            }
-
-            .dataTables_wrapper .dataTables_filter input {
-                max-width: 100%;
-                font-size: 14px;
-                padding: 8px 12px;
-            }
-
-            .campo-categoria {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .campo-categoria button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .grid-cols-1.md\:grid-cols-2 {
-                grid-template-columns: 1fr !important;
-            }
-
-            nav .text-xl {
-                font-size: 16px;
-            }
-
-            nav .px-6 {
-                padding-left: 12px;
-                padding-right: 12px;
-            }
-
-            nav .py-4 {
-                padding-top: 10px;
-                padding-bottom: 10px;
-            }
-
-            main .p-6 {
-                padding: 12px;
-            }
-
-            main .space-y-6>* {
-                margin-bottom: 12px;
-            }
-
-            .vendas-table th,
-            .vendas-table td {
-                font-size: 11px;
-                padding: 6px 4px !important;
+            .filtros-container {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 480px) {
-            .grid-cols-2 {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .grid-cols-1.sm\:grid-cols-2 {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .grid-cols-2.md\:grid-cols-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .btn-group button {
-            flex: 1;
-            min-width: 80px;
-            font-size: 12px;
-            padding: 8px 12px;
-            justify-content: center;
-        }
-
-        @media (max-width: 480px) {
-            .btn-group button {
-                font-size: 10px;
-                padding: 6px 8px;
-                min-width: 60px;
+            .filtros-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -395,7 +454,6 @@
             </div>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-            <!-- 🔥 BOTÃO PARA PÁGINA PÚBLICA -->
             <a href="index.html" target="_blank"
                 class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg transition text-xs font-medium flex items-center gap-1">
                 <i class="fas fa-globe"></i> <span class="hidden sm:inline">Ver Site</span>
@@ -504,24 +562,28 @@
         <!-- TABELA PRODUTOS -->
         <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
             <div class="p-3 border-b bg-gray-50/50 flex flex-wrap justify-between items-center gap-2">
-                <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos
-                </h2>
+                <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos</h2>
                 <span class="text-xs text-gray-400" id="total-registros">0 registros</span>
             </div>
-            <div class="p-2 overflow-x-auto">
+            <div class="p-1 md:p-2 overflow-x-auto">
                 <table id="produtosTable" class="display responsive nowrap w-full" style="width:100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Imagem</th>
-                            <th>Produto</th>
-                            <th>Ref.</th>
-                            <th>Preço</th>
-                            <th>Categoria</th>
-                            <th>Estoque</th>
-                            <th>Disp.</th>
-                            <th>Destaque</th>
-                            <th>Ações</th>
+                            <th class="text-center" style="min-width: 40px;">ID</th>
+                            <th class="text-center" style="min-width: 50px;">Img</th>
+                            <th style="min-width: 120px;">Nome</th>
+                            <th style="min-width: 70px;">Referência</th>
+                            <th class="text-right" style="min-width: 60px;">Preço</th>
+                            <th style="min-width: 80px;">Quantidade</th>
+                            <th style="min-width: 100px;">Categoria</th>
+                            <th style="min-width: 60px;">Tamanho</th>
+                            <th style="min-width: 60px;">Imagem</th>
+                            <th class="text-center" style="min-width: 60px;">Disponível</th>
+                            <th class="text-center" style="min-width: 60px;">Destaque</th>
+                            <th class="text-center" style="min-width: 50px;">📦 Estoque</th>
+                            <th class="text-center" style="min-width: 50px;">Vendidos</th>
+                            <th class="text-center" style="min-width: 70px;">Saldo</th>
+                            <th class="text-center" style="min-width: 70px;">Ações</th>
                         </tr>
                     </thead>
                     <tbody id="produtos-tbody"></tbody>
@@ -633,6 +695,15 @@
                         <small class="text-xs text-gray-400">Separe por vírgula</small>
                     </div>
 
+                    <!-- CAMPO ESTOQUE TOTAL -->
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Estoque Total *</label>
+                        <input type="number" id="Estoque" required
+                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
+                            placeholder="Ex: 200" value="0">
+                    </div>
+
+                    <!-- CAMPO SALDO ESTOQUE -->
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Saldo Estoque *</label>
                         <input type="number" id="Saldo Estoque" required
@@ -739,20 +810,72 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL VENDAS -->
+    <!-- MODAL VENDAS COM FILTROS -->
     <!-- ========================================== -->
     <div id="modalVendas" class="modal-overlay">
-        <div class="modal-content modal-content-banner" onclick="event.stopPropagation()" style="max-width: 800px;">
+        <div class="modal-content modal-content-vendas" onclick="event.stopPropagation()">
             <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white sticky top-0 z-10">
-                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-chart-line"></i>Relatório de
-                    Vendas</h3>
+                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-chart-line"></i>Relatório de Vendas</h3>
                 <button onclick="fecharModal('modalVendas')" class="text-white/80 hover:text-white text-xl transition">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="p-4 overflow-y-auto" style="max-height: calc(95vh - 60px);">
+                
+                <!-- FILTROS -->
+                <div class="filtros-container">
+                    <div>
+                        <label>Data Início</label>
+                        <input type="date" id="filtro-data-inicio">
+                    </div>
+                    <div>
+                        <label>Data Fim</label>
+                        <input type="date" id="filtro-data-fim">
+                    </div>
+                    <div>
+                        <label>Mês / Ano</label>
+                        <input type="month" id="filtro-mes">
+                    </div>
+                    <div>
+                        <label>Cliente</label>
+                        <select id="filtro-cliente">
+                            <option value="">Todos os clientes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Status</label>
+                        <select id="filtro-status">
+                            <option value="">Todos</option>
+                            <option value="Pago">Pago</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="filtros-actions">
+                        <button onclick="aplicarFiltros()" class="btn-filtrar">
+                            <i class="fas fa-filter mr-1"></i> Filtrar
+                        </button>
+                        <button onclick="limparFiltros()" class="btn-limpar">
+                            <i class="fas fa-undo mr-1"></i> Limpar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BOTÕES DE AÇÃO -->
+                <div class="flex flex-wrap gap-2 mt-4 mb-4">
+                    <button onclick="carregarVendasAdmin()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition flex items-center gap-1">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                    <button onclick="imprimirRelatorioCompleto()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-green-700 transition flex items-center gap-1">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                    <button onclick="exportarCSV()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 transition flex items-center gap-1">
+                        <i class="fas fa-file-csv"></i> Exportar CSV
+                    </button>
+                </div>
+
                 <!-- Resumo Vendas -->
-                <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                     <div class="bg-green-50 p-3 rounded-xl text-center">
                         <p class="text-lg font-bold text-green-600" id="vendas-total">R$ 0,00</p>
                         <p class="text-[10px] text-gray-500 font-medium">Total Vendas</p>
@@ -772,22 +895,30 @@
                 </div>
 
                 <hr class="my-3">
-                <h4 class="font-bold text-gray-700 mb-2 text-sm">Últimos Pedidos</h4>
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="font-bold text-gray-700 text-sm">📋 Lista de Pedidos</h4>
+                    <span class="text-xs text-gray-400" id="vendas-count">0 registros</span>
+                </div>
+
+                <!-- TABELA DE VENDAS -->
                 <div class="overflow-x-auto">
-                    <table class="w-full text-xs vendas-table">
+                    <table class="w-full text-xs vendas-table" id="vendasTable">
                         <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-2 px-2">#</th>
-                                <th class="text-left py-2 px-2">Cliente</th>
-                                <th class="text-left py-2 px-2 hidden sm:table-cell">Produtos</th>
-                                <th class="text-left py-2 px-2">Total</th>
-                                <th class="text-left py-2 px-2">Status</th>
-                                <th class="text-left py-2 px-2 hidden md:table-cell">Data</th>
+                            <tr>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">#</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Data</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Cliente</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Endereço</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Itens</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Subtotal</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Frete</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Total</th>
+                                <th class="text-center py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
                         <tbody id="vendas-tbody">
                             <tr>
-                                <td colspan="6" class="text-center py-6 text-gray-400 text-sm">
+                                <td colspan="9" class="text-center py-6 text-gray-400 text-sm">
                                     <i class="fas fa-inbox text-2xl block mb-2"></i>
                                     Nenhum pedido registrado
                                 </td>
@@ -803,24 +934,19 @@
     <!-- SCRIPT PRINCIPAL -->
     <!-- ========================================== -->
     <script>
-
         // CONFIGURAÇÕES
-        // ============================================
-        const PLANILHA_ID = "1AL1_DDF9dOO-qS_fnEBoz94687lYp7rqIVLFnUT7ch8";
-
         const ESTOQUE_API_URL = "https://script.google.com/macros/s/AKfycbx-vvLsDmvtIQHeH10z5xJXgReG-RRzzhLQYmWAJcoZ1ZW7Cr2M_PcZn1E61araSFlu6A/exec";
 
-        // ============================================
         // SVG PLACEHOLDER
-        // ============================================
         const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f3f4f6"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dy=".3em" fill="%239ca3af"%3ESem Imagem%3C/text%3E%3C/svg%3E`;
 
-        // ============================================
         // VARIÁVEIS GLOBAIS
-        // ============================================
         let produtos = [];
         let banners = [];
+        let vendas = [];
+        let vendasFiltradas = [];
         let dataTableInstance;
+        let dataTableVendasInstance;
         let categoriasCache = [];
         let chartCategorias = null;
         let chartEstoque = null;
@@ -863,53 +989,33 @@
             return SVG_PLACEHOLDER;
         }
 
-        function parseCSV(text) {
-            const lines = [];
-            let currentLine = [];
-            let currentField = '';
-            let insideQuotes = false;
-
-            for (let i = 0; i < text.length; i++) {
-                const char = text[i];
-                const nextChar = text[i + 1];
-
-                if (char === '"') {
-                    if (insideQuotes && nextChar === '"') {
-                        currentField += '"';
-                        i++;
-                    } else {
-                        insideQuotes = !insideQuotes;
-                    }
-                } else if (char === ',' && !insideQuotes) {
-                    currentLine.push(currentField.trim());
-                    currentField = '';
-                } else if (char === '\n' || char === '\r') {
-                    if (char === '\r' && nextChar === '\n') {
-                        i++;
-                    }
-                    currentLine.push(currentField.trim());
-                    if (currentLine.some(field => field !== '')) {
-                        lines.push(currentLine);
-                    }
-                    currentLine = [];
-                    currentField = '';
-                } else {
-                    currentField += char;
-                }
+        function formatarData(dataISO) {
+            if (!dataISO) return '-';
+            try {
+                const d = new Date(dataISO);
+                return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            } catch (e) {
+                return dataISO;
             }
-
-            if (currentField || currentLine.length > 0) {
-                currentLine.push(currentField.trim());
-                if (currentLine.some(field => field !== '')) {
-                    lines.push(currentLine);
-                }
-            }
-            return lines;
         }
 
+        function formatarItens(itens) {
+            if (!itens) return '-';
+            try {
+                const itensObj = JSON.parse(itens);
+                if (Array.isArray(itensObj)) {
+                    return itensObj.map(item => 
+                        `${item.quantidade}x ${item.nome}${item.referencia ? ` (Ref: ${item.referencia})` : ''}`
+                    ).join(', ');
+                }
+            } catch (e) {
+                return itens;
+            }
+            return itens;
+        }
 
         // ============================================
-        // 🔥 FUNÇÃO PARA CHAMAR A API (JSONP)
+        // FUNÇÃO PARA CHAMAR A API (JSONP)
         // ============================================
         function chamarAPI(tipo, dados) {
             return new Promise((resolve, reject) => {
@@ -925,12 +1031,10 @@
                         resolve(data);
                     };
 
-                    // Prepara os parâmetros
                     let params = `modo=admin&tipo=${tipo}`;
 
                     if (tipo === 'cadastrar' || tipo === 'atualizar') {
                         const p = dados.produto || {};
-                        // 🔥 NÃO envia Saldo Estoque - só Estoque
                         params += `&nome=${encodeURIComponent(p["Nome do Produto"] || p.nome || '')}`;
                         params += `&ref=${encodeURIComponent(p.referencia || '')}`;
                         params += `&preco=${p.Preço || p.preco || 0}`;
@@ -941,7 +1045,9 @@
                         params += `&imagem=${encodeURIComponent(p.Imagem || p.imagem || '')}`;
                         params += `&disponivel=${p.Disponível || p.disponivel || 'sim'}`;
                         params += `&destaque=${p.Destaque || p.destaque || 'nao'}`;
-                        params += `&estoque=${p["Saldo Estoque"] || p.estoque || 0}`;  // 🔥 Envia como "estoque"
+                        params += `&estoque=${p.Estoque || p.estoque || 0}`;
+                        params += `&vendidos=${p.Vendidos || p.vendidos || 0}`;
+                        params += `&saldo_estoque=${p["Saldo Estoque"] || p.saldo_estoque || 0}`;
                         if (p.ID) params += `&id=${p.ID}`;
                     } else if (tipo === 'excluir') {
                         params += `&id=${dados.id || ''}`;
@@ -951,6 +1057,8 @@
                         params += `&banner=${encodeURIComponent(JSON.stringify(dados.banner || {}))}`;
                     } else if (tipo === 'excluir_banner') {
                         params += `&index=${dados.index || ''}`;
+                    } else if (tipo === 'listar_vendas') {
+                        // Para listar vendas, não precisa de parâmetros extras
                     }
 
                     const script = document.createElement('script');
@@ -987,6 +1095,7 @@
                 }
             });
         }
+
         // ============================================
         // CARREGAR CATEGORIAS (FIXAS)
         // ============================================
@@ -1016,21 +1125,15 @@
         }
 
         // ============================================
-        // CARREGAR PRODUTOS (CORRIGIDO)
+        // CARREGAR PRODUTOS
         // ============================================
         async function carregarProdutos() {
             try {
                 console.log("🔄 Carregando produtos via API...");
 
-                // 🔥 USAR A API
-                const url = `${ESTOQUE_API_URL}?modo=admin&tipo=listar`;
-                console.log("📤 Buscando:", url);
-
-                // Usar JSONP para listar produtos
                 const data = await new Promise((resolve, reject) => {
                     const callbackName = 'listar_callback_' + Date.now();
 
-                    // 🔥 Definir a função callback GLOBAL
                     window[callbackName] = function (data) {
                         console.log("📥 Callback executado com dados:", data);
                         delete window[callbackName];
@@ -1053,7 +1156,6 @@
                         reject(new Error('Erro ao listar produtos - verifique a URL da API'));
                     };
 
-                    // Timeout
                     const timeoutId = setTimeout(() => {
                         if (window[callbackName]) {
                             console.error("❌ Timeout");
@@ -1065,7 +1167,6 @@
                         }
                     }, 30000);
 
-                    // Limpa timeout quando resolver
                     const originalResolve = resolve;
                     resolve = function (data) {
                         clearTimeout(timeoutId);
@@ -1081,12 +1182,33 @@
                     throw new Error(data.error);
                 }
 
-                produtos = data.produtos || [];
+                if (data.produtos) {
+                    produtos = data.produtos.map(p => {
+                        return {
+                            ID: p.ID || p.id,
+                            "Nome do Produto": p["Nome do Produto"] || p.nome,
+                            referencia: p.referencia || p.ref,
+                            Preço: p.Preço || p.preco,
+                            Quantidade: p.Quantidade || p.quantidade,
+                            Categoria: p.Categoria || p.categoria,
+                            Cores: p.Cores || p.cores,
+                            Tamanho: p.Tamanho || p.tamanho,
+                            Imagem: p.Imagem || p.imagem,
+                            Disponível: p.Disponível || p.disponivel,
+                            Destaque: p.Destaque || p.destaque,
+                            Estoque: p.Estoque || p.estoque || 0,
+                            Vendidos: p.Vendidos || p.vendidos || 0,
+                            "Saldo Estoque": p["Saldo Estoque"] || p.saldo_estoque || 0
+                        };
+                    });
+                } else {
+                    produtos = [];
+                }
+
                 banners = data.banners || [];
 
-                // Atualizar Dashboard
-                const totalEstoque = produtos.reduce((s, p) => s + p["Saldo Estoque"], 0);
-                const baixoEstoque = produtos.filter(p => p["Saldo Estoque"] <= 3 && p["Saldo Estoque"] > 0).length;
+                const totalEstoque = produtos.reduce((s, p) => s + (p.Estoque || 0), 0);
+                const baixoEstoque = produtos.filter(p => (p["Saldo Estoque"] || 0) <= 3 && (p["Saldo Estoque"] || 0) > 0).length;
                 const destaques = produtos.filter(p => p.Destaque === 'sim').length;
 
                 document.getElementById('total-produtos').innerText = produtos.length;
@@ -1095,99 +1217,48 @@
                 document.getElementById('total-destaques').innerText = destaques;
                 document.getElementById('total-registros').innerText = `${produtos.length} registros`;
 
-                renderizarTabela();
+                renderizarTabelaProdutos();
                 renderizarBanners();
                 carregarCategoriasFixas();
                 atualizarGraficos();
 
                 console.log(`✅ ${produtos.length} produtos carregados`);
-                console.log("📊 Tabela renderizada com " + produtos.length + " produtos");
 
             } catch (error) {
                 console.error("❌ Erro ao carregar produtos:", error);
                 document.getElementById('produtos-tbody').innerHTML = `
-            <tr>
-                <td colspan="10" class="text-center py-8 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
-                    Erro ao carregar produtos: ${error.message}
-                    <br>
-                    <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
-                        <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
-                    </button>
-                    <br>
-                    <small class="text-gray-400 text-xs mt-2 block">
-                        URL da API: ${ESTOQUE_API_URL}
-                    </small>
-                </td>
-            </tr>
-        `;
+                    <tr>
+                        <td colspan="15" class="text-center py-8 text-red-500 text-sm">
+                            <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
+                            Erro ao carregar produtos: ${error.message}
+                            <br>
+                            <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
+                                <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
+                            </button>
+                        </td>
+                    </tr>
+                `;
             }
         }
 
-// ============================================
-// BOTÃO ATUALIZAR COM DELAY
-// ============================================
-async function atualizarProdutos() {
-    const btn = document.querySelector('button[onclick="carregarProdutos()"]') || 
-                document.querySelector('#btn-atualizar');
-    const originalHTML = btn ? btn.innerHTML : '';
-    
-    if (btn) {
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Carregando...';
-        btn.disabled = true;
-    }
-    
-    try {
-        await carregarProdutos();
-        
-        // 🔥 FORÇA RECARGA DO DATATABLE
-        setTimeout(() => {
-            if ($.fn.DataTable.isDataTable('#produtosTable')) {
-                $('#produtosTable').DataTable().destroy();
-            }
-            renderizarTabela();
-        }, 100);
-        
-        if (btn) {
-            btn.innerHTML = '<i class="fas fa-check mr-1"></i> Atualizado!';
-            btn.classList.add('bg-green-100', 'text-green-700');
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.disabled = false;
-                btn.classList.remove('bg-green-100', 'text-green-700');
-            }, 2000);
-        }
-    } catch (error) {
-        console.error("❌ Erro ao atualizar:", error);
-        if (btn) {
-            btn.innerHTML = '<i class="fas fa-exclamation-triangle mr-1"></i> Erro!';
-            btn.classList.add('bg-red-100', 'text-red-700');
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.disabled = false;
-                btn.classList.remove('bg-red-100', 'text-red-700');
-            }, 3000);
-        }
-    }
-}
         // ============================================
-        // RENDERIZAR TABELA (CORRIGIDO)
+        // RENDERIZAR TABELA PRODUTOS
         // ============================================
-        function renderizarTabela() {
+        function renderizarTabelaProdutos() {
             const tbody = document.getElementById("produtos-tbody");
             if (!tbody) return;
             tbody.innerHTML = "";
 
             if (produtos.length === 0) {
                 tbody.innerHTML = `
-            <tr>
-                <td colspan="10" class="text-center py-6 text-gray-400 text-sm">
-                    <i class="fas fa-box-open text-2xl block mb-2"></i>
-                    Nenhum produto encontrado.
-                </td>
-            </tr>
-        `;
-                // 🔥 Mesmo vazio, recria o DataTable
+                    <tr>
+                        <td colspan="15" class="text-center py-6 text-gray-400 text-sm">
+                            <i class="fas fa-box-open text-2xl block mb-2"></i>
+                            Nenhum produto encontrado.
+                        </td>
+                    </tr>
+                `;
+
                 if ($.fn.DataTable.isDataTable('#produtosTable')) {
                     $('#produtosTable').DataTable().clear().destroy();
                 }
@@ -1195,72 +1266,89 @@ async function atualizarProdutos() {
                     responsive: true,
                     pageLength: 25,
                     order: [[0, 'asc']],
-                    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
-                    columnDefs: [
-                        { responsivePriority: 1, targets: [0, 2, 4, 9] },
-                        { responsivePriority: 2, targets: [3, 5, 6] },
-                        { responsivePriority: 3, targets: [1, 7, 8] }
-                    ]
+                    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' }
                 });
                 return;
             }
 
-            // 🔥 CONSTRÓI AS LINHAS DA TABELA
             produtos.forEach(p => {
-                const estoque = parseInt(p["Saldo Estoque"]) || 0;
-                const status = estoque <= 0 ? 'bg-red-100 text-red-700' : (estoque <= 3 ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700');
+                const estoque = parseInt(p.Estoque) || 0;
+                const vendidos = parseInt(p.Vendidos) || 0;
+                const saldoEstoque = parseInt(p["Saldo Estoque"]) || 0;
+                const quantidade = p.Quantidade || '-';
+
+                let statusClass = '';
+                let statusIcon = '';
+                if (saldoEstoque <= 0) {
+                    statusClass = 'bg-red-100 text-red-700 border-red-300';
+                    statusIcon = '❌';
+                } else if (saldoEstoque <= 3) {
+                    statusClass = 'bg-yellow-100 text-yellow-700 border-yellow-300 animate-pulse';
+                    statusIcon = '⚠️';
+                } else if (saldoEstoque <= 10) {
+                    statusClass = 'bg-blue-100 text-blue-700 border-blue-300';
+                    statusIcon = '📦';
+                } else {
+                    statusClass = 'bg-green-100 text-green-700 border-green-300';
+                    statusIcon = '✅';
+                }
+
                 const imgSrc = getPlaceholderImage(p.Imagem, 100);
 
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-            <td class="font-bold text-xs">${p.ID}</td>
-            <td>
-                <img src="${imgSrc}" 
-                     class="w-8 h-8 rounded object-cover" 
-                     alt="${p["Nome do Produto"]}"
-                     onerror="this.src='${SVG_PLACEHOLDER}'">
-            </td>
-            <td class="text-xs font-medium">${p["Nome do Produto"]}</td>
-            <td class="text-xs">${p.referencia}</td>
-            <td class="text-xs font-bold text-primary">R$ ${parseFloat(p.Preço || 0).toFixed(2).replace(".", ",")}</td>
-            <td><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[10px] font-bold">${p.Categoria}</span></td>
-            <td><span class="badge-estoque ${status} text-[10px]">${estoque}</span></td>
-            <td class="text-center">${p.Disponível === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
-            <td class="text-center">${p.Destaque === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : ''}</td>
-            <td>
-                <div class="flex gap-1">
-                    <button onclick="editarProduto('${p.ID}')" class="text-blue-600 hover:text-blue-800 p-1 rounded text-xs"><i class="fas fa-pen"></i></button>
-                    <button onclick="excluirProduto('${p.ID}')" class="text-red-500 hover:text-red-700 p-1 rounded text-xs"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            </td>
-        `;
+                    <td class="font-bold text-xs text-center">${p.ID || '-'}</td>
+                    <td class="text-center">
+                        <img src="${imgSrc}" 
+                             class="w-7 h-7 md:w-8 md:h-8 rounded object-cover inline-block border border-gray-200" 
+                             alt="${p["Nome do Produto"]}"
+                             onerror="this.src='${SVG_PLACEHOLDER}'">
+                    </td>
+                    <td class="text-xs font-medium max-w-[120px] md:max-w-none truncate" title="${p["Nome do Produto"] || ''}">${p["Nome do Produto"] || '-'}</td>
+                    <td class="text-xs text-gray-500">${p.referencia || '-'}</td>
+                    <td class="text-xs font-bold text-primary text-right">R$ ${parseFloat(p.Preço || 0).toFixed(2).replace(".", ",")}</td>
+                    <td class="text-xs text-gray-600 max-w-[80px] truncate" title="${quantidade}">${quantidade}</td>
+                    <td class="text-[10px]">
+                        <span class="bg-gray-100 px-1.5 py-0.5 rounded font-bold">${p.Categoria || '-'}</span>
+                    </td>
+                    <td class="text-xs text-gray-600">${p.Tamanho || '-'}</td>
+                    <td class="text-[10px]">
+                        ${p.Imagem ? `<a href="${p.Imagem}" target="_blank" class="text-blue-500 hover:text-blue-700" title="Ver imagem"><i class="fas fa-external-link-alt"></i></a>` : '-'}
+                    </td>
+                    <td class="text-center">${p.Disponível === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
+                    <td class="text-center">${p.Destaque === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : '<i class="fas fa-star text-gray-300 text-sm"></i>'}</td>
+                    <td class="text-center">
+                        <span class="badge-estoque ${statusClass} text-[10px] md:text-xs font-bold px-2 py-1 rounded-full border inline-flex items-center gap-1 whitespace-nowrap">
+                            ${statusIcon} ${estoque}
+                        </span>
+                    </td>
+                    <td class="text-center text-xs font-bold text-blue-600">${vendidos}</td>
+                    <td class="text-center text-xs font-bold ${saldoEstoque <= 3 ? 'text-red-600' : 'text-green-600'}">${saldoEstoque}</td>
+                    <td class="text-center">
+                        <div class="flex gap-1 justify-center">
+                            <button onclick="editarProduto('${p.ID}')" class="text-blue-600 hover:text-blue-800 p-1 rounded text-xs" title="Editar"><i class="fas fa-pen"></i></button>
+                            <button onclick="excluirProduto('${p.ID}')" class="text-red-500 hover:text-red-700 p-1 rounded text-xs" title="Excluir"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                `;
                 tbody.appendChild(tr);
             });
 
-            // 🔥 DESTROI E RECRIA O DATATABLE
             if ($.fn.DataTable.isDataTable('#produtosTable')) {
                 $('#produtosTable').DataTable().clear().destroy();
             }
 
-            // 🔥 LIMPA O CACHE DO DATATABLE
-            $('#produtosTable').DataTable({
+            dataTableInstance = $('#produtosTable').DataTable({
                 responsive: true,
                 pageLength: 25,
                 order: [[0, 'asc']],
                 language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
                 columnDefs: [
-                    { responsivePriority: 1, targets: [0, 2, 4, 9] },
-                    { responsivePriority: 2, targets: [3, 5, 6] },
-                    { responsivePriority: 3, targets: [1, 7, 8] }
+                    { responsivePriority: 1, targets: [0, 1, 2, 4, 9, 11, 12, 13, 14] },
+                    { responsivePriority: 2, targets: [3, 5, 6, 7, 8, 10] }
                 ],
-                // 🔥 FORÇA REDRAW
-                drawCallback: function () {
-                    console.log("📊 Tabela redesenhada com " + produtos.length + " produtos");
-                }
+                autoWidth: false
             });
-
-            dataTableInstance = $('#produtosTable').DataTable();
-            console.log("✅ DataTable recriado com " + produtos.length + " produtos");
         }
 
         // ============================================
@@ -1337,7 +1425,7 @@ async function atualizarProdutos() {
             });
 
             const top5 = [...produtos]
-                .sort((a, b) => b["Saldo Estoque"] - a["Saldo Estoque"])
+                .sort((a, b) => (b.Estoque || 0) - (a.Estoque || 0))
                 .slice(0, 5);
 
             if (chartEstoque) chartEstoque.destroy();
@@ -1349,7 +1437,7 @@ async function atualizarProdutos() {
                     labels: top5.map(p => p["Nome do Produto"].substring(0, 15) + (p["Nome do Produto"].length > 15 ? '...' : '')),
                     datasets: [{
                         label: 'Estoque',
-                        data: top5.map(p => p["Saldo Estoque"]),
+                        data: top5.map(p => p.Estoque || 0),
                         backgroundColor: '#2f6b4f',
                         borderRadius: 6,
                         barThickness: 25
@@ -1368,6 +1456,334 @@ async function atualizarProdutos() {
         }
 
         // ============================================
+        // CARREGAR VENDAS (ADMIN)
+        // ============================================
+        async function carregarVendasAdmin() {
+            try {
+                console.log("🔄 Carregando vendas...");
+
+                const data = await chamarAPI('listar_vendas');
+
+                console.log("📥 Dados de vendas:", data);
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                vendas = data.vendas || [];
+
+                // Ordena por data (mais recente primeiro)
+                vendas.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+                // Preenche o select de clientes
+                const clientesSelect = document.getElementById('filtro-cliente');
+                const clientesUnicos = [...new Set(vendas.map(v => v.cliente).filter(c => c))];
+                clientesSelect.innerHTML = '<option value="">Todos os clientes</option>';
+                clientesUnicos.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente;
+                    option.textContent = cliente;
+                    clientesSelect.appendChild(option);
+                });
+
+                // Aplica os filtros
+                aplicarFiltros();
+
+            } catch (error) {
+                console.error("❌ Erro ao carregar vendas:", error);
+                document.getElementById('vendas-tbody').innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center py-6 text-red-500 text-sm">
+                            <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
+                            Erro ao carregar vendas: ${error.message}
+                            <br>
+                            <button onclick="carregarVendasAdmin()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">
+                                <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // ============================================
+        // APLICAR FILTROS
+        // ============================================
+        function aplicarFiltros() {
+            const dataInicio = document.getElementById('filtro-data-inicio').value;
+            const dataFim = document.getElementById('filtro-data-fim').value;
+            const mes = document.getElementById('filtro-mes').value;
+            const cliente = document.getElementById('filtro-cliente').value;
+            const status = document.getElementById('filtro-status').value;
+
+            vendasFiltradas = vendas.filter(v => {
+                let incluir = true;
+
+                // Filtro por data início
+                if (dataInicio) {
+                    const dataVenda = new Date(v.data).toISOString().split('T')[0];
+                    if (dataVenda < dataInicio) incluir = false;
+                }
+
+                // Filtro por data fim
+                if (dataFim && incluir) {
+                    const dataVenda = new Date(v.data).toISOString().split('T')[0];
+                    if (dataVenda > dataFim) incluir = false;
+                }
+
+                // Filtro por mês
+                if (mes && incluir) {
+                    const mesVenda = new Date(v.data).toISOString().substring(0, 7);
+                    if (mesVenda !== mes) incluir = false;
+                }
+
+                // Filtro por cliente
+                if (cliente && incluir) {
+                    if (v.cliente !== cliente) incluir = false;
+                }
+
+                // Filtro por status
+                if (status && incluir) {
+                    if (v.status !== status) incluir = false;
+                }
+
+                return incluir;
+            });
+
+            renderizarTabelaVendas();
+            atualizarResumoVendas();
+        }
+
+        // ============================================
+        // LIMPAR FILTROS
+        // ============================================
+        function limparFiltros() {
+            document.getElementById('filtro-data-inicio').value = '';
+            document.getElementById('filtro-data-fim').value = '';
+            document.getElementById('filtro-mes').value = '';
+            document.getElementById('filtro-cliente').value = '';
+            document.getElementById('filtro-status').value = '';
+            aplicarFiltros();
+        }
+
+        // ============================================
+        // ATUALIZAR RESUMO VENDAS
+        // ============================================
+        function atualizarResumoVendas() {
+            const totalVendas = vendasFiltradas.reduce((s, v) => s + (parseFloat(v.total) || 0), 0);
+            const totalPedidos = vendasFiltradas.length;
+            const pendentes = vendasFiltradas.filter(v => v.status === 'Pendente').length;
+            const ticketMedio = totalPedidos > 0 ? totalVendas / totalPedidos : 0;
+
+            document.getElementById('vendas-total').innerText = `R$ ${totalVendas.toFixed(2).replace('.', ',')}`;
+            document.getElementById('vendas-pedidos').innerText = totalPedidos;
+            document.getElementById('vendas-pendentes').innerText = pendentes;
+            document.getElementById('vendas-ticket').innerText = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
+            document.getElementById('vendas-count').innerText = `${totalPedidos} registros`;
+        }
+
+        // ============================================
+        // RENDERIZAR TABELA VENDAS
+        // ============================================
+        function renderizarTabelaVendas() {
+            const tbody = document.getElementById('vendas-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (vendasFiltradas.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center py-6 text-gray-400 text-sm">
+                            <i class="fas fa-inbox text-2xl block mb-2"></i>
+                            Nenhum pedido encontrado com os filtros aplicados
+                        </td>
+                    </tr>
+                `;
+
+                if ($.fn.DataTable.isDataTable('#vendasTable')) {
+                    $('#vendasTable').DataTable().clear().destroy();
+                }
+                dataTableVendasInstance = $('#vendasTable').DataTable({
+                    responsive: true,
+                    pageLength: 25,
+                    order: [[0, 'desc']],
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+                    }
+                });
+                return;
+            }
+
+            vendasFiltradas.forEach((v, index) => {
+                const statusClass = v.status === 'Pago' ? 'status-pago' : (v.status === 'Pendente' ? 'status-pendente' : 'status-cancelado');
+                const tr = document.createElement('tr');
+                tr.className = 'border-b hover:bg-gray-50';
+
+                const dataFormatada = formatarData(v.data);
+                const itensTexto = formatarItens(v.itens);
+
+                tr.innerHTML = `
+                    <td class="py-2 px-2 text-xs">${index + 1}</td>
+                    <td class="py-2 px-2 text-xs">${dataFormatada}</td>
+                    <td class="py-2 px-2 text-xs font-medium">${v.cliente || 'Não informado'}</td>
+                    <td class="py-2 px-2 text-xs max-w-[150px] truncate" title="${v.endereco || ''}">${v.endereco || '-'}</td>
+                    <td class="py-2 px-2 text-xs max-w-[200px] truncate" title="${itensTexto}">${itensTexto.substring(0, 50)}${itensTexto.length > 50 ? '...' : ''}</td>
+                    <td class="py-2 px-2 text-xs text-right">R$ ${(parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',')}</td>
+                    <td class="py-2 px-2 text-xs text-right">${parseFloat(v.frete) === 0 ? 'GRÁTIS' : `R$ ${(parseFloat(v.frete) || 0).toFixed(2).replace('.', ',')}`}</td>
+                    <td class="py-2 px-2 text-xs font-bold text-primary text-right">R$ ${(parseFloat(v.total) || 0).toFixed(2).replace('.', ',')}</td>
+                    <td class="py-2 px-2 text-center"><span class="${statusClass}">${v.status || 'Pendente'}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if ($.fn.DataTable.isDataTable('#vendasTable')) {
+                $('#vendasTable').DataTable().clear().destroy();
+            }
+
+            dataTableVendasInstance = $('#vendasTable').DataTable({
+                responsive: true,
+                pageLength: 25,
+                order: [[0, 'desc']],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
+                },
+                columnDefs: [
+                    { responsivePriority: 1, targets: [0, 1, 2, 7, 8] },
+                    { responsivePriority: 2, targets: [3, 4, 5, 6] }
+                ],
+                autoWidth: false
+            });
+        }
+
+        // ============================================
+        // IMPRIMIR RELATÓRIO COMPLETO
+        // ============================================
+        function imprimirRelatorioCompleto() {
+            const dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
+
+            if (dados.length === 0) {
+                alert('⚠️ Não há dados para imprimir!');
+                return;
+            }
+
+            const totalVendas = dados.reduce((s, v) => s + (parseFloat(v.total) || 0), 0);
+            const totalPedidos = dados.length;
+            const pendentes = dados.filter(v => v.status === 'Pendente').length;
+            const ticketMedio = totalPedidos > 0 ? totalVendas / totalPedidos : 0;
+
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Relatório de Vendas - WRJ Joias</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; }
+                        .header { text-align: center; border-bottom: 3px solid #2f6b4f; padding-bottom: 15px; margin-bottom: 20px; }
+                        .header h1 { color: #2f6b4f; margin: 0; }
+                        .resumo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
+                        .resumo-item { background: #f5f7f5; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e5e7eb; }
+                        .resumo-item .valor { font-size: 22px; font-weight: bold; color: #2f6b4f; }
+                        .resumo-item .label { font-size: 11px; color: #666; text-transform: uppercase; }
+                        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+                        th { background: #2f6b4f; color: white; padding: 8px 10px; text-align: left; }
+                        td { padding: 6px 10px; border-bottom: 1px solid #ddd; }
+                        .status-pago { color: #16a34a; background: #dcfce7; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+                        .status-pendente { color: #ca8a04; background: #fef9c3; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+                        .status-cancelado { color: #dc2626; background: #fee2e2; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+                        .footer { margin-top: 30px; text-align: center; color: #999; font-size: 11px; border-top: 1px solid #ddd; padding-top: 15px; }
+                        .text-right { text-align: right; }
+                        .font-bold { font-weight: bold; }
+                        @media print { body { padding: 10px; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>💎 WRJ Joias</h1>
+                        <p>Relatório de Vendas</p>
+                        <p>📅 Gerado em: ${new Date().toLocaleString('pt-BR')}</p>
+                    </div>
+                    <div class="resumo">
+                        <div class="resumo-item"><div class="valor">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div><div class="label">Total Vendas</div></div>
+                        <div class="resumo-item"><div class="valor">${totalPedidos}</div><div class="label">Pedidos</div></div>
+                        <div class="resumo-item"><div class="valor">${pendentes}</div><div class="label">Pendentes</div></div>
+                        <div class="resumo-item"><div class="valor">R$ ${ticketMedio.toFixed(2).replace('.', ',')}</div><div class="label">Ticket Médio</div></div>
+                    </div>
+                    <table>
+                        <thead><tr>
+                            <th>#</th><th>Data</th><th>Cliente</th><th>Itens</th>
+                            <th class="text-right">Subtotal</th><th class="text-right">Frete</th>
+                            <th class="text-right">Total</th><th>Status</th>
+                        </tr></thead>
+                        <tbody>`;
+
+            dados.forEach((v, i) => {
+                const itensTexto = formatarItens(v.itens);
+                const dataFormatada = formatarData(v.data);
+                const statusClass = v.status === 'Pago' ? 'status-pago' : (v.status === 'Pendente' ? 'status-pendente' : 'status-cancelado');
+
+                html += `<tr>
+                    <td>${i + 1}</td>
+                    <td>${dataFormatada}</td>
+                    <td>${v.cliente || '-'}</td>
+                    <td>${itensTexto.substring(0, 60)}${itensTexto.length > 60 ? '...' : ''}</td>
+                    <td class="text-right">R$ ${(parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',')}</td>
+                    <td class="text-right">${parseFloat(v.frete) === 0 ? 'GRÁTIS' : `R$ ${(parseFloat(v.frete) || 0).toFixed(2).replace('.', ',')}`}</td>
+                    <td class="text-right font-bold">R$ ${(parseFloat(v.total) || 0).toFixed(2).replace('.', ',')}</td>
+                    <td><span class="${statusClass}">${v.status || 'Pendente'}</span></td>
+                </tr>`;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+                    <div class="footer">
+                        <p>WRJ Joias - Relatório gerado automaticamente | Total: ${dados.length} registros</p>
+                    </div>
+                    <script>
+                        window.onload = function() { window.print(); };
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+            const win = window.open('', '_blank', 'width=1024,height=768');
+            win.document.write(html);
+            win.document.close();
+        }
+
+        // ============================================
+        // EXPORTAR CSV
+        // ============================================
+        function exportarCSV() {
+            const dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
+
+            if (dados.length === 0) {
+                alert('⚠️ Não há dados para exportar!');
+                return;
+            }
+
+            let csv = 'Data;Cliente;Endereço;Itens;Subtotal;Frete;Total;Status\n';
+
+            dados.forEach(v => {
+                const dataFormatada = formatarData(v.data);
+                const itensFormatados = formatarItens(v.itens).replace(/"/g, '""');
+                const subtotal = (parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',');
+                const frete = parseFloat(v.frete) === 0 ? 'GRÁTIS' : (parseFloat(v.frete) || 0).toFixed(2).replace('.', ',');
+                const total = (parseFloat(v.total) || 0).toFixed(2).replace('.', ',');
+
+                csv += `"${dataFormatada}";"${v.cliente || ''}";"${v.endereco || ''}";"${itensFormatados}";${subtotal};${frete};${total};${v.status || 'Pendente'}\n`;
+            });
+
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `vendas_WRJ_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // ============================================
         // MODAIS
         // ============================================
         function abrirModal(tipo) {
@@ -1378,6 +1794,7 @@ async function atualizarProdutos() {
                 document.getElementById('ID').value = "";
                 document.getElementById('Disponível').checked = true;
                 document.getElementById('Destaque').checked = false;
+                document.getElementById('Estoque').value = 0;
                 document.getElementById('Saldo Estoque').value = 0;
                 carregarCategoriasFixas();
                 document.getElementById('modalProduto').classList.add('active');
@@ -1385,7 +1802,7 @@ async function atualizarProdutos() {
             } else if (tipo === 'modalVendas') {
                 document.getElementById('modalVendas').classList.add('active');
                 document.body.style.overflow = 'hidden';
-                carregarVendas();
+                carregarVendasAdmin();
             } else {
                 document.getElementById('modalBanner').classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1396,47 +1813,6 @@ async function atualizarProdutos() {
         function fecharModal(id) {
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = 'auto';
-        }
-
-        // ============================================
-        // CARREGAR VENDAS
-        // ============================================
-        function carregarVendas() {
-            const vendas = [
-                { id: 1, cliente: "Maria Silva", produtos: "2x Anel Ouro, 1x Brinco Pérola", total: 789.70, status: "Pago", data: "15/08/2026" },
-                { id: 2, cliente: "João Santos", produtos: "1x Colar Prata", total: 159.90, status: "Pendente", data: "14/08/2026" },
-                { id: 3, cliente: "Ana Oliveira", produtos: "3x Brinco Pressão", total: 115.20, status: "Pago", data: "14/08/2026" },
-                { id: 4, cliente: "Carlos Lima", produtos: "1x Pulseira Couro", total: 89.90, status: "Cancelado", data: "13/08/2026" },
-                { id: 5, cliente: "Beatriz Costa", produtos: "2x Terço Pedras", total: 159.80, status: "Pago", data: "13/08/2026" },
-            ];
-
-            const totalVendas = vendas.reduce((s, v) => s + (v.status === 'Pago' ? v.total : 0), 0);
-            const totalPedidos = vendas.length;
-            const pendentes = vendas.filter(v => v.status === 'Pendente').length;
-            const ticketMedio = totalPedidos > 0 ? totalVendas / totalPedidos : 0;
-
-            document.getElementById('vendas-total').innerText = `R$ ${totalVendas.toFixed(2).replace('.', ',')}`;
-            document.getElementById('vendas-pedidos').innerText = totalPedidos;
-            document.getElementById('vendas-pendentes').innerText = pendentes;
-            document.getElementById('vendas-ticket').innerText = `R$ ${ticketMedio.toFixed(2).replace('.', ',')}`;
-
-            const tbody = document.getElementById('vendas-tbody');
-            tbody.innerHTML = '';
-
-            vendas.forEach(v => {
-                const statusClass = v.status === 'Pago' ? 'status-pago' : (v.status === 'Pendente' ? 'status-pendente' : 'status-cancelado');
-                const tr = document.createElement('tr');
-                tr.className = 'border-b hover:bg-gray-50';
-                tr.innerHTML = `
-                    <td class="py-2 px-2 text-xs">#${v.id}</td>
-                    <td class="py-2 px-2 text-xs font-medium">${v.cliente}</td>
-                    <td class="py-2 px-2 text-xs text-gray-600 hidden sm:table-cell">${v.produtos}</td>
-                    <td class="py-2 px-2 text-xs font-bold text-primary">R$ ${v.total.toFixed(2).replace('.', ',')}</td>
-                    <td class="py-2 px-2"><span class="${statusClass}">${v.status}</span></td>
-                    <td class="py-2 px-2 text-xs text-gray-500 hidden md:table-cell">${v.data}</td>
-                `;
-                tbody.appendChild(tr);
-            });
         }
 
         // ============================================
@@ -1490,7 +1866,7 @@ async function atualizarProdutos() {
         });
 
         // ============================================
-        // SALVAR PRODUTO (COM SOMA DE ESTOQUE)
+        // SALVAR PRODUTO
         // ============================================
         document.getElementById('formProduto').onsubmit = async (e) => {
             e.preventDefault();
@@ -1506,7 +1882,8 @@ async function atualizarProdutos() {
             const imagem = document.getElementById('Imagem').value.trim();
             const disponivel = document.getElementById('Disponível').checked ? 'sim' : 'nao';
             const destaque = document.getElementById('Destaque').checked ? 'sim' : 'nao';
-            const estoque = parseInt(document.getElementById('Saldo Estoque').value) || 0;
+            const estoque = parseInt(document.getElementById('Estoque').value) || 0;
+            const saldoEstoque = parseInt(document.getElementById('Saldo Estoque').value) || 0;
 
             if (!nome) {
                 alert('Preencha o Nome do Produto');
@@ -1533,7 +1910,9 @@ async function atualizarProdutos() {
                 Imagem: imagem,
                 Disponível: disponivel,
                 Destaque: destaque,
-                "Saldo Estoque": estoque
+                Estoque: estoque,
+                "Saldo Estoque": saldoEstoque,
+                Vendidos: 0
             };
 
             const tipo = idEdicao ? "atualizar" : "cadastrar";
@@ -1547,20 +1926,17 @@ async function atualizarProdutos() {
                 const result = await chamarAPI(tipo, { produto: dados });
 
                 if (result.success) {
-                    // 🔥 MOSTRA MENSAGEM DETALHADA
                     let mensagem = result.message || 'Produto salvo com sucesso!';
-
-                    // 🔥 SE FOI UMA ATUALIZAÇÃO (SOMA DE ESTOQUE)
                     if (result.acao === 'atualizado') {
                         mensagem = `✅ Produto atualizado! Estoque: ${result.estoque_anterior} + ${result.estoque_adicionado} = ${result.estoque_novo}`;
                     }
-
                     alert(mensagem);
 
                     if (!idEdicao) {
                         document.getElementById('formProduto').reset();
                         document.getElementById('ID').value = '';
                         document.getElementById('Disponível').checked = true;
+                        document.getElementById('Estoque').value = 0;
                         document.getElementById('Saldo Estoque').value = 0;
                     }
                     fecharModal('modalProduto');
@@ -1576,24 +1952,17 @@ async function atualizarProdutos() {
                 btnSubmit.innerHTML = textoOriginal;
             }
         };
+
         // ============================================
-        // EDITAR PRODUTO - CORRIGIDO
+        // EDITAR PRODUTO
         // ============================================
         function editarProduto(id) {
-            console.log("🔍 Editando produto com ID:", id);
-            console.log("📦 Produtos disponíveis:", produtos);
-
-            // 🔥 CORREÇÃO: Converter ID para string na comparação
             const p = produtos.find(prod => String(prod.ID) === String(id));
 
             if (!p) {
-                console.error("❌ Produto não encontrado! ID:", id);
-                console.log("📦 IDs disponíveis:", produtos.map(p => p.ID));
-                alert('Produto não encontrado! Verifique o console para mais detalhes.');
+                alert('Produto não encontrado!');
                 return;
             }
-
-            console.log("✅ Produto encontrado:", p);
 
             document.getElementById('modalProdutoTitle').innerText = "✏️ Editar Produto";
             document.getElementById('editID').value = p.ID;
@@ -1602,8 +1971,14 @@ async function atualizarProdutos() {
             document.getElementById('referencia').value = p.referencia || '';
             document.getElementById('Preço').value = p.Preço || 0;
             document.getElementById('Quantidade').value = p.Quantidade || '';
+            document.getElementById('Estoque').value = p.Estoque || 0;
+            document.getElementById('Cores').value = p.Cores || '';
+            document.getElementById('Tamanho').value = p.Tamanho || '';
+            document.getElementById('Imagem').value = p.Imagem || '';
+            document.getElementById('Saldo Estoque').value = p["Saldo Estoque"] || 0;
+            document.getElementById('Disponível').checked = p.Disponível === 'sim';
+            document.getElementById('Destaque').checked = p.Destaque === 'sim';
 
-            // Categoria
             const select = document.getElementById('Categoria');
             if (p.Categoria) {
                 let exists = false;
@@ -1622,18 +1997,10 @@ async function atualizarProdutos() {
                 select.value = p.Categoria;
             }
 
-            document.getElementById('Cores').value = p.Cores || '';
-            document.getElementById('Tamanho').value = p.Tamanho || '';
-            document.getElementById('Imagem').value = p.Imagem || '';
-            document.getElementById('Saldo Estoque').value = p["Saldo Estoque"] || 0;
-
-            // CHECKBOXES
-            document.getElementById('Disponível').checked = p.Disponível === 'sim';
-            document.getElementById('Destaque').checked = p.Destaque === 'sim';
-
             document.getElementById('modalProduto').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
+
         // ============================================
         // EXCLUIR PRODUTO
         // ============================================
@@ -1723,5 +2090,4 @@ async function atualizarProdutos() {
         });
     </script>
 </body>
-
 </html>
