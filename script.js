@@ -1,8 +1,4 @@
 // ============================================
-// WRJ JOIAS - SCRIPT COMPLETO
-// ============================================
-
-// ============================================
 // CONFIGURAÇÕES
 // ============================================
 const PLANILHA_ID = "1AL1_DDF9dOO-qS_fnEBoz94687lYp7rqIVLFnUT7ch8";
@@ -12,6 +8,11 @@ const PRODUCTS_CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQSSuh
 const BANNERS_CSV_URL = `https://docs.google.com/spreadsheets/d/e/2PACX-1vQSSuhY_r_jTgQqR_v_BTbk9AlhRxrRKFsUgE-jGkqYeDyww387Lgwvs9GG7Q5vJP1UPhbvn9nhMcgc/pub?gid=1271686459&single=true&output=csv`;
 
 const ESTOQUE_API_URL = "https://script.google.com/macros/s/AKfycbx-vvLsDmvtIQHeH10z5xJXgReG-RRzzhLQYmWAJcoZ1ZW7Cr2M_PcZn1E61araSFlu6A/exec";
+
+// ============================================
+// NOVA URL PARA SALVAR VENDAS
+// ============================================
+const VENDAS_API_URL = "https://script.google.com/macros/s/AKfycbx-vvLsDmvtIQHeH10z5xJXgReG-RRzzhLQYmWAJcoZ1ZW7Cr2M_PcZn1E61araSFlu6A/exec";
 
 let allProducts = [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -90,21 +91,179 @@ function normalizar(texto) {
 function driveImg(url) {
     if (!url) return "https://via.placeholder.com/400?text=Sem+Imagem";
     
-    // Se já for uma URL do Googleusercontent, retorna ela
     if (url.includes('googleusercontent.com')) return url;
     
-    // Tenta extrair o ID do Google Drive
     const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
     if (match) {
         return `https://lh3.googleusercontent.com/u/0/d/${match[1]}=w800`;
     }
     
-    // Se for uma URL válida, retorna ela
     if (url.startsWith('http')) return url;
     
-    // Fallback
     return "https://via.placeholder.com/400?text=Sem+Imagem";
 }
+
+// ============================================
+// FUNÇÃO SALVAR VENDA NA PLANILHA
+// ============================================
+async function salvarVenda(nomeCliente, endereco, itens, subtotal, frete, total) {
+    try {
+        console.log("📤 Salvando venda...", { nomeCliente, endereco, itens, subtotal, frete, total });
+        
+        // Formata os itens para envio
+        const itensFormatados = itens.map(item => ({
+            nome: item.name,
+            referencia: item.ref || '',
+            quantidade: item.quantity,
+            preco_unitario: item.price / item.quantity,
+            total_item: item.price
+        }));
+        
+        // Dados da venda
+        const dadosVenda = {
+            cliente: nomeCliente,
+            endereco: endereco,
+            itens: JSON.stringify(itensFormatados),
+            subtotal: subtotal,
+            frete: frete,
+            total: total,
+            data: new Date().toISOString(),
+            status: 'Pago'
+        };
+        
+        // Usa JSONP para salvar
+        return new Promise((resolve, reject) => {
+            const callbackName = 'venda_callback_' + Date.now();
+            
+            window[callbackName] = function(data) {
+                console.log("📥 Resposta salvar venda:", data);
+                delete window[callbackName];
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+                resolve(data);
+            };
+            
+            // Parâmetros
+            const params = `modo=admin&tipo=salvar_venda&cliente=${encodeURIComponent(nomeCliente)}&endereco=${encodeURIComponent(endereco)}&itens=${encodeURIComponent(dadosVenda.itens)}&subtotal=${subtotal}&frete=${frete}&total=${total}&data=${encodeURIComponent(dadosVenda.data)}&status=${dadosVenda.status}`;
+            
+            const script = document.createElement('script');
+            script.src = `${VENDAS_API_URL}?${params}&callback=${callbackName}`;
+            console.log("📤 URL salvar venda:", script.src);
+            
+            script.onerror = function() {
+                console.error("❌ Erro ao salvar venda");
+                delete window[callbackName];
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+                reject(new Error('Erro ao salvar venda'));
+            };
+            
+            const timeoutId = setTimeout(() => {
+                if (window[callbackName]) {
+                    console.error("❌ Timeout ao salvar venda");
+                    delete window[callbackName];
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                    reject(new Error('Timeout ao salvar venda'));
+                }
+            }, 30000);
+            
+            const originalResolve = resolve;
+            resolve = function(data) {
+                clearTimeout(timeoutId);
+                originalResolve(data);
+            };
+            
+            document.body.appendChild(script);
+        });
+    } catch (error) {
+        console.error("❌ Erro ao salvar venda:", error);
+        throw error;
+    }
+}
+
+// ============================================
+// FUNÇÃO BAIXAR ESTOQUE (VIA API)
+// ============================================
+async function baixarEstoque() {
+    const itemsParaBaixar = {};
+
+    cart.forEach((item) => {
+        const baseId = item.baseId || item.id.toString().split("-")[0];
+        const idNumerico = parseInt(baseId);
+        if (isNaN(idNumerico)) return;
+        if (!itemsParaBaixar[idNumerico]) itemsParaBaixar[idNumerico] = 0;
+        itemsParaBaixar[idNumerico] += item.quantity;
+    });
+
+    const itemsFormatados = Object.keys(itemsParaBaixar).map((id) => ({
+        id: id,
+        quantity: itemsParaBaixar[id],
+    }));
+
+    if (itemsFormatados.length === 0) return true;
+
+    try {
+        const result = await new Promise((resolve, reject) => {
+            const callbackName = 'baixa_callback_' + Date.now();
+            
+            window[callbackName] = function(data) {
+                console.log("📥 Resposta baixa estoque:", data);
+                delete window[callbackName];
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+                resolve(data);
+            };
+            
+            const params = `modo=admin&tipo=baixa_estoque&items=${encodeURIComponent(JSON.stringify(itemsFormatados))}`;
+            const script = document.createElement('script');
+            script.src = `${ESTOQUE_API_URL}?${params}&callback=${callbackName}`;
+            console.log("📤 Chamando API baixa estoque:", script.src);
+            
+            script.onerror = function() {
+                delete window[callbackName];
+                if (script.parentNode) {
+                    script.parentNode.removeChild(script);
+                }
+                reject(new Error('Erro ao baixar estoque'));
+            };
+            
+            const timeoutId = setTimeout(() => {
+                if (window[callbackName]) {
+                    delete window[callbackName];
+                    if (script.parentNode) {
+                        script.parentNode.removeChild(script);
+                    }
+                    reject(new Error('Timeout ao baixar estoque'));
+                }
+            }, 30000);
+            
+            const originalResolve = resolve;
+            resolve = function(data) {
+                clearTimeout(timeoutId);
+                originalResolve(data);
+            };
+            
+            document.body.appendChild(script);
+        });
+        
+        console.log("✅ Estoque baixado com sucesso:", result);
+        return result.success;
+    } catch (error) {
+        console.error("❌ Erro ao dar baixa no estoque:", error);
+        Toastify({
+            text: "Erro ao atualizar estoque. Verifique sua conexão.",
+            duration: 3000,
+            style: { background: "#ef4444" },
+        }).showToast();
+        return false;
+    }
+}
+
 // ============================================
 // FUNÇÃO UPDATE CART
 // ============================================
@@ -250,6 +409,171 @@ function addToCart(id, name, price, img, baseId, ref, quantity) {
 }
 
 // ============================================
+// FUNÇÃO FINALIZAR PEDIDO DIRETO (COM SALVAR VENDA)
+// ============================================
+async function finalizarPedidoDireto() {
+    const nomeCliente = document.getElementById("customer-name").value;
+    const endereco = document.getElementById("address").value;
+
+    if (cart.length === 0) {
+        Toastify({
+            text: "Sacola vazia!",
+            duration: 2000,
+            style: { background: "#ef4444" },
+        }).showToast();
+        return;
+    }
+    if (!nomeCliente.trim()) {
+        Toastify({
+            text: "Por favor, informe seu nome!",
+            duration: 2000,
+            style: { background: "#ef4444" },
+        }).showToast();
+        document.getElementById("customer-name").focus();
+        return;
+    }
+    if (!endereco.trim()) {
+        Toastify({
+            text: "Por favor, informe o endereço!",
+            duration: 2000,
+            style: { background: "#ef4444" },
+        }).showToast();
+        document.getElementById("address").focus();
+        return;
+    }
+
+    const checkoutBtn = document.getElementById("checkout-btn");
+    if (checkoutBtn) {
+        checkoutBtn.disabled = true;
+        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+    }
+
+    try {
+        const totalFinal = subtotal >= FRETE_GRATIS_VALOR ? subtotal : subtotal + TAXA_FRETE;
+        const freteTexto = subtotal >= FRETE_GRATIS_VALOR ? 0 : TAXA_FRETE;
+        
+        // 🔥 1. ABRE WHATSAPP PRIMEIRO
+        const itensTexto = cart.map(i => `✅ ${i.quantity}x ${i.name}${i.ref ? ` (Ref: ${i.ref})` : ""} - R$ ${(i.price / i.quantity).toFixed(2).replace(".", ",")} cada`).join("\n");
+        const freteExibicao = subtotal >= FRETE_GRATIS_VALOR ? "GRÁTIS" : `R$ ${TAXA_FRETE.toFixed(2).replace(".", ",")}`;
+
+        const mensagem = `🛍️ *NOVO PEDIDO - WRJ JOIAS* 🛍️\n\n👤 *CLIENTE:* ${nomeCliente.toUpperCase()}\n📍 *ENDEREÇO:* ${endereco}\n\n*📦 ITENS DO PEDIDO:*\n${itensTexto}\n\n*💰 RESUMO DO PEDIDO:*\n─────────────────\nSubtotal: R$ ${subtotal.toFixed(2).replace(".", ",")}\nFrete: ${freteExibicao}\n─────────────────\n*TOTAL: R$ ${totalFinal.toFixed(2).replace(".", ",")}*\n─────────────────\n\n✨ *Obrigado pela preferência!*\n📲 *WRJ Joias - Qualidade e Elegância*`;
+
+        // 🔥 ABRE O WHATSAPP
+        window.open(`https://wa.me/5588999049636?text=${encodeURIComponent(mensagem)}`, "_blank");
+
+        // 🔥 2. DEPOIS SALVA NA PLANILHA
+        console.log("📤 Salvando venda...", {
+            cliente: nomeCliente,
+            endereco: endereco,
+            itens: cart,
+            subtotal: subtotal,
+            frete: freteTexto,
+            total: totalFinal
+        });
+        
+        await salvarVenda(
+            nomeCliente,
+            endereco,
+            cart,
+            subtotal,
+            freteTexto,
+            totalFinal
+        );
+        
+        console.log("✅ Venda salva");
+
+        // 🔥 3. BAIXA O ESTOQUE
+        await baixarEstoque();
+
+        // 🔥 4. LIMPA O CARRINHO
+        cart = [];
+        updateCart();
+        document.getElementById("customer-name").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("cart-modal").classList.add("hidden");
+
+        Toastify({
+            text: "✅ Pedido enviado! Venda registrada. Aguarde nosso contato.",
+            duration: 4000,
+            style: { background: "#1f4d38" },
+        }).showToast();
+    } catch (error) {
+        console.error("❌ Erro ao finalizar pedido:", error);
+        Toastify({
+            text: "❌ Erro ao processar pedido: " + error.message,
+            duration: 3000,
+            style: { background: "#ef4444" },
+        }).showToast();
+    } finally {
+        if (checkoutBtn) {
+            checkoutBtn.disabled = false;
+            checkoutBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Finalizar';
+        }
+    }
+}
+
+// ============================================
+// FUNÇÃO ENVIAR PDF WHATSAPP (COM SALVAR VENDA)
+// ============================================
+async function enviarPDFWhatsApp() {
+    let element = document.getElementById("pdf-content-to-print");
+    if (!element) {
+        await visualizarPDF();
+        setTimeout(() => enviarPDFWhatsApp(), 500);
+        return;
+    }
+    const nomeCliente = document.getElementById("customer-name").value;
+    const endereco = document.getElementById("address").value;
+    if (!nomeCliente.trim() || !endereco.trim()) return;
+
+    const sendBtn = document.getElementById("send-pdf-whatsapp-btn");
+    if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    }
+
+    try {
+        // 1. Salva a venda
+        const totalFinal = subtotal >= FRETE_GRATIS_VALOR ? subtotal : subtotal + TAXA_FRETE;
+        const freteTexto = subtotal >= FRETE_GRATIS_VALOR ? 0 : TAXA_FRETE;
+        
+        await salvarVenda(
+            nomeCliente,
+            endereco,
+            cart,
+            subtotal,
+            freteTexto,
+            totalFinal
+        );
+        
+        // 2. Baixa o estoque
+        await baixarEstoque();
+
+        // 3. Envia WhatsApp
+        const itensTexto = cart.map(i => `✅ ${i.quantity}x ${i.name}${i.ref ? ` (Ref: ${i.ref})` : ""}`).join("\n");
+        const freteExibicao = subtotal >= FRETE_GRATIS_VALOR ? "GRÁTIS" : `R$ ${TAXA_FRETE.toFixed(2).replace(".", ",")}`;
+        const mensagem = `🛍️ *NOVO PEDIDO - WRJ JOIAS* 🛍️\n\n👤 *CLIENTE:* ${nomeCliente.toUpperCase()}\n📍 *ENDEREÇO:* ${endereco}\n\n*📦 ITENS DO PEDIDO:*\n${itensTexto}\n\n*💰 RESUMO:*\nSubtotal: R$ ${subtotal.toFixed(2).replace(".", ",")}\nFrete: ${freteExibicao}\n*TOTAL: R$ ${totalFinal.toFixed(2).replace(".", ",")}*\n\n✨ *Obrigado pela preferência!*`;
+        window.open(`https://wa.me/5588999049636?text=${encodeURIComponent(mensagem)}`, "_blank");
+        
+        Toastify({ text: "Pedido finalizado! Venda registrada.", duration: 4000, style: { background: "#1f4d38" } }).showToast();
+        
+        cart = [];
+        updateCart();
+        document.getElementById("customer-name").value = "";
+        document.getElementById("address").value = "";
+        document.getElementById("pdf-preview-modal").classList.add("hidden");
+        document.getElementById("cart-modal").classList.add("hidden");
+    } catch (error) {
+        Toastify({ text: "Erro ao processar pedido", duration: 3000, style: { background: "#ef4444" } }).showToast();
+    } finally {
+        if (sendBtn) {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Enviar via WhatsApp';
+        }
+    }
+}
+
+// ============================================
 // FUNÇÃO LOAD PRODUCTS
 // ============================================
 async function loadProducts() {
@@ -358,7 +682,6 @@ async function loadProducts() {
     }
 }
 
-
 // ============================================
 // FUNÇÃO RENDER PRODUCTS (COM ESTOQUE DESTACADO)
 // ============================================
@@ -380,7 +703,6 @@ function renderProducts(products) {
     products.forEach((p) => {
         const estoque = parseInt(p["Saldo Estoque"]) || 0;
         
-        // 🔥 BADGE DE ESTOQUE DESTACADO
         let stockBadge = '';
         if (estoque <= 0) {
             stockBadge = `<span class="stock-out"><i class="fas fa-times-circle"></i> Indisponível</span>`;
@@ -405,7 +727,6 @@ function renderProducts(products) {
                 <h3 class="font-bold text-sm">${p["Nome do Produto"]}</h3>
                 ${p["referencia"] ? `<p class="ref-text text-xs">Ref: ${p["referencia"]}</p>` : ""}
                 <p class="text-lg font-black text-primary mt-2">R$ ${p["Preço"].toFixed(2).replace(".", ",")}</p>
-                <!-- 🔥 ESTOQUE DESTACADO -->
                 <div class="product-stock">${stockBadge}</div>
                 ${estoque > 0 ? `<button onclick='openSizeSelector("${p["ID"]}", "${p["Nome do Produto"].replace(/'/g, "\\'")}", "${p["referencia"] || ""}", ${p["Preço"]}, "${p["Imagem"]}")' class="w-full mt-2 py-2 rounded-xl font-bold text-xs bg-primary text-white hover:bg-primaryDark transition">Escolher Opções</button>` : `<button disabled class="w-full mt-2 py-2 rounded-xl font-bold text-xs bg-gray-300 text-gray-500 cursor-not-allowed">Indisponível</button>`}
             </div>
@@ -413,7 +734,6 @@ function renderProducts(products) {
         container.appendChild(card);
     });
 }
-
 
 // ============================================
 // FUNÇÃO RENDER DESTAQUES (COM ESTOQUE DESTACADO)
@@ -434,7 +754,6 @@ function renderDestaques(products) {
     destaques.forEach((p) => {
         const estoque = parseInt(p["Saldo Estoque"]) || 0;
         
-        // 🔥 BADGE DE ESTOQUE DESTACADO
         let stockBadge = '';
         if (estoque <= 3) {
             stockBadge = `<span class="stock-low"><i class="fas fa-exclamation-triangle"></i> Últimas ${estoque}!</span>`;
@@ -458,7 +777,6 @@ function renderDestaques(products) {
                     <h3 class="font-bold text-sm">${p["Nome do Produto"]}</h3>
                     ${p["referencia"] ? `<p class="ref-text text-xs">Ref: ${p["referencia"]}</p>` : ""}
                     <p class="text-lg font-black text-primary">R$ ${p["Preço"].toFixed(2).replace(".", ",")}</p>
-                    <!-- 🔥 ESTOQUE DESTACADO -->
                     <div class="product-stock">${stockBadge}</div>
                     <button onclick='openSizeSelector("${p["ID"]}", "${p["Nome do Produto"].replace(/'/g, "\\'")}", "${p["referencia"] || ""}", ${p["Preço"]}, "${p["Imagem"]}")' class="w-full mt-2 py-2 rounded-xl font-bold text-xs bg-primary text-white hover:bg-primaryDark transition">Comprar</button>
                 </div>
@@ -494,17 +812,12 @@ function abrirZoomDireto(imagem) {
         return;
     }
     
-    // 🔥 CONVERTER URL PARA EXIBIÇÃO
     const imagemExibir = driveImg(imagem);
-    console.log("📸 Imagem para exibir:", imagemExibir);
     
-    // 🔥 ENCONTRAR O PRODUTO QUE FOI CLICADO
-    // Procura o elemento pai mais próximo que contém as informações do produto
     let elementoClicado = null;
     let produtoId = null;
     let produtoNome = null;
     
-    // Tenta encontrar qual produto foi clicado
     const allImages = document.querySelectorAll('#produtos-container img, #destaques-container img, .main-image');
     for (const el of allImages) {
         if (el.getAttribute('src') === imagemExibir || el.getAttribute('src') === imagem) {
@@ -513,24 +826,18 @@ function abrirZoomDireto(imagem) {
         }
     }
     
-    // Se encontrou a imagem, tenta encontrar o ID do produto
     if (elementoClicado) {
-        // Procura o card do produto
         let card = elementoClicado.closest('.bg-white.rounded-3xl, .swiper-slide, .product-gallery');
         if (card) {
-            // Tenta encontrar o botão de comprar que tem o ID do produto
             const btn = card.querySelector('button[onclick*="openSizeSelector"]');
             if (btn) {
                 const onclickAttr = btn.getAttribute('onclick');
-                // Extrai o ID do produto do onclick
                 const match = onclickAttr.match(/openSizeSelector\("([^"]+)"|'([^']+)'/);
                 if (match) {
                     produtoId = match[1] || match[2];
-                    console.log("🔍 ID do produto encontrado:", produtoId);
                 }
             }
             
-            // Tenta pegar o nome do produto
             const nomeEl = card.querySelector('h3, .font-bold');
             if (nomeEl) {
                 produtoNome = nomeEl.textContent.trim();
@@ -538,21 +845,16 @@ function abrirZoomDireto(imagem) {
         }
     }
     
-    // 🔥 COLETAR APENAS IMAGENS DO MESMO PRODUTO
     imagensZoom = [];
     
     if (produtoId) {
-        // Se encontrou o ID, busca imagens apenas desse produto
-        // Procura no array allProducts
         const produto = allProducts.find(p => String(p.ID) === String(produtoId));
         if (produto) {
-            // Adiciona a imagem principal do produto
             const imgPrincipal = driveImg(produto.Imagem);
             if (imgPrincipal && !imagensZoom.includes(imgPrincipal)) {
                 imagensZoom.push(imgPrincipal);
             }
             
-            // 🔥 Se o produto tiver múltiplas imagens (campo Imagens separadas por vírgula)
             if (produto.Imagens && produto.Imagens.includes(',')) {
                 const imagensMultiplas = produto.Imagens.split(',').map(i => driveImg(i.trim()));
                 imagensMultiplas.forEach(imgSrc => {
@@ -564,13 +866,10 @@ function abrirZoomDireto(imagem) {
         }
     }
     
-    // 🔥 Se não encontrou imagens específicas, usa a imagem clicada
     if (imagensZoom.length === 0) {
-        // Tenta pegar imagens do mesmo card
         if (elementoClicado) {
             let card = elementoClicado.closest('.bg-white.rounded-3xl, .swiper-slide, .product-gallery, .group');
             if (card) {
-                // Busca todas as imagens dentro do mesmo card
                 card.querySelectorAll('img').forEach(el => {
                     const src = el.getAttribute('src');
                     if (src && src !== 'https://via.placeholder.com/400?text=Sem+Imagem' && src !== '') {
@@ -582,27 +881,21 @@ function abrirZoomDireto(imagem) {
             }
         }
         
-        // Se ainda não tem imagens, usa a imagem clicada
         if (imagensZoom.length === 0) {
             imagensZoom = [imagemExibir];
         }
     }
     
-    // 🔥 ENCONTRAR O ÍNDICE DA IMAGEM CLICADA
     zoomIndex = imagensZoom.indexOf(imagemExibir);
     if (zoomIndex === -1) {
         zoomIndex = 0;
     }
     
-    console.log("📸 Imagens do produto:", imagensZoom);
-    
-    // 🔥 EXIBIR IMAGEM
     img.src = imagensZoom[zoomIndex];
     img.onerror = function() {
         this.src = 'https://via.placeholder.com/800x800?text=Imagem+Indispon%C3%ADvel';
     };
     
-    // 🔥 THUMBNAILS
     thumbnails.innerHTML = '';
     imagensZoom.forEach((src, i) => {
         const thumb = document.createElement('img');
@@ -628,7 +921,6 @@ function abrirZoomDireto(imagem) {
         thumbnails.appendChild(thumb);
     });
     
-    // 🔥 MOSTRAR MODAL
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -814,7 +1106,6 @@ window.openSizeSelector = function (id, name, ref, price, img) {
         optionsContainer.appendChild(btn);
     });
 
-    // GALERIA DE IMAGENS no modal
     const existingGallery = document.querySelector('.product-gallery-container');
     if (existingGallery) existingGallery.remove();
 
@@ -972,15 +1263,11 @@ function trocarImagem(el, src) {
 }
 
 // ============================================
-// ZOOM NO MODAL DE CORES
-// ============================================
-// ============================================
 // ZOOM NO MODAL DE CORES - CORRIGIDO
 // ============================================
 function abrirZoomModal(imagem) {
     console.log("🔍 Abrindo zoom do modal para imagem:", imagem);
     
-    // Pega todas as imagens do modal atual
     const thumbs = document.querySelectorAll('.product-gallery-container .thumbnail-image');
     imagensZoom = [];
     thumbs.forEach(el => {
@@ -992,7 +1279,6 @@ function abrirZoomModal(imagem) {
         }
     });
     
-    // Se não encontrou thumbnails, pegar a imagem principal
     if (imagensZoom.length === 0) {
         const mainImg = document.querySelector('.main-image');
         if (mainImg) {
@@ -1001,12 +1287,10 @@ function abrirZoomModal(imagem) {
         }
     }
     
-    // Se ainda não tem imagens, usar a imagem clicada
     if (imagensZoom.length === 0) {
         imagensZoom = [driveImg(imagem)];
     }
     
-    // Encontrar índice da imagem
     const imagemExibir = driveImg(imagem);
     zoomIndex = imagensZoom.indexOf(imagemExibir);
     if (zoomIndex === -1) {
@@ -1055,173 +1339,7 @@ function abrirZoomModal(imagem) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-// ============================================
-// FUNÇÃO BAIXAR ESTOQUE (VIA API)
-// ============================================
-async function baixarEstoque() {
-    const itemsParaBaixar = {};
 
-    cart.forEach((item) => {
-        const baseId = item.baseId || item.id.toString().split("-")[0];
-        const idNumerico = parseInt(baseId);
-        if (isNaN(idNumerico)) return;
-        if (!itemsParaBaixar[idNumerico]) itemsParaBaixar[idNumerico] = 0;
-        itemsParaBaixar[idNumerico] += item.quantity;
-    });
-
-    const itemsFormatados = Object.keys(itemsParaBaixar).map((id) => ({
-        id: id,
-        quantity: itemsParaBaixar[id],
-    }));
-
-    if (itemsFormatados.length === 0) return true;
-
-    try {
-        const result = await new Promise((resolve, reject) => {
-            const callbackName = 'baixa_callback_' + Date.now();
-            
-            window[callbackName] = function(data) {
-                console.log("📥 Resposta baixa estoque:", data);
-                delete window[callbackName];
-                document.body.removeChild(script);
-                resolve(data);
-            };
-            
-            // 🔥 PARAMS CORRETOS
-            const params = `modo=admin&tipo=baixa_estoque&items=${encodeURIComponent(JSON.stringify(itemsFormatados))}`;
-            const script = document.createElement('script');
-            script.src = `${ESTOQUE_API_URL}?${params}&callback=${callbackName}`;
-            console.log("📤 Chamando API:", script.src);
-            
-            script.onerror = function() {
-                delete window[callbackName];
-                document.body.removeChild(script);
-                reject(new Error('Erro ao baixar estoque'));
-            };
-            
-            const timeoutId = setTimeout(() => {
-                if (window[callbackName]) {
-                    delete window[callbackName];
-                    document.body.removeChild(script);
-                    reject(new Error('Timeout ao baixar estoque'));
-                }
-            }, 30000);
-            
-            const originalResolve = resolve;
-            resolve = function(data) {
-                clearTimeout(timeoutId);
-                originalResolve(data);
-            };
-            
-            document.body.appendChild(script);
-        });
-        
-        console.log("✅ Estoque baixado com sucesso:", result);
-        return result.success;
-    } catch (error) {
-        console.error("❌ Erro ao dar baixa no estoque:", error);
-        Toastify({
-            text: "Erro ao atualizar estoque. Verifique sua conexão.",
-            duration: 3000,
-            style: { background: "#ef4444" },
-        }).showToast();
-        return false;
-    }
-}
-
-// ============================================
-// FUNÇÃO FINALIZAR PEDIDO DIRETO
-// ============================================
-// ============================================
-// FUNÇÃO FINALIZAR PEDIDO DIRETO
-// ============================================
-async function finalizarPedidoDireto() {
-    const nomeCliente = document.getElementById("customer-name").value;
-    const endereco = document.getElementById("address").value;
-
-    if (cart.length === 0) {
-        Toastify({
-            text: "Sacola vazia!",
-            duration: 2000,
-            style: { background: "#ef4444" },
-        }).showToast();
-        return;
-    }
-    if (!nomeCliente.trim()) {
-        Toastify({
-            text: "Por favor, informe seu nome!",
-            duration: 2000,
-            style: { background: "#ef4444" },
-        }).showToast();
-        document.getElementById("customer-name").focus();
-        return;
-    }
-    if (!endereco.trim()) {
-        Toastify({
-            text: "Por favor, informe o endereço!",
-            duration: 2000,
-            style: { background: "#ef4444" },
-        }).showToast();
-        document.getElementById("address").focus();
-        return;
-    }
-
-    const checkoutBtn = document.getElementById("checkout-btn");
-    if (checkoutBtn) {
-        checkoutBtn.disabled = true;
-        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-    }
-
-    try {
-        // 🔥 CHAMAR BAIXAR ESTOQUE ANTES DE ENVIAR O PEDIDO
-        const estoqueAtualizado = await baixarEstoque();
-        
-        if (!estoqueAtualizado) {
-            Toastify({
-                text: "⚠️ Erro ao atualizar estoque. Pedido não foi processado.",
-                duration: 3000,
-                style: { background: "#ef4444" },
-            }).showToast();
-            return;
-        }
-
-        const itensTexto = cart.map(i => `✅ ${i.quantity}x ${i.name}${i.ref ? ` (Ref: ${i.ref})` : ""}`).join("\n");
-        const totalFinal = subtotal >= FRETE_GRATIS_VALOR ? subtotal : subtotal + TAXA_FRETE;
-        const freteTexto = subtotal >= FRETE_GRATIS_VALOR ? "GRÁTIS" : `R$ ${TAXA_FRETE.toFixed(2).replace(".", ",")}`;
-
-        const mensagem = `🛍️ *NOVO PEDIDO - WRJ JOIAS* 🛍️\n\n👤 *CLIENTE:* ${nomeCliente.toUpperCase()}\n📍 *ENDEREÇO:* ${endereco}\n\n*📦 ITENS DO PEDIDO:*\n${itensTexto}\n\n*💰 RESUMO DO PEDIDO:*\n─────────────────\nSubtotal: R$ ${subtotal.toFixed(2).replace(".", ",")}\nFrete: ${freteTexto}\n─────────────────\n*TOTAL: R$ ${totalFinal.toFixed(2).replace(".", ",")}*\n─────────────────\n\n✨ *Obrigado pela preferência!*\n📲 *WRJ Joias - Qualidade e Elegância*`;
-
-        window.open(`https://wa.me/5588999049636?text=${encodeURIComponent(mensagem)}`, "_blank");
-
-        cart = [];
-        updateCart();
-        document.getElementById("customer-name").value = "";
-        document.getElementById("address").value = "";
-        document.getElementById("cart-modal").classList.add("hidden");
-
-        Toastify({
-            text: "✅ Pedido enviado! Estoque atualizado. Aguarde nosso contato.",
-            duration: 4000,
-            style: { background: "#1f4d38" },
-        }).showToast();
-    } catch (error) {
-        console.error("❌ Erro ao finalizar pedido:", error);
-        Toastify({
-            text: "❌ Erro ao processar pedido. Tente novamente.",
-            duration: 3000,
-            style: { background: "#ef4444" },
-        }).showToast();
-    } finally {
-        if (checkoutBtn) {
-            checkoutBtn.disabled = false;
-            checkoutBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Finalizar';
-        }
-    }
-}
-
-// ============================================
-// FUNÇÕES DE PDF
-// ============================================
 function gerarConteudoPDF() {
     const nomeCliente = document.getElementById("customer-name").value || "Não informado";
     const endereco = document.getElementById("address").value || "Não informado";
@@ -1232,7 +1350,16 @@ function gerarConteudoPDF() {
 
     let itensHTML = "";
     cart.forEach((item, index) => {
-        itensHTML += `<tr><td style="padding: 8px 5px;">${index + 1}</td><td style="padding: 8px 5px;">${item.name}${item.ref ? `<br><small>Ref: ${item.ref}</small>` : ""}</td><td style="padding: 8px 5px; text-align: center;">${item.quantity}</td><td style="padding: 8px 5px; text-align: right;">R$ ${item.price.toFixed(2).replace(".", ",")}</td></tr>`;
+        const precoUnitario = item.price / item.quantity;
+        itensHTML += `
+            <tr>
+                <td style="padding: 8px 5px; text-align: center;">${index + 1}</td>
+                <td style="padding: 8px 5px;">${item.name}${item.ref ? `<br><small style="color: #666;">Ref: ${item.ref}</small>` : ""}</td>
+                <td style="padding: 8px 5px; text-align: center;">${item.quantity}</td>
+                <td style="padding: 8px 5px; text-align: right;">R$ ${precoUnitario.toFixed(2).replace(".", ",")}</td>
+                <td style="padding: 8px 5px; text-align: right; font-weight: bold;">R$ ${item.price.toFixed(2).replace(".", ",")}</td>
+            </tr>
+        `;
     });
 
     return `<div class="pdf-preview-content" id="pdf-content-to-print">
@@ -1248,10 +1375,11 @@ function gerarConteudoPDF() {
         <table class="pdf-items-table" style="width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th style="background: #eef4ef; padding: 10px 5px;">#</th>
+                    <th style="background: #eef4ef; padding: 10px 5px; text-align: center;">#</th>
                     <th style="background: #eef4ef; padding: 10px 5px;">Produto</th>
                     <th style="background: #eef4ef; padding: 10px 5px; text-align: center;">Qtd</th>
-                    <th style="background: #eef4ef; padding: 10px 5px; text-align: right;">Valor</th>
+                    <th style="background: #eef4ef; padding: 10px 5px; text-align: right;">Unitário</th>
+                    <th style="background: #eef4ef; padding: 10px 5px; text-align: right;">Total</th>
                 </tr>
             </thead>
             <tbody>${itensHTML}</tbody>
@@ -1306,47 +1434,6 @@ async function downloadPDF() {
         Toastify({ text: "PDF baixado!", duration: 3000, style: { background: "#1f4d38" } }).showToast();
     } catch (error) {
         Toastify({ text: "Erro ao gerar PDF", duration: 3000, style: { background: "#ef4444" } }).showToast();
-    }
-}
-
-async function enviarPDFWhatsApp() {
-    let element = document.getElementById("pdf-content-to-print");
-    if (!element) {
-        await visualizarPDF();
-        setTimeout(() => enviarPDFWhatsApp(), 500);
-        return;
-    }
-    const nomeCliente = document.getElementById("customer-name").value;
-    const endereco = document.getElementById("address").value;
-    if (!nomeCliente.trim() || !endereco.trim()) return;
-
-    const sendBtn = document.getElementById("send-pdf-whatsapp-btn");
-    if (sendBtn) {
-        sendBtn.disabled = true;
-        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-    }
-
-    try {
-        await baixarEstoque();
-        const itensTexto = cart.map(i => `✅ ${i.quantity}x ${i.name}${i.ref ? ` (Ref: ${i.ref})` : ""}`).join("\n");
-        const totalFinal = subtotal >= FRETE_GRATIS_VALOR ? subtotal : subtotal + TAXA_FRETE;
-        const freteTexto = subtotal >= FRETE_GRATIS_VALOR ? "GRÁTIS" : `R$ ${TAXA_FRETE.toFixed(2).replace(".", ",")}`;
-        const mensagem = `🛍️ *NOVO PEDIDO - WRJ JOIAS* 🛍️\n\n👤 *CLIENTE:* ${nomeCliente.toUpperCase()}\n📍 *ENDEREÇO:* ${endereco}\n\n*📦 ITENS DO PEDIDO:*\n${itensTexto}\n\n*💰 RESUMO:*\nSubtotal: R$ ${subtotal.toFixed(2).replace(".", ",")}\nFrete: ${freteTexto}\n*TOTAL: R$ ${totalFinal.toFixed(2).replace(".", ",")}*\n\n✨ *Obrigado pela preferência!*`;
-        window.open(`https://wa.me/5588999049636?text=${encodeURIComponent(mensagem)}`, "_blank");
-        Toastify({ text: "Pedido enviado! Estoque atualizado.", duration: 4000, style: { background: "#1f4d38" } }).showToast();
-        cart = [];
-        updateCart();
-        document.getElementById("customer-name").value = "";
-        document.getElementById("address").value = "";
-        document.getElementById("pdf-preview-modal").classList.add("hidden");
-        document.getElementById("cart-modal").classList.add("hidden");
-    } catch (error) {
-        Toastify({ text: "Erro ao processar pedido", duration: 3000, style: { background: "#ef4444" } }).showToast();
-    } finally {
-        if (sendBtn) {
-            sendBtn.disabled = false;
-            sendBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Enviar via WhatsApp';
-        }
     }
 }
 
@@ -1446,7 +1533,6 @@ document.addEventListener('keydown', function(e) {
 // EVENT LISTENERS
 // ============================================
 document.addEventListener("DOMContentLoaded", function() {
-    // Filtros do menu mobile
     document.querySelectorAll(".filtro-menu-btn").forEach((btn) =>
         btn.addEventListener("click", (e) => {
             e.preventDefault();
@@ -1459,17 +1545,14 @@ document.addEventListener("DOMContentLoaded", function() {
         })
     );
 
-    // Search Desktop
     document.getElementById("search-input-desktop")?.addEventListener("input", (e) => {
         performSearch(e.target.value);
     });
 
-    // Search Mobile
     document.getElementById("search-input-mobile")?.addEventListener("input", (e) => {
         performSearch(e.target.value);
     });
 
-    // Alternar busca mobile
     const mobileSearchToggle = document.querySelector('[data-search-toggle]');
     const searchOverlay = document.getElementById('search-overlay');
     if (mobileSearchToggle && searchOverlay) {
@@ -1482,7 +1565,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById('search-overlay')?.classList.add('-translate-y-full');
     });
 
-    // Carrinho
     document.getElementById("cart-btn")?.addEventListener("click", () => {
         document.getElementById("cart-modal")?.classList.remove("hidden");
         document.getElementById("cart-modal")?.classList.add("flex");
@@ -1504,7 +1586,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("download-pdf-btn")?.addEventListener("click", downloadPDF);
     document.getElementById("send-pdf-whatsapp-btn")?.addEventListener("click", enviarPDFWhatsApp);
 
-    // Limpar carrinho
     const clearBtn = document.getElementById("clear-cart-btn");
     const confirmModal = document.getElementById("confirm-clear-modal");
     if (clearBtn && confirmModal) {
@@ -1517,7 +1598,6 @@ document.addEventListener("DOMContentLoaded", function() {
         };
     }
 
-    // Menu mobile
     const mobileMenuBtn = document.getElementById("mobile-menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileOverlay = document.getElementById("mobile-overlay");
@@ -1536,7 +1616,6 @@ document.addEventListener("DOMContentLoaded", function() {
         mobileOverlay?.classList.add("hidden");
     });
 
-    // Fechar modais clicando fora
     document.getElementById("cart-modal")?.addEventListener("click", (e) => {
         if (e.target === document.getElementById("cart-modal")) {
             document.getElementById("cart-modal").classList.add("hidden");
@@ -1552,7 +1631,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (e.target === document.getElementById("image-zoom-modal")) fecharZoom();
     });
 
-    // Quantidade customizada
     document.getElementById("add-custom-qty")?.addEventListener("click", () => {
         const qty = parseInt(document.getElementById("custom-quantity").value);
         if (qty && qty > 0) finishSelection(qty);
