@@ -738,3 +738,43 @@ header {
         padding: 3px 10px;
     }
 }
+/* Estilos para impressão */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .modal-overlay {
+        position: relative !important;
+        background: white !important;
+        backdrop-filter: none !important;
+        display: block !important;
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+    
+    .modal-content {
+        max-width: 100% !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    .modal-content .bg-blue-600 {
+        background: #2f6b4f !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .status-pago, .status-pendente, .status-cancelado {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .bg-gray-50, .resumo-item, .card-dashboard {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
