@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Admin WRJ Joias - Painel de Controle</title>
+    <title>WRJ Joias - Admin</title>
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -18,6 +18,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -77,14 +78,6 @@
             white-space: nowrap;
         }
 
-        .badge-estoque {
-            padding: 2px 8px;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -127,59 +120,11 @@
                 transform: scale(0.95) translateY(20px);
                 opacity: 0;
             }
+
             to {
                 transform: scale(1) translateY(0);
                 opacity: 1;
             }
-        }
-
-        .campo-categoria {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            margin-top: 6px;
-        }
-
-        .campo-categoria input {
-            flex: 1;
-            min-width: 120px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .campo-categoria input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(47, 107, 79, 0.2);
-        }
-
-        .campo-categoria button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 6px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-            white-space: nowrap;
-        }
-
-        .campo-categoria button:hover {
-            background: var(--primary-dark);
-        }
-
-        .id-auto {
-            font-size: 11px;
-            color: #6b7280;
-            background: #f3f4f6;
-            padding: 2px 10px;
-            border-radius: 12px;
-            display: inline-block;
-            white-space: nowrap;
         }
 
         .card-dashboard {
@@ -214,43 +159,6 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-        }
-
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .btn-group button {
-            flex: 1;
-            min-width: 80px;
-            font-size: 12px;
-            padding: 8px 12px;
-            justify-content: center;
-        }
-
-        @media (max-width: 480px) {
-            .btn-group button {
-                font-size: 10px;
-                padding: 6px 8px;
-                min-width: 60px;
-            }
         }
 
         .badge-estoque {
@@ -294,8 +202,14 @@
         }
 
         @keyframes pulse-stock {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .status-pago {
@@ -328,10 +242,31 @@
             display: inline-block;
         }
 
-        /* Filtros */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .btn-group button {
+            flex: 1;
+            min-width: 80px;
+            font-size: 12px;
+            padding: 8px 12px;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            .btn-group button {
+                font-size: 10px;
+                padding: 6px 8px;
+                min-width: 60px;
+            }
+        }
+
         .filtros-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 10px;
             background: #f8faf8;
             padding: 14px;
@@ -409,31 +344,234 @@
             letter-spacing: 0.5px;
         }
 
+        .id-auto {
+            font-size: 11px;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 2px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .campo-categoria {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .campo-categoria input {
+            flex: 1;
+            min-width: 120px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .campo-categoria input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(47, 107, 79, 0.2);
+        }
+
+        .campo-categoria button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .campo-categoria button:hover {
+            background: var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
         @media (max-width: 640px) {
             .card-dashboard .value {
                 font-size: 20px;
             }
+
             .card-dashboard {
                 padding: 12px;
             }
+
             .card-dashboard .icon {
                 width: 36px;
                 height: 36px;
                 font-size: 16px;
             }
+
             .modal-content {
                 max-width: 100%;
                 border-radius: 12px;
                 max-height: 98vh;
             }
+
             .filtros-container {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
         @media (max-width: 480px) {
+
+            #produtosTable th:nth-child(4),
+            #produtosTable td:nth-child(4),
+            #produtosTable th:nth-child(6),
+            #produtosTable td:nth-child(6),
+            #produtosTable th:nth-child(7),
+            #produtosTable td:nth-child(7),
+            #produtosTable th:nth-child(8),
+            #produtosTable td:nth-child(8),
+            #produtosTable th:nth-child(9),
+            #produtosTable td:nth-child(9),
+            #produtosTable th:nth-child(11),
+            #produtosTable td:nth-child(11) {
+                display: none !important;
+            }
+
+            #produtosTable th:nth-child(1),
+            #produtosTable td:nth-child(1),
+            #produtosTable th:nth-child(2),
+            #produtosTable td:nth-child(2),
+            #produtosTable th:nth-child(3),
+            #produtosTable td:nth-child(3),
+            #produtosTable th:nth-child(5),
+            #produtosTable td:nth-child(5),
+            #produtosTable th:nth-child(10),
+            #produtosTable td:nth-child(10),
+            #produtosTable th:nth-child(12),
+            #produtosTable td:nth-child(12),
+            #produtosTable th:nth-child(13),
+            #produtosTable td:nth-child(13),
+            #produtosTable th:nth-child(14),
+            #produtosTable td:nth-child(14),
+            #produtosTable th:nth-child(15),
+            #produtosTable td:nth-child(15) {
+                display: table-cell !important;
+            }
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 8px !important;
+                padding: 2px 2px !important;
+                line-height: 1.2 !important;
+            }
+
+            #produtosTable td img {
+                width: 18px !important;
+                height: 18px !important;
+            }
+
+            .badge-estoque {
+                font-size: 7px !important;
+                padding: 1px 4px !important;
+                min-width: 24px !important;
+                gap: 1px !important;
+            }
+
             .filtros-container {
                 grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+
+            #produtosTable th:nth-child(4),
+            #produtosTable td:nth-child(4),
+            #produtosTable th:nth-child(6),
+            #produtosTable td:nth-child(6),
+            #produtosTable th:nth-child(7),
+            #produtosTable td:nth-child(7),
+            #produtosTable th:nth-child(8),
+            #produtosTable td:nth-child(8),
+            #produtosTable th:nth-child(9),
+            #produtosTable td:nth-child(9),
+            #produtosTable th:nth-child(11),
+            #produtosTable td:nth-child(11) {
+                display: none !important;
+            }
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 9px !important;
+                padding: 3px 3px !important;
+            }
+
+            .badge-estoque {
+                font-size: 8px !important;
+                padding: 1px 6px !important;
+                min-width: 30px !important;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+
+            #produtosTable th:nth-child(6),
+            #produtosTable td:nth-child(6),
+            #produtosTable th:nth-child(8),
+            #produtosTable td:nth-child(8),
+            #produtosTable th:nth-child(9),
+            #produtosTable td:nth-child(9) {
+                display: none !important;
+            }
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 10px !important;
+                padding: 4px 4px !important;
+            }
+
+            .badge-estoque {
+                font-size: 9px !important;
+                padding: 2px 8px !important;
+            }
+        }
+
+        @media (min-width: 1025px) {
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 11px !important;
+                padding: 6px 5px !important;
+            }
+
+            .badge-estoque {
+                font-size: 11px !important;
+                padding: 2px 12px !important;
+                min-width: 45px !important;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #produtosTable td:last-child .flex {
+                gap: 2px !important;
+            }
+
+            #produtosTable td:last-child button {
+                padding: 3px !important;
+                font-size: 9px !important;
             }
         }
     </style>
@@ -562,7 +700,8 @@
         <!-- TABELA PRODUTOS -->
         <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
             <div class="p-3 border-b bg-gray-50/50 flex flex-wrap justify-between items-center gap-2">
-                <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos</h2>
+                <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos
+                </h2>
                 <span class="text-xs text-gray-400" id="total-registros">0 registros</span>
             </div>
             <div class="p-1 md:p-2 overflow-x-auto">
@@ -647,7 +786,6 @@
                         <small class="text-xs text-gray-400">Separe por vírgula</small>
                     </div>
 
-                    <!-- CATEGORIA -->
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Categoria *</label>
                         <select id="Categoria" required
@@ -695,7 +833,6 @@
                         <small class="text-xs text-gray-400">Separe por vírgula</small>
                     </div>
 
-                    <!-- CAMPO ESTOQUE TOTAL -->
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Estoque Total *</label>
                         <input type="number" id="Estoque" required
@@ -703,7 +840,6 @@
                             placeholder="Ex: 200" value="0">
                     </div>
 
-                    <!-- CAMPO SALDO ESTOQUE -->
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Saldo Estoque *</label>
                         <input type="number" id="Saldo Estoque" required
@@ -815,13 +951,14 @@
     <div id="modalVendas" class="modal-overlay">
         <div class="modal-content modal-content-vendas" onclick="event.stopPropagation()">
             <div class="bg-blue-600 px-4 py-3 flex justify-between items-center text-white sticky top-0 z-10">
-                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-chart-line"></i>Relatório de Vendas</h3>
+                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fas fa-chart-line"></i>Relatório de
+                    Vendas</h3>
                 <button onclick="fecharModal('modalVendas')" class="text-white/80 hover:text-white text-xl transition">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="p-4 overflow-y-auto" style="max-height: calc(95vh - 60px);">
-                
+
                 <!-- FILTROS -->
                 <div class="filtros-container">
                     <div>
@@ -863,16 +1000,20 @@
 
                 <!-- BOTÕES DE AÇÃO -->
                 <div class="flex flex-wrap gap-2 mt-4 mb-4">
-                    <button onclick="carregarVendasAdmin()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition flex items-center gap-1">
+                    <button onclick="carregarVendasAdmin()"
+                        class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition flex items-center gap-1">
                         <i class="fas fa-sync-alt"></i> Atualizar
                     </button>
-                    <button onclick="imprimirRelatorioCompleto()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-green-700 transition flex items-center gap-1">
-                        <i class="fas fa-print"></i> Imprimir
-                    </button>
-                    <button onclick="exportarCSV()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 transition flex items-center gap-1">
+                    <button onclick="exportarCSV()"
+                        class="bg-purple-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-purple-700 transition flex items-center gap-1">
                         <i class="fas fa-file-csv"></i> Exportar CSV
                     </button>
+                    <button onclick="gerarPDFFormatoCliente()"
+                        class="bg-red-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-red-700 transition flex items-center gap-1">
+                        <i class="fas fa-file-pdf"></i> Gerar PDF
+                    </button>
                 </div>
+
 
                 <!-- Resumo Vendas -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
@@ -905,15 +1046,33 @@
                     <table class="w-full text-xs vendas-table" id="vendasTable">
                         <thead>
                             <tr>
-                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">#</th>
-                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Data</th>
-                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Cliente</th>
-                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Endereço</th>
-                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Itens</th>
-                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Subtotal</th>
-                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Frete</th>
-                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Total</th>
-                                <th class="text-center py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Status</th>
+                                <th
+                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    #</th>
+                                <th
+                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Data</th>
+                                <th
+                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Cliente</th>
+                                <th
+                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Endereço</th>
+                                <th
+                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Itens</th>
+                                <th
+                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Subtotal</th>
+                                <th
+                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Frete</th>
+                                <th
+                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Total</th>
+                                <th
+                                    class="text-center py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                    Status</th>
                             </tr>
                         </thead>
                         <tbody id="vendas-tbody">
@@ -937,7 +1096,6 @@
         // CONFIGURAÇÕES
         const ESTOQUE_API_URL = "https://script.google.com/macros/s/AKfycbx-vvLsDmvtIQHeH10z5xJXgReG-RRzzhLQYmWAJcoZ1ZW7Cr2M_PcZn1E61araSFlu6A/exec";
 
-        // SVG PLACEHOLDER
         const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f3f4f6"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dy=".3em" fill="%239ca3af"%3ESem Imagem%3C/text%3E%3C/svg%3E`;
 
         // VARIÁVEIS GLOBAIS
@@ -1001,17 +1159,113 @@
 
         function formatarItens(itens) {
             if (!itens) return '-';
-            try {
-                const itensObj = JSON.parse(itens);
-                if (Array.isArray(itensObj)) {
-                    return itensObj.map(item => 
-                        `${item.quantidade}x ${item.nome}${item.referencia ? ` (Ref: ${item.referencia})` : ''}`
-                    ).join(', ');
+
+            // Se for string JSON, tenta parsear
+            if (typeof itens === 'string') {
+                try {
+                    const itensObj = JSON.parse(itens);
+                    if (Array.isArray(itensObj) && itensObj.length > 0) {
+                        return itensObj.map(item =>
+                            `${item.quantidade || 1}x ${item.nome || 'Produto'}${item.referencia ? ` (Ref: ${item.referencia})` : ''}`
+                        ).join(' | ');
+                    }
+                    return itens;
+                } catch (e) {
+                    return itens;
                 }
-            } catch (e) {
-                return itens;
             }
-            return itens;
+
+            // Se for array, formata diretamente
+            if (Array.isArray(itens) && itens.length > 0) {
+                return itens.map(item =>
+                    `${item.quantidade || 1}x ${item.nome || 'Produto'}${item.referencia ? ` (Ref: ${item.referencia})` : ''}`
+                ).join(' | ');
+            }
+
+            return itens || '-';
+        }
+
+        function extrairItens(venda) {
+            try {
+                var itensTexto = venda.itens || venda.itensTexto || '';
+                var subtotal = parseFloat(venda.subtotal) || 0;
+
+                if (!itensTexto || itensTexto.trim() === '') {
+                    return [];
+                }
+
+                // Se já for um array, retorna direto
+                if (Array.isArray(venda.itens)) {
+                    return venda.itens;
+                }
+
+                // Tenta parsear como JSON
+                try {
+                    var parsed = JSON.parse(itensTexto);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        return parsed;
+                    }
+                } catch (e) {}
+
+                var itens = [];
+                var partes = itensTexto.split(/\s*\|\s*/);
+
+                // 🔥 CALCULA O PREÇO TOTAL DOS ITENS
+                var totalItens = 0;
+                var itensExtracao = [];
+
+                for (var i = 0; i < partes.length; i++) {
+                    var parte = partes[i].trim();
+                    if (!parte) continue;
+
+                    // Extrai referência
+                    var refMatch = parte.match(/\(Ref:\s*([^)]+)\)/);
+                    var referencia = refMatch ? refMatch[1].trim() : '';
+
+                    // Remove referência
+                    var textoLimpo = parte.replace(/\(Ref:\s*[^)]+\)/, '').trim();
+
+                    // Extrai quantidade
+                    var qtdMatch = textoLimpo.match(/^(\d+)x\s*/);
+                    var quantidade = qtdMatch ? parseInt(qtdMatch[1]) : 1;
+
+                    // Remove quantidade
+                    var nome = textoLimpo.replace(/^\d+x\s*/, '').trim();
+
+                    // 🔥 TENTA EXTRAIR PREÇO DO TEXTO (se tiver)
+                    var preco = 0;
+                    var precoMatch = nome.match(/R\$\s*([\d,]+)/);
+                    if (precoMatch) {
+                        preco = parseFloat(precoMatch[1].replace(',', '.'));
+                        nome = nome.replace(/R\$\s*[\d,]+\s*/, '').trim();
+                    }
+
+                    if (nome) {
+                        itensExtracao.push({
+                            nome: nome,
+                            referencia: referencia,
+                            quantidade: quantidade || 1,
+                            preco: preco
+                        });
+                        totalItens += quantidade || 1;
+                    }
+                }
+
+                // 🔥 SE NÃO ENCONTROU PREÇO, USA O SUBTOTAL PARA CALCULAR
+                if (totalItens > 0 && itensExtracao.length > 0) {
+                    var precoPorItem = subtotal / totalItens;
+                    for (var j = 0; j < itensExtracao.length; j++) {
+                        if (itensExtracao[j].preco === 0) {
+                            itensExtracao[j].preco = precoPorItem;
+                        }
+                    }
+                }
+
+                return itensExtracao;
+            } catch (e) {
+                console.error('Erro ao extrair itens:', e);
+                return [];
+            }
         }
 
         // ============================================
@@ -1027,7 +1281,9 @@
                     window[callbackName] = function (data) {
                         console.log("📥 Resposta JSONP:", data);
                         delete window[callbackName];
-                        document.body.removeChild(script);
+                        if (script.parentNode) {
+                            script.parentNode.removeChild(script);
+                        }
                         resolve(data);
                     };
 
@@ -1125,7 +1381,7 @@
         }
 
         // ============================================
-        // CARREGAR PRODUTOS
+        // CARREGAR PRODUTOS - CORRIGIDO
         // ============================================
         async function carregarProdutos() {
             try {
@@ -1217,6 +1473,7 @@
                 document.getElementById('total-destaques').innerText = destaques;
                 document.getElementById('total-registros').innerText = `${produtos.length} registros`;
 
+                // ✅ CHAMA AQUI DEPOIS DE CARREGAR OS DADOS
                 renderizarTabelaProdutos();
                 renderizarBanners();
                 carregarCategoriasFixas();
@@ -1226,18 +1483,19 @@
 
             } catch (error) {
                 console.error("❌ Erro ao carregar produtos:", error);
+                // 🔥 MANTER A TABELA VISÍVEL MESMO COM ERRO
                 document.getElementById('produtos-tbody').innerHTML = `
-                    <tr>
-                        <td colspan="15" class="text-center py-8 text-red-500 text-sm">
-                            <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
-                            Erro ao carregar produtos: ${error.message}
-                            <br>
-                            <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
-                                <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
-                            </button>
-                        </td>
-                    </tr>
-                `;
+            <tr>
+                <td colspan="15" class="text-center py-8 text-red-500 text-sm">
+                    <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
+                    Erro ao carregar produtos: ${error.message}
+                    <br>
+                    <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
+                        <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
+                    </button>
+                </td>
+            </tr>
+        `;
             }
         }
 
@@ -1247,21 +1505,23 @@
         function renderizarTabelaProdutos() {
             const tbody = document.getElementById("produtos-tbody");
             if (!tbody) return;
-            tbody.innerHTML = "";
 
+            // 🔥 NÃO LIMPA O TBODY ANTES DE VERIFICAR
             if (produtos.length === 0) {
                 tbody.innerHTML = `
-                    <tr>
-                        <td colspan="15" class="text-center py-6 text-gray-400 text-sm">
-                            <i class="fas fa-box-open text-2xl block mb-2"></i>
-                            Nenhum produto encontrado.
-                        </td>
-                    </tr>
-                `;
+            <tr>
+                <td colspan="15" class="text-center py-6 text-gray-400 text-sm">
+                    <i class="fas fa-box-open text-2xl block mb-2"></i>
+                    Nenhum produto encontrado.
+                </td>
+            </tr>
+        `;
 
+                // 🔥 SÓ DESTROI SE EXISTIR
                 if ($.fn.DataTable.isDataTable('#produtosTable')) {
-                    $('#produtosTable').DataTable().clear().destroy();
+                    $('#produtosTable').DataTable().destroy();
                 }
+
                 dataTableInstance = $('#produtosTable').DataTable({
                     responsive: true,
                     pageLength: 25,
@@ -1270,6 +1530,9 @@
                 });
                 return;
             }
+
+            // 🔥 LIMPA O TBODY APENAS QUANDO TEM DADOS
+            tbody.innerHTML = "";
 
             produtos.forEach(p => {
                 const estoque = parseInt(p.Estoque) || 0;
@@ -1519,30 +1782,25 @@
             vendasFiltradas = vendas.filter(v => {
                 let incluir = true;
 
-                // Filtro por data início
                 if (dataInicio) {
                     const dataVenda = new Date(v.data).toISOString().split('T')[0];
                     if (dataVenda < dataInicio) incluir = false;
                 }
 
-                // Filtro por data fim
                 if (dataFim && incluir) {
                     const dataVenda = new Date(v.data).toISOString().split('T')[0];
                     if (dataVenda > dataFim) incluir = false;
                 }
 
-                // Filtro por mês
                 if (mes && incluir) {
                     const mesVenda = new Date(v.data).toISOString().substring(0, 7);
                     if (mesVenda !== mes) incluir = false;
                 }
 
-                // Filtro por cliente
                 if (cliente && incluir) {
                     if (v.cliente !== cliente) incluir = false;
                 }
 
-                // Filtro por status
                 if (status && incluir) {
                     if (v.status !== status) incluir = false;
                 }
@@ -1653,6 +1911,421 @@
                 ],
                 autoWidth: false
             });
+        }
+
+
+        // ============================================
+        // GERAR PDF NO FORMATO DO CLIENTE - UM BOTÃO
+        // ============================================
+        function gerarPDFFormatoCliente() {
+            var dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
+
+            if (dados.length === 0) {
+                alert('⚠️ Não há dados para gerar o PDF! Aplique um filtro primeiro.');
+                return;
+            }
+
+            // 🔥 PEGA OS FILTROS APLICADOS
+            var dataInicio = document.getElementById('filtro-data-inicio').value;
+            var dataFim = document.getElementById('filtro-data-fim').value;
+            var mes = document.getElementById('filtro-mes').value;
+            var clienteSelecionado = document.getElementById('filtro-cliente').value;
+            var statusFiltro = document.getElementById('filtro-status').value;
+
+            // 🔥 DEFINE O TÍTULO DO RELATÓRIO
+            var tituloRelatorio = 'Relatório de Vendas';
+            if (clienteSelecionado) {
+                tituloRelatorio = 'Relatório de Vendas - Cliente: ' + clienteSelecionado.toUpperCase();
+            }
+
+            var subtitulo = '';
+            if (dataInicio && dataFim) {
+                var dataInicioFormatada = new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR');
+                var dataFimFormatada = new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR');
+                subtitulo += 'Período: ' + dataInicioFormatada + ' a ' + dataFimFormatada + ' | ';
+            } else if (dataInicio) {
+                var dataInicioFormatada = new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR');
+                subtitulo += 'A partir de: ' + dataInicioFormatada + ' | ';
+            } else if (dataFim) {
+                var dataFimFormatada = new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR');
+                subtitulo += 'Até: ' + dataFimFormatada + ' | ';
+            }
+            if (mes) {
+                var partes = mes.split('-');
+                var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+                subtitulo += 'Mês: ' + meses[parseInt(partes[1]) - 1] + '/' + partes[0] + ' | ';
+            }
+            if (statusFiltro) {
+                subtitulo += 'Status: ' + statusFiltro + ' | ';
+            }
+            if (subtitulo === '') {
+                subtitulo = 'Todos os dados';
+            } else {
+                subtitulo = subtitulo.slice(0, -3);
+            }
+
+            // 🔥 CALCULA TOTAIS
+            var totalVendas = 0;
+            for (var i = 0; i < dados.length; i++) {
+                totalVendas = totalVendas + (parseFloat(dados[i].total) || 0);
+            }
+            var totalPedidos = dados.length;
+            var totalItens = 0;
+
+            // 🔥 EXTRAI ITENS AGRUPADOS
+            var itensAgrupados = {};
+            for (var x = 0; x < dados.length; x++) {
+                var itens = extrairItens(dados[x]);
+                for (var y = 0; y < itens.length; y++) {
+                    var item = itens[y];
+                    var qtd = parseInt(item.quantidade) || 1;
+                    var nome = item.nome || 'Produto';
+                    var ref = item.referencia || '';
+                    var chave = nome + (ref ? ' (Ref: ' + ref + ')' : '');
+                    var preco = parseFloat(item.preco || 0);
+
+                    if (!itensAgrupados[chave]) {
+                        itensAgrupados[chave] = { qtd: 0, preco: preco };
+                    }
+                    itensAgrupados[chave].qtd += qtd;
+                    if (preco > 0) {
+                        itensAgrupados[chave].preco = preco;
+                    }
+                    totalItens += qtd;
+                }
+            }
+
+            // SE NÃO ENCONTROU ITENS, TENTA EXTRAIR DO TEXTO BRUTO
+            if (Object.keys(itensAgrupados).length === 0) {
+                for (var z = 0; z < dados.length; z++) {
+                    var textoBruto = dados[z].itens || '';
+                    if (textoBruto) {
+                        var partes = textoBruto.split(/\s*\|\s*/);
+                        for (var p = 0; p < partes.length; p++) {
+                            var parte = partes[p].trim();
+                            if (!parte) continue;
+
+                            var qtdMatch = parte.match(/^(\d+)x\s*/);
+                            var qtd = qtdMatch ? parseInt(qtdMatch[1]) : 1;
+                            var nome = parte.replace(/^\d+x\s*/, '').trim();
+
+                            if (nome) {
+                                var chave = nome;
+                                if (!itensAgrupados[chave]) {
+                                    itensAgrupados[chave] = { qtd: 0, preco: 0 };
+                                }
+                                itensAgrupados[chave].qtd += qtd;
+                                totalItens += qtd;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 🔥 CONSTRÓI O HTML DO PDF
+            var html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>${tituloRelatorio}</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            background: white; 
+        }
+        .header-cliente {
+            background: linear-gradient(135deg, #2f6b4f, #1f4d38);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px 12px 0 0;
+            margin-bottom: 0;
+        }
+        .header-cliente h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .header-cliente .sub {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        .header-cliente .data {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 3px;
+        }
+        .cliente-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            background: #f8faf8;
+            padding: 15px 20px;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+        .cliente-info .label {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cliente-info .value {
+            font-weight: 700;
+            color: #1f4d38;
+            font-size: 15px;
+        }
+        .resumo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0 25px;
+        }
+        .resumo-item {
+            background: #f5f7f5;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        .resumo-item .valor {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2f6b4f;
+        }
+        .resumo-item .label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .table-title {
+            color: #1f4d38;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+        .relatorio-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .relatorio-table th {
+            background: #2f6b4f;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .relatorio-table th.center { text-align: center; }
+        .relatorio-table th.right { text-align: right; }
+        .relatorio-table td {
+            padding: 7px 12px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .relatorio-table td.center { text-align: center; }
+        .relatorio-table td.right { text-align: right; }
+        .relatorio-table tr:nth-child(even) { background: #fafcfa; }
+        .relatorio-table .total-row { 
+            background: #eef4ef !important; 
+            font-weight: bold; 
+        }
+        .relatorio-table .total-row td { 
+            border-top: 2px solid #2f6b4f; 
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999;
+            font-size: 11px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .font-bold { font-weight: bold; }
+        @media print { 
+            body { padding: 10px; } 
+        }
+        @media (max-width: 600px) {
+            .cliente-info { grid-template-columns: 1fr 1fr; }
+            .resumo { grid-template-columns: 1fr 1fr; }
+            .relatorio-table { font-size: 10px; }
+            .relatorio-table th, .relatorio-table td { padding: 4px 6px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-cliente">
+        <h1>💎 WRJ JOIAS</h1>
+        <div class="sub">${tituloRelatorio}</div>
+        <div class="data">📅 Gerado em: ${new Date().toLocaleString('pt-BR')}</div>
+        <div class="data" style="margin-top: 5px; font-size: 11px; opacity: 0.6;">Filtros: ${subtitulo}</div>
+    </div>
+
+    <div class="cliente-info">
+        <div>
+            <div class="label">TOTAL DE VENDAS</div>
+            <div class="value">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div>
+        </div>
+        <div>
+            <div class="label">TOTAL DE PEDIDOS</div>
+            <div class="value">${totalPedidos}</div>
+        </div>
+        <div>
+            <div class="label">TOTAL DE ITENS</div>
+            <div class="value">${totalItens}</div>
+        </div>
+        <div>
+            <div class="label">TICKET MÉDIO</div>
+            <div class="value">R$ ${(totalPedidos > 0 ? totalVendas / totalPedidos : 0).toFixed(2).replace('.', ',')}</div>
+        </div>
+    </div>
+
+    <div class="resumo">
+        <div class="resumo-item">
+            <div class="valor">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div>
+            <div class="label">Total Vendas</div>
+        </div>
+        <div class="resumo-item">
+            <div class="valor">${totalPedidos}</div>
+            <div class="label">Pedidos</div>
+        </div>
+        <div class="resumo-item">
+            <div class="valor">${totalItens}</div>
+            <div class="label">Itens</div>
+        </div>
+        <div class="resumo-item">
+            <div class="valor">R$ ${(totalPedidos > 0 ? totalVendas / totalPedidos : 0).toFixed(2).replace('.', ',')}</div>
+            <div class="label">Ticket Médio</div>
+        </div>
+    </div>
+
+    <h3 class="table-title">📋 ITENS POR PRODUTO</h3>
+    <table class="relatorio-table">
+        <thead>
+            <tr>
+                <th style="width: 50px;">#</th>
+                <th>PRODUTO</th>
+                <th class="center" style="width: 80px;">QUANTIDADE</th>
+                <th class="right" style="width: 100px;">PREÇO UNIT.</th>
+                <th class="right" style="width: 120px;">TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+            var index = 0;
+            var subtotalGeral = 0;
+            var itensArray = Object.keys(itensAgrupados);
+
+            if (itensArray.length === 0) {
+                html += `<tr><td colspan="5" class="text-center" style="padding: 20px; color: #999;">Nenhum item encontrado</td></tr>`;
+            } else {
+                for (var key = 0; key < itensArray.length; key++) {
+                    index++;
+                    var chave = itensArray[key];
+                    var item = itensAgrupados[chave];
+                    var totalItem = item.qtd * item.preco;
+                    subtotalGeral += totalItem;
+
+                    html += `<tr>
+                <td>${index}</td>
+                <td>${chave}</td>
+                <td class="center">${item.qtd}</td>
+                <td class="right">R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
+                <td class="right">R$ ${totalItem.toFixed(2).replace('.', ',')}</td>
+            </tr>`;
+                }
+            }
+
+            html += `
+            <tr class="total-row">
+                <td colspan="4" class="right">SUBTOTAL</td>
+                <td class="right">R$ ${subtotalGeral.toFixed(2).replace('.', ',')}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px; padding: 15px; background: #f8faf8; border-radius: 10px; border: 1px solid #e5e7eb;">
+        <div style="display: flex; justify-content: flex-end; font-size: 14px;">
+            <div style="text-align: right;">
+                <p><strong>Total de Itens:</strong> ${totalItens}</p>
+                <p><strong>Total de Pedidos:</strong> ${totalPedidos}</p>
+                <p style="font-size: 18px; color: #2f6b4f; margin-top: 5px;"><strong>TOTAL GERAL: R$ ${totalVendas.toFixed(2).replace('.', ',')}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>WRJ Joias - Relatório gerado automaticamente</p>
+        <p>© ${new Date().getFullYear()} Todos os direitos reservados</p>
+    </div>
+</body>
+</html>`;
+
+            // 🔥 CRIA UM CONTAINER PARA O PDF
+            var container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.left = '-9999px';
+            container.style.top = '0';
+            container.style.width = '1100px';
+            container.style.background = 'white';
+            container.style.padding = '20px';
+            container.style.zIndex = '9999';
+            container.innerHTML = html;
+            document.body.appendChild(container);
+
+            // 🔥 USA html2pdf.js PARA GERAR O PDF
+            html2pdf().set({
+                margin: 10,
+                filename: 'Relatorio_Vendas_WRJ_' + new Date().toISOString().slice(0, 10) + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    letterRendering: true
+                },
+                jsPDF: {
+                    unit: 'mm',
+                    format: 'a4',
+                    orientation: 'portrait'
+                },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            }).from(container).save().then(function () {
+                document.body.removeChild(container);
+                showToast('✅ PDF gerado com sucesso!', 'success');
+            }).catch(function (error) {
+                console.error('❌ Erro ao gerar PDF:', error);
+                document.body.removeChild(container);
+                showToast('❌ Erro ao gerar PDF: ' + error.message, 'error');
+            });
+        }
+
+        // 🔥 FUNÇÃO TOAST
+        function showToast(message, type) {
+            var toast = document.getElementById('toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast';
+                toast.style.cssText = 'position:fixed;bottom:30px;right:30px;padding:16px 24px;border-radius:12px;color:white;font-weight:600;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.4s ease;';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#dc2626' : type === 'info' ? '#2563eb' : '#16a34a';
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+            setTimeout(function () {
+                toast.style.transform = 'translateY(100px)';
+                toast.style.opacity = '0';
+            }, 4000);
         }
 
         // ============================================
@@ -2090,4 +2763,5 @@
         });
     </script>
 </body>
+
 </html>
