@@ -599,8 +599,8 @@ function renderProducts(products) {
 // ============================================
 function renderDestaques(products) {
     const destaques = products
-        .filter(p => p["Destaque"] === "sim" && parseInt(p["Saldo Estoque"]) > 0)
-        .slice(0, 12);
+    .filter(p => String(p["Destaque"] || '').toLowerCase().trim() === "sim" && parseInt(p["Saldo Estoque"]) > 0)
+    .slice(0, 12);
     const container = document.getElementById("destaques-container");
     if (!container) return;
     container.innerHTML = "";
