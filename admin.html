@@ -30,9 +30,7 @@
             --gold: #d4af37;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             background-color: #f0f2f5;
@@ -41,21 +39,10 @@
             padding: 0;
         }
 
-        .text-primary {
-            color: var(--primary);
-        }
-
-        .bg-primary {
-            background-color: var(--primary);
-        }
-
-        .bg-primary-dark {
-            background-color: var(--primary-dark);
-        }
-
-        .text-gold {
-            color: var(--gold);
-        }
+        .text-primary { color: var(--primary); }
+        .bg-primary { background-color: var(--primary); }
+        .bg-primary-dark { background-color: var(--primary-dark); }
+        .text-gold { color: var(--gold); }
 
         .dataTables_wrapper .dataTables_filter input {
             border-radius: 0.5rem;
@@ -91,9 +78,7 @@
             overflow-y: auto;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: white;
@@ -107,24 +92,12 @@
             margin: auto;
         }
 
-        .modal-content-banner {
-            max-width: 600px;
-        }
-
-        .modal-content-vendas {
-            max-width: 1200px;
-        }
+        .modal-content-banner { max-width: 600px; }
+        .modal-content-vendas { max-width: 1200px; }
 
         @keyframes modalFadeIn {
-            from {
-                transform: scale(0.95) translateY(20px);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
+            from { transform: scale(0.95) translateY(20px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
         }
 
         .card-dashboard {
@@ -147,12 +120,7 @@
             flex-shrink: 0;
         }
 
-        .card-dashboard .value {
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
+        .card-dashboard .value { font-size: 24px; font-weight: 800; line-height: 1.2; }
         .card-dashboard .label {
             font-size: 10px;
             color: #6b7280;
@@ -176,92 +144,28 @@
             justify-content: center !important;
         }
 
-        .badge-estoque.bg-red-100 {
-            background: #fee2e2 !important;
-            color: #991b1b !important;
-            border-color: #f87171 !important;
-        }
-
+        .badge-estoque.bg-red-100 { background: #fee2e2 !important; color: #991b1b !important; border-color: #f87171 !important; }
         .badge-estoque.bg-yellow-100 {
-            background: #fef9c3 !important;
-            color: #92400e !important;
-            border-color: #fbbf24 !important;
+            background: #fef9c3 !important; color: #92400e !important; border-color: #fbbf24 !important;
             animation: pulse-stock 1.5s ease-in-out infinite;
         }
-
-        .badge-estoque.bg-blue-100 {
-            background: #dbeafe !important;
-            color: #1e40af !important;
-            border-color: #60a5fa !important;
-        }
-
-        .badge-estoque.bg-green-100 {
-            background: #dcfce7 !important;
-            color: #166534 !important;
-            border-color: #86efac !important;
-        }
+        .badge-estoque.bg-blue-100 { background: #dbeafe !important; color: #1e40af !important; border-color: #60a5fa !important; }
+        .badge-estoque.bg-green-100 { background: #dcfce7 !important; color: #166534 !important; border-color: #86efac !important; }
 
         @keyframes pulse-stock {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        .status-pago {
-            color: #16a34a;
-            background: #dcfce7;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
+        .status-pago { color: #16a34a; background: #dcfce7; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-pendente { color: #ca8a04; background: #fef9c3; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-cancelado { color: #dc2626; background: #fee2e2; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
 
-        .status-pendente {
-            color: #ca8a04;
-            background: #fef9c3;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .status-cancelado {
-            color: #dc2626;
-            background: #fee2e2;
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .btn-group button {
-            flex: 1;
-            min-width: 80px;
-            font-size: 12px;
-            padding: 8px 12px;
-            justify-content: center;
-        }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 6px; }
+        .btn-group button { flex: 1; min-width: 80px; font-size: 12px; padding: 8px 12px; justify-content: center; }
 
         @media (max-width: 480px) {
-            .btn-group button {
-                font-size: 10px;
-                padding: 6px 8px;
-                min-width: 60px;
-            }
+            .btn-group button { font-size: 10px; padding: 6px 8px; min-width: 60px; }
         }
 
         .filtros-container {
@@ -301,11 +205,7 @@
             box-shadow: 0 0 0 2px rgba(47, 107, 79, 0.15);
         }
 
-        .filtros-actions {
-            display: flex;
-            gap: 6px;
-            align-items: flex-end;
-        }
+        .filtros-actions { display: flex; gap: 6px; align-items: flex-end; }
 
         .filtros-actions button {
             padding: 6px 16px;
@@ -318,23 +218,10 @@
             white-space: nowrap;
         }
 
-        .btn-filtrar {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-filtrar:hover {
-            background: var(--primary-dark);
-        }
-
-        .btn-limpar {
-            background: #e5e7eb;
-            color: #4b5563;
-        }
-
-        .btn-limpar:hover {
-            background: #d1d5db;
-        }
+        .btn-filtrar { background: var(--primary); color: white; }
+        .btn-filtrar:hover { background: var(--primary-dark); }
+        .btn-limpar { background: #e5e7eb; color: #4b5563; }
+        .btn-limpar:hover { background: #d1d5db; }
 
         .vendas-table th {
             background: #f0f5f1 !important;
@@ -389,87 +276,75 @@
             white-space: nowrap;
         }
 
-        .campo-categoria button:hover {
-            background: var(--primary-dark);
+        .campo-categoria button:hover { background: var(--primary-dark); }
+
+        .field-hint {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 3px;
+            display: block;
+            line-height: 1.3;
         }
 
-        ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+        .field-hint strong {
+            color: var(--primary);
+            font-weight: 700;
         }
 
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+        .badge-categoria {
+            display: inline-block;
+            padding: 2px 8px;
             border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            background: #eef4ef;
+            color: var(--primary);
+            border: 1px solid rgba(47, 107, 79, 0.15);
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
+        .badge-subcategoria {
+            display: inline-block;
+            padding: 2px 8px;
             border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            background: #f5eed9;
+            color: #92400e;
+            border: 1px solid rgba(201, 168, 106, 0.3);
         }
+
+        select.form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 32px;
+        }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
         @media (max-width: 640px) {
-            .card-dashboard .value {
-                font-size: 20px;
-            }
-
-            .card-dashboard {
-                padding: 12px;
-            }
-
-            .card-dashboard .icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-
-            .modal-content {
-                max-width: 100%;
-                border-radius: 12px;
-                max-height: 98vh;
-            }
-
-            .filtros-container {
-                grid-template-columns: 1fr 1fr;
-            }
+            .card-dashboard .value { font-size: 20px; }
+            .card-dashboard { padding: 12px; }
+            .card-dashboard .icon { width: 36px; height: 36px; font-size: 16px; }
+            .modal-content { max-width: 100%; border-radius: 12px; max-height: 98vh; }
+            .filtros-container { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 480px) {
-
             #produtosTable th:nth-child(4),
             #produtosTable td:nth-child(4),
             #produtosTable th:nth-child(6),
             #produtosTable td:nth-child(6),
-            #produtosTable th:nth-child(7),
-            #produtosTable td:nth-child(7),
             #produtosTable th:nth-child(8),
             #produtosTable td:nth-child(8),
             #produtosTable th:nth-child(9),
             #produtosTable td:nth-child(9),
-            #produtosTable th:nth-child(11),
-            #produtosTable td:nth-child(11) {
-                display: none !important;
-            }
-
-            #produtosTable th:nth-child(1),
-            #produtosTable td:nth-child(1),
-            #produtosTable th:nth-child(2),
-            #produtosTable td:nth-child(2),
-            #produtosTable th:nth-child(3),
-            #produtosTable td:nth-child(3),
-            #produtosTable th:nth-child(5),
-            #produtosTable td:nth-child(5),
             #produtosTable th:nth-child(10),
-            #produtosTable td:nth-child(10),
-            #produtosTable th:nth-child(12),
-            #produtosTable td:nth-child(12),
-            #produtosTable th:nth-child(13),
-            #produtosTable td:nth-child(13),
-            #produtosTable th:nth-child(14),
-            #produtosTable td:nth-child(14),
-            #produtosTable th:nth-child(15),
-            #produtosTable td:nth-child(15) {
-                display: table-cell !important;
+            #produtosTable td:nth-child(10) {
+                display: none !important;
             }
 
             #produtosTable th,
@@ -491,25 +366,16 @@
                 gap: 1px !important;
             }
 
-            .filtros-container {
-                grid-template-columns: 1fr;
-            }
+            .filtros-container { grid-template-columns: 1fr; }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
-
             #produtosTable th:nth-child(4),
             #produtosTable td:nth-child(4),
-            #produtosTable th:nth-child(6),
-            #produtosTable td:nth-child(6),
-            #produtosTable th:nth-child(7),
-            #produtosTable td:nth-child(7),
             #produtosTable th:nth-child(8),
             #produtosTable td:nth-child(8),
             #produtosTable th:nth-child(9),
-            #produtosTable td:nth-child(9),
-            #produtosTable th:nth-child(11),
-            #produtosTable td:nth-child(11) {
+            #produtosTable td:nth-child(9) {
                 display: none !important;
             }
 
@@ -527,9 +393,6 @@
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
-
-            #produtosTable th:nth-child(6),
-            #produtosTable td:nth-child(6),
             #produtosTable th:nth-child(8),
             #produtosTable td:nth-child(8),
             #produtosTable th:nth-child(9),
@@ -543,14 +406,10 @@
                 padding: 4px 4px !important;
             }
 
-            .badge-estoque {
-                font-size: 9px !important;
-                padding: 2px 8px !important;
-            }
+            .badge-estoque { font-size: 9px !important; padding: 2px 8px !important; }
         }
 
         @media (min-width: 1025px) {
-
             #produtosTable th,
             #produtosTable td {
                 font-size: 11px !important;
@@ -565,19 +424,33 @@
         }
 
         @media (max-width: 600px) {
-            #produtosTable td:last-child .flex {
-                gap: 2px !important;
-            }
-
-            #produtosTable td:last-child button {
-                padding: 3px !important;
-                font-size: 9px !important;
-            }
+            #produtosTable td:last-child .flex { gap: 2px !important; }
+            #produtosTable td:last-child button { padding: 3px !important; font-size: 9px !important; }
         }
+
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        .loading-overlay.active { display: flex; }
     </style>
 </head>
 
 <body>
+
+    <!-- LOADING -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="text-center">
+            <i class="fas fa-spinner fa-spin text-4xl text-primary mb-3"></i>
+            <p class="text-sm font-bold text-primary">Carregando...</p>
+        </div>
+    </div>
 
     <!-- NAVBAR -->
     <nav class="bg-white shadow-md px-4 py-3 flex justify-between items-center sticky top-0 z-50 border-b">
@@ -702,7 +575,12 @@
             <div class="p-3 border-b bg-gray-50/50 flex flex-wrap justify-between items-center gap-2">
                 <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos
                 </h2>
-                <span class="text-xs text-gray-400" id="total-registros">0 registros</span>
+                <div class="flex items-center gap-2">
+                    <input type="text" id="filtro-subcategoria" placeholder="Filtrar por subcategoria..."
+                        class="border rounded-lg px-3 py-1 text-xs outline-none focus:ring-2 focus:ring-primary"
+                        style="max-width: 200px;">
+                    <span class="text-xs text-gray-400" id="total-registros">0 registros</span>
+                </div>
             </div>
             <div class="p-1 md:p-2 overflow-x-auto">
                 <table id="produtosTable" class="display responsive nowrap w-full" style="width:100%">
@@ -714,7 +592,8 @@
                             <th style="min-width: 70px;">Referência</th>
                             <th class="text-right" style="min-width: 60px;">Preço</th>
                             <th style="min-width: 80px;">Quantidade</th>
-                            <th style="min-width: 100px;">Categoria</th>
+                            <th style="min-width: 130px;">Categoria</th>
+                            <th style="min-width: 110px;">Subcategoria</th>
                             <th style="min-width: 60px;">Tamanho</th>
                             <th style="min-width: 60px;">Imagem</th>
                             <th class="text-center" style="min-width: 60px;">Disponível</th>
@@ -761,68 +640,79 @@
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Nome do Produto *</label>
                         <input type="text" id="Nome do Produto" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: Anel Ouro 18k">
+                            placeholder="Ex: Argola Dourada Lisa Pequena">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Referência</label>
-                        <input type="text" id="referencia"
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Referência *</label>
+                        <input type="text" id="referencia" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: ANEL-001">
+                            placeholder="Ex: AG 001">
+                        <small class="field-hint">🔑 <strong>Único</strong> — usado para identificar o produto</small>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Preço (R$) *</label>
                         <input type="number" step="0.01" id="Preço" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: 99.90">
+                            placeholder="Ex: 4.88">
+                        <small class="field-hint">Use <strong>ponto</strong> em vez de vírgula</small>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Quantidades</label>
                         <input type="text" id="Quantidade"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: 5,10,15,20">
-                        <small class="text-xs text-gray-400">Separe por vírgula</small>
+                            placeholder="Ex: 5,10,20,30,40">
+                        <small class="field-hint">Números separados por <strong>vírgula, sem espaço</strong></small>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Categoria *</label>
                         <select id="Categoria" required
-                            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm">
+                            class="form-select w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm">
                             <option value="">Selecione</option>
-                            <option value="Brincos de Pressão">Brincos de Pressão</option>
-                            <option value="Argolas Douradas">Argolas Douradas</option>
-                            <option value="Argolas Prateadas">Argolas Prateadas</option>
-                            <option value="Pingentes Dourados">Pingentes Dourados</option>
-                            <option value="Pingentes Prateados">Pingentes Prateados</option>
-                            <option value="Brincos de Moda Dourado">Brincos de Moda Dourado</option>
-                            <option value="Brincos de Moda Prateados">Brincos de Moda Prateados</option>
-                            <option value="Anéis">Anéis</option>
-                            <option value="Correntes">Correntes</option>
-                            <option value="Pulseiras">Pulseiras</option>
-                            <option value="Colares">Colares</option>
-                            <option value="Gargantilhas">Gargantilhas</option>
-                            <option value="Braceletes">Braceletes</option>
-                            <option value="Terço">Terço</option>
-                            <option value="Escapulários">Escapulários</option>
                         </select>
+                        <small class="field-hint">Copie <strong>exatamente</strong> como aparece no menu do site</small>
                         <div class="campo-categoria">
-                            <input type="text" id="novaCategoria" placeholder="Nova categoria..."
-                                class="border rounded-lg px-3 py-1.5 text-sm">
-                            <button type="button" id="btnNovaCategoria"
-                                class="bg-primary text-white px-3 py-1.5 rounded-lg text-sm font-bold hover:bg-primary-dark transition">
+                            <input type="text" id="novaCategoria" placeholder="Nova categoria...">
+                            <button type="button" id="btnNovaCategoria">
                                 <i class="fas fa-plus mr-1"></i> Adicionar
                             </button>
                         </div>
                     </div>
 
                     <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Subcategoria</label>
+                        <select id="Subcategoria"
+                            class="form-select w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm">
+                            <option value="">Selecione (opcional)</option>
+                            <option value="Pequena">Pequena</option>
+                            <option value="Média">Média</option>
+                            <option value="Grande">Grande</option>
+                            <option value="Click">Click</option>
+                            <option value="Brinco de pressão">Brinco de pressão</option>
+                            <option value="Brincos de moda">Brincos de moda</option>
+                            <option value="Feminina">Feminina</option>
+                            <option value="Masculina">Masculina</option>
+                            <option value="Infantil">Infantil</option>
+                            <option value="Diversos">Diversos</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Adulto">Adulto</option>
+                            <option value="Infantis">Infantis</option>
+                            <option value="Brinco + Colar">Brinco + Colar</option>
+                            <option value="Completo">Completo</option>
+                        </select>
+                        <small class="field-hint">Escolha uma subcategoria para <strong>filtros do site</strong></small>
+                    </div>
+
+                    <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Cores</label>
                         <input type="text" id="Cores"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: Ouro, Prata, Rosa">
-                        <small class="text-xs text-gray-400">Separe por vírgula</small>
+                            placeholder="Ex: cristal,vermelho,azul">
+                        <small class="field-hint">Nomes separados por <strong>vírgula, sem espaço</strong></small>
                     </div>
 
                     <div>
@@ -830,21 +720,23 @@
                         <input type="text" id="Tamanho"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
                             placeholder="Ex: 12,14,16,18">
-                        <small class="text-xs text-gray-400">Separe por vírgula</small>
+                        <small class="field-hint">Valores separados por <strong>vírgula, sem espaço</strong></small>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Estoque Total *</label>
                         <input type="number" id="Estoque" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: 200" value="0">
+                            placeholder="Ex: 100" value="0">
+                        <small class="field-hint">Quantidade <strong>física</strong> em estoque</small>
                     </div>
 
                     <div>
                         <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Saldo Estoque *</label>
                         <input type="number" id="Saldo Estoque" required
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
-                            placeholder="Ex: 50" value="0">
+                            placeholder="Ex: 100" value="0">
+                        <small class="field-hint">Deixe <strong>igual ao Estoque Total</strong> para novo produto</small>
                     </div>
 
                     <div class="col-span-1 md:col-span-2">
@@ -853,19 +745,19 @@
                         <input type="text" id="Imagem"
                             class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary outline-none text-sm"
                             placeholder="https://drive.google.com/file/d/...">
-                        <small class="text-xs text-gray-400">Cole o link do Google Drive</small>
+                        <small class="field-hint">Certifique-se de que a imagem está <strong>pública</strong> no Drive</small>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-4 col-span-1 md:col-span-2">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" id="Disponível" checked
                                 class="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary">
-                            <span class="text-sm font-medium text-gray-700">Disponível</span>
+                            <span class="text-sm font-medium text-gray-700">Disponível no site</span>
                         </label>
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="checkbox" id="Destaque"
                                 class="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary">
-                            <span class="text-sm font-medium text-gray-700">Destaque</span>
+                            <span class="text-sm font-medium text-gray-700">Mostrar em Destaques</span>
                         </label>
                     </div>
 
@@ -946,7 +838,7 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL VENDAS COM FILTROS -->
+    <!-- MODAL VENDAS -->
     <!-- ========================================== -->
     <div id="modalVendas" class="modal-overlay">
         <div class="modal-content modal-content-vendas" onclick="event.stopPropagation()">
@@ -959,7 +851,6 @@
             </div>
             <div class="p-4 overflow-y-auto" style="max-height: calc(95vh - 60px);">
 
-                <!-- FILTROS -->
                 <div class="filtros-container">
                     <div>
                         <label>Data Início</label>
@@ -998,7 +889,6 @@
                     </div>
                 </div>
 
-                <!-- BOTÕES DE AÇÃO -->
                 <div class="flex flex-wrap gap-2 mt-4 mb-4">
                     <button onclick="carregarVendasAdmin()"
                         class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-blue-700 transition flex items-center gap-1">
@@ -1014,8 +904,6 @@
                     </button>
                 </div>
 
-
-                <!-- Resumo Vendas -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                     <div class="bg-green-50 p-3 rounded-xl text-center">
                         <p class="text-lg font-bold text-green-600" id="vendas-total">R$ 0,00</p>
@@ -1041,38 +929,19 @@
                     <span class="text-xs text-gray-400" id="vendas-count">0 registros</span>
                 </div>
 
-                <!-- TABELA DE VENDAS -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-xs vendas-table" id="vendasTable">
                         <thead>
                             <tr>
-                                <th
-                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    #</th>
-                                <th
-                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Data</th>
-                                <th
-                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Cliente</th>
-                                <th
-                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Endereço</th>
-                                <th
-                                    class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Itens</th>
-                                <th
-                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Subtotal</th>
-                                <th
-                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Frete</th>
-                                <th
-                                    class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Total</th>
-                                <th
-                                    class="text-center py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">
-                                    Status</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">#</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Data</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Cliente</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Endereço</th>
+                                <th class="text-left py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Itens</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Subtotal</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Frete</th>
+                                <th class="text-right py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Total</th>
+                                <th class="text-center py-2 px-2 text-[10px] font-bold text-primary uppercase tracking-wider">Status</th>
                             </tr>
                         </thead>
                         <tbody id="vendas-tbody">
@@ -1097,6 +966,95 @@
         const ESTOQUE_API_URL = "https://script.google.com/macros/s/AKfycbx-vvLsDmvtIQHeH10z5xJXgReG-RRzzhLQYmWAJcoZ1ZW7Cr2M_PcZn1E61araSFlu6A/exec";
 
         const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f3f4f6"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dy=".3em" fill="%239ca3af"%3ESem Imagem%3C/text%3E%3C/svg%3E`;
+
+        // 🔥 LISTA DE CATEGORIAS OFICIAIS (com Dourado/Prateado)
+        const CATEGORIAS_OFICIAIS = [
+            // DOURADO
+            "Brinco de Pressão Dourado",
+            "Argolas Dourada",
+            "Brinco de Moda Dourado",
+            "Correntes Feminina Dourado",
+            "Correntes Masculina Dourado",
+            "Pulseiras Feminina Dourado",
+            "Pulseiras Masculina Dourado",
+            "Pulseiras Infantil Dourado",
+            "Terço Dourado",
+            "Pingentes Dourado",
+            "Braceletes Dourado",
+            "Conjuntos Dourado",
+            "Anéis Dourado",
+            "Colar Feminino Dourado",
+            "Colar Masculino Dourado",
+            "Colar Infantil Dourado",
+            "Tornozeleiras Feminina Dourado",
+            "Tornozeleiras Infantil Dourado",
+            "Escapulário Dourado",
+            // PRATEADO
+            "Brinco de Pressão Prateado",
+            "Argolas Prateada",
+            "Brinco de Moda Prateado",
+            "Correntes Feminina Prateado",
+            "Correntes Masculina Prateado",
+            "Pulseiras Feminina Prateado",
+            "Pulseiras Masculina Prateado",
+            "Pulseiras Infantil Prateado",
+            "Terço Prateado",
+            "Pingentes Prateado",
+            "Braceletes Prateado",
+            "Conjuntos Prateado",
+            "Anéis Prateado",
+            "Colar Feminino Prateado",
+            "Colar Masculino Prateado",
+            "Colar Infantil Prateado",
+            "Tornozeleiras Feminina Prateado",
+            "Tornozeleiras Infantil Prateado",
+            "Escapulário Prateado"
+        ];
+
+        // 🔥 MAPEAMENTO: Categoria → Subcategorias sugeridas
+        const SUBCATEGORIAS_POR_CATEGORIA = {
+            "Brinco de Pressão Dourado": ["Brinco de pressão"],
+            "Brinco de Pressão Prateado": ["Brinco de pressão"],
+            "Brinco de Moda Dourado": ["Brincos de moda"],
+            "Brinco de Moda Prateado": ["Brincos de moda"],
+            
+            // ✅ ARGOLAS — Subcategorias por TAMANHO
+            "Argolas Dourada": ["Pequena", "Média", "Grande", "Click"],
+            "Argolas Prateada": ["Pequena", "Média", "Grande", "Click"],
+            
+            "Correntes Feminina Dourado": ["Feminina"],
+            "Correntes Masculina Dourado": ["Masculina"],
+            "Correntes Feminina Prateado": ["Feminina"],
+            "Correntes Masculina Prateado": ["Masculina"],
+            "Pulseiras Feminina Dourado": ["Feminina"],
+            "Pulseiras Masculina Dourado": ["Masculina"],
+            "Pulseiras Infantil Dourado": ["Infantil"],
+            "Pulseiras Feminina Prateado": ["Feminina"],
+            "Pulseiras Masculina Prateado": ["Masculina"],
+            "Pulseiras Infantil Prateado": ["Infantil"],
+            "Pingentes Dourado": ["Diversos"],
+            "Pingentes Prateado": ["Diversos"],
+            "Terço Dourado": ["Diversos"],
+            "Terço Prateado": ["Diversos"],
+            "Braceletes Dourado": ["Feminino", "Masculino"],
+            "Braceletes Prateado": ["Feminino", "Masculino"],
+            "Anéis Dourado": ["Adulto", "Infantis"],
+            "Anéis Prateado": ["Adulto", "Infantis"],
+            "Escapulário Dourado": ["Diversos"],
+            "Escapulário Prateado": ["Diversos"],
+            "Conjuntos Dourado": ["Brinco + Colar", "Completo"],
+            "Conjuntos Prateado": ["Brinco + Colar", "Completo"],
+            "Colar Feminino Dourado": ["Feminino"],
+            "Colar Masculino Dourado": ["Masculino"],
+            "Colar Infantil Dourado": ["Infantil"],
+            "Colar Feminino Prateado": ["Feminino"],
+            "Colar Masculino Prateado": ["Masculino"],
+            "Colar Infantil Prateado": ["Infantil"],
+            "Tornozeleiras Feminina Dourado": ["Feminina"],
+            "Tornozeleiras Infantil Dourado": ["Infantil"],
+            "Tornozeleiras Feminina Prateado": ["Feminina"],
+            "Tornozeleiras Infantil Prateado": ["Infantil"]
+        };
 
         // VARIÁVEIS GLOBAIS
         let produtos = [];
@@ -1159,8 +1117,6 @@
 
         function formatarItens(itens) {
             if (!itens) return '-';
-
-            // Se for string JSON, tenta parsear
             if (typeof itens === 'string') {
                 try {
                     const itensObj = JSON.parse(itens);
@@ -1174,14 +1130,11 @@
                     return itens;
                 }
             }
-
-            // Se for array, formata diretamente
             if (Array.isArray(itens) && itens.length > 0) {
                 return itens.map(item =>
                     `${item.quantidade || 1}x ${item.nome || 'Produto'}${item.referencia ? ` (Ref: ${item.referencia})` : ''}`
                 ).join(' | ');
             }
-
             return itens || '-';
         }
 
@@ -1189,78 +1142,42 @@
             try {
                 var itensTexto = venda.itens || venda.itensTexto || '';
                 var subtotal = parseFloat(venda.subtotal) || 0;
-
-                if (!itensTexto || itensTexto.trim() === '') {
-                    return [];
-                }
-
-                // Se já for um array, retorna direto
-                if (Array.isArray(venda.itens)) {
-                    return venda.itens;
-                }
-
-                // Tenta parsear como JSON
+                if (!itensTexto || itensTexto.trim() === '') return [];
+                if (Array.isArray(venda.itens)) return venda.itens;
                 try {
                     var parsed = JSON.parse(itensTexto);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        return parsed;
-                    }
+                    if (Array.isArray(parsed) && parsed.length > 0) return parsed;
                 } catch (e) {}
-
                 var itens = [];
                 var partes = itensTexto.split(/\s*\|\s*/);
-
-                // 🔥 CALCULA O PREÇO TOTAL DOS ITENS
                 var totalItens = 0;
                 var itensExtracao = [];
-
                 for (var i = 0; i < partes.length; i++) {
                     var parte = partes[i].trim();
                     if (!parte) continue;
-
-                    // Extrai referência
                     var refMatch = parte.match(/\(Ref:\s*([^)]+)\)/);
                     var referencia = refMatch ? refMatch[1].trim() : '';
-
-                    // Remove referência
                     var textoLimpo = parte.replace(/\(Ref:\s*[^)]+\)/, '').trim();
-
-                    // Extrai quantidade
                     var qtdMatch = textoLimpo.match(/^(\d+)x\s*/);
                     var quantidade = qtdMatch ? parseInt(qtdMatch[1]) : 1;
-
-                    // Remove quantidade
                     var nome = textoLimpo.replace(/^\d+x\s*/, '').trim();
-
-                    // 🔥 TENTA EXTRAIR PREÇO DO TEXTO (se tiver)
                     var preco = 0;
                     var precoMatch = nome.match(/R\$\s*([\d,]+)/);
                     if (precoMatch) {
                         preco = parseFloat(precoMatch[1].replace(',', '.'));
                         nome = nome.replace(/R\$\s*[\d,]+\s*/, '').trim();
                     }
-
                     if (nome) {
-                        itensExtracao.push({
-                            nome: nome,
-                            referencia: referencia,
-                            quantidade: quantidade || 1,
-                            preco: preco
-                        });
+                        itensExtracao.push({ nome, referencia, quantidade: quantidade || 1, preco });
                         totalItens += quantidade || 1;
                     }
                 }
-
-                // 🔥 SE NÃO ENCONTROU PREÇO, USA O SUBTOTAL PARA CALCULAR
                 if (totalItens > 0 && itensExtracao.length > 0) {
                     var precoPorItem = subtotal / totalItens;
                     for (var j = 0; j < itensExtracao.length; j++) {
-                        if (itensExtracao[j].preco === 0) {
-                            itensExtracao[j].preco = precoPorItem;
-                        }
+                        if (itensExtracao[j].preco === 0) itensExtracao[j].preco = precoPorItem;
                     }
                 }
-
                 return itensExtracao;
             } catch (e) {
                 console.error('Erro ao extrair itens:', e);
@@ -1269,21 +1186,15 @@
         }
 
         // ============================================
-        // FUNÇÃO PARA CHAMAR A API (JSONP)
+        // API
         // ============================================
         function chamarAPI(tipo, dados) {
             return new Promise((resolve, reject) => {
                 try {
-                    console.log("📤 Enviando requisição JSONP:", tipo, dados);
-
                     const callbackName = 'jsonp_callback_' + Date.now();
-
                     window[callbackName] = function (data) {
-                        console.log("📥 Resposta JSONP:", data);
                         delete window[callbackName];
-                        if (script.parentNode) {
-                            script.parentNode.removeChild(script);
-                        }
+                        if (script.parentNode) script.parentNode.removeChild(script);
                         resolve(data);
                     };
 
@@ -1296,6 +1207,7 @@
                         params += `&preco=${p.Preço || p.preco || 0}`;
                         params += `&quantidade=${encodeURIComponent(p.Quantidade || p.quantidade || '')}`;
                         params += `&categoria=${encodeURIComponent(p.Categoria || p.categoria || '')}`;
+                        params += `&subcategoria=${encodeURIComponent(p.Subcategoria || p.subcategoria || '')}`;
                         params += `&cores=${encodeURIComponent(p.Cores || p.cores || '')}`;
                         params += `&tamanho=${encodeURIComponent(p.Tamanho || p.tamanho || '')}`;
                         params += `&imagem=${encodeURIComponent(p.Imagem || p.imagem || '')}`;
@@ -1313,26 +1225,21 @@
                         params += `&banner=${encodeURIComponent(JSON.stringify(dados.banner || {}))}`;
                     } else if (tipo === 'excluir_banner') {
                         params += `&index=${dados.index || ''}`;
-                    } else if (tipo === 'listar_vendas') {
-                        // Para listar vendas, não precisa de parâmetros extras
                     }
 
                     const script = document.createElement('script');
                     script.src = `${ESTOQUE_API_URL}?${params}&callback=${callbackName}`;
-                    console.log("📤 URL JSONP:", script.src);
 
                     script.onerror = function () {
-                        console.error("❌ Erro no script JSONP");
                         delete window[callbackName];
-                        document.body.removeChild(script);
+                        if (script.parentNode) script.parentNode.removeChild(script);
                         reject(new Error('Erro na requisição JSONP'));
                     };
 
                     const timeoutId = setTimeout(() => {
                         if (window[callbackName]) {
-                            console.error("❌ Timeout na requisição");
                             delete window[callbackName];
-                            document.body.removeChild(script);
+                            if (script.parentNode) script.parentNode.removeChild(script);
                             reject(new Error('Timeout na requisição'));
                         }
                     }, 30000);
@@ -1344,32 +1251,23 @@
                     };
 
                     document.body.appendChild(script);
-
                 } catch (error) {
-                    console.error("❌ Erro no JSONP:", error);
                     reject(error);
                 }
             });
         }
 
         // ============================================
-        // CARREGAR CATEGORIAS (FIXAS)
+        // CATEGORIAS
         // ============================================
         function carregarCategoriasFixas() {
-            const categoriasFixas = [
-                "Brincos de Pressão", "Argolas Douradas", "Argolas Prateadas",
-                "Pingentes Dourados", "Pingentes Prateados", "Brincos de Moda Dourado",
-                "Brincos de Moda Prateados", "Anéis", "Correntes", "Pulseiras",
-                "Colares", "Gargantilhas", "Braceletes", "Terço", "Escapulários"
-            ];
-
             const select = document.getElementById('Categoria');
             if (!select) return;
 
             select.innerHTML = '<option value="">Selecione uma categoria</option>';
             categoriasCache = [];
 
-            categoriasFixas.forEach(cat => {
+            CATEGORIAS_OFICIAIS.forEach(cat => {
                 const option = document.createElement('option');
                 option.value = cat;
                 option.textContent = cat;
@@ -1380,63 +1278,66 @@
             document.getElementById('total-categorias').innerText = categoriasCache.length;
         }
 
+        // 🔥 AUTO-PREENCHER SUBCATEGORIA baseado na categoria
+        function atualizarSubcategorias() {
+            const categoria = document.getElementById('Categoria').value;
+            const selectSub = document.getElementById('Subcategoria');
+            
+            if (!categoria) {
+                selectSub.value = '';
+                return;
+            }
+
+            const subs = SUBCATEGORIAS_POR_CATEGORIA[categoria] || [];
+            
+            // Se só tem 1 subcategoria, auto-seleciona
+            if (subs.length === 1) {
+                selectSub.value = subs[0];
+            } else if (subs.length === 0) {
+                selectSub.value = '';
+            } else {
+                // Tem várias — limpa para o usuário escolher
+                selectSub.value = '';
+            }
+            
+            console.log('📂 Categoria:', categoria, '→ Subcategorias sugeridas:', subs);
+        }
+
         // ============================================
-        // CARREGAR PRODUTOS - CORRIGIDO
+        // CARREGAR PRODUTOS
         // ============================================
         async function carregarProdutos() {
             try {
-                console.log("🔄 Carregando produtos via API...");
-
                 const data = await new Promise((resolve, reject) => {
                     const callbackName = 'listar_callback_' + Date.now();
-
                     window[callbackName] = function (data) {
-                        console.log("📥 Callback executado com dados:", data);
                         delete window[callbackName];
-                        if (script.parentNode) {
-                            script.parentNode.removeChild(script);
-                        }
+                        if (script.parentNode) script.parentNode.removeChild(script);
                         resolve(data);
                     };
-
                     const script = document.createElement('script');
                     script.src = `${ESTOQUE_API_URL}?modo=admin&tipo=listar&callback=${callbackName}`;
-                    console.log("📤 Script URL:", script.src);
-
-                    script.onerror = function (e) {
-                        console.error("❌ Erro no script:", e);
+                    script.onerror = function () {
                         delete window[callbackName];
-                        if (script.parentNode) {
-                            script.parentNode.removeChild(script);
-                        }
-                        reject(new Error('Erro ao listar produtos - verifique a URL da API'));
+                        if (script.parentNode) script.parentNode.removeChild(script);
+                        reject(new Error('Erro ao listar produtos'));
                     };
-
                     const timeoutId = setTimeout(() => {
                         if (window[callbackName]) {
-                            console.error("❌ Timeout");
                             delete window[callbackName];
-                            if (script.parentNode) {
-                                script.parentNode.removeChild(script);
-                            }
-                            reject(new Error('Timeout ao listar produtos'));
+                            if (script.parentNode) script.parentNode.removeChild(script);
+                            reject(new Error('Timeout'));
                         }
                     }, 30000);
-
                     const originalResolve = resolve;
                     resolve = function (data) {
                         clearTimeout(timeoutId);
                         originalResolve(data);
                     };
-
                     document.body.appendChild(script);
                 });
 
-                console.log("📥 Dados recebidos:", data);
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
+                if (data.error) throw new Error(data.error);
 
                 if (data.produtos) {
                     produtos = data.produtos.map(p => {
@@ -1447,6 +1348,7 @@
                             Preço: p.Preço || p.preco,
                             Quantidade: p.Quantidade || p.quantidade,
                             Categoria: p.Categoria || p.categoria,
+                            Subcategoria: p.Subcategoria || p.subcategoria || '',
                             Cores: p.Cores || p.cores,
                             Tamanho: p.Tamanho || p.tamanho,
                             Imagem: p.Imagem || p.imagem,
@@ -1473,7 +1375,6 @@
                 document.getElementById('total-destaques').innerText = destaques;
                 document.getElementById('total-registros').innerText = `${produtos.length} registros`;
 
-                // ✅ CHAMA AQUI DEPOIS DE CARREGAR OS DADOS
                 renderizarTabelaProdutos();
                 renderizarBanners();
                 carregarCategoriasFixas();
@@ -1483,19 +1384,18 @@
 
             } catch (error) {
                 console.error("❌ Erro ao carregar produtos:", error);
-                // 🔥 MANTER A TABELA VISÍVEL MESMO COM ERRO
                 document.getElementById('produtos-tbody').innerHTML = `
-            <tr>
-                <td colspan="15" class="text-center py-8 text-red-500 text-sm">
-                    <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
-                    Erro ao carregar produtos: ${error.message}
-                    <br>
-                    <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
-                        <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
-                    </button>
-                </td>
-            </tr>
-        `;
+                    <tr>
+                        <td colspan="16" class="text-center py-8 text-red-500 text-sm">
+                            <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
+                            Erro ao carregar produtos: ${error.message}
+                            <br>
+                            <button onclick="carregarProdutos()" class="mt-2 bg-primary text-white px-4 py-2 rounded-lg text-xs font-bold">
+                                <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
+                            </button>
+                        </td>
+                    </tr>
+                `;
             }
         }
 
@@ -1506,22 +1406,27 @@
             const tbody = document.getElementById("produtos-tbody");
             if (!tbody) return;
 
-            // 🔥 NÃO LIMPA O TBODY ANTES DE VERIFICAR
-            if (produtos.length === 0) {
-                tbody.innerHTML = `
-            <tr>
-                <td colspan="15" class="text-center py-6 text-gray-400 text-sm">
-                    <i class="fas fa-box-open text-2xl block mb-2"></i>
-                    Nenhum produto encontrado.
-                </td>
-            </tr>
-        `;
+            const filtroSub = document.getElementById('filtro-subcategoria')?.value?.toLowerCase() || '';
+            let produtosFiltrados = produtos;
+            
+            if (filtroSub) {
+                produtosFiltrados = produtos.filter(p => 
+                    (p.Subcategoria || '').toLowerCase().includes(filtroSub)
+                );
+            }
 
-                // 🔥 SÓ DESTROI SE EXISTIR
+            if (produtosFiltrados.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="16" class="text-center py-6 text-gray-400 text-sm">
+                            <i class="fas fa-box-open text-2xl block mb-2"></i>
+                            Nenhum produto encontrado.
+                        </td>
+                    </tr>
+                `;
                 if ($.fn.DataTable.isDataTable('#produtosTable')) {
                     $('#produtosTable').DataTable().destroy();
                 }
-
                 dataTableInstance = $('#produtosTable').DataTable({
                     responsive: true,
                     pageLength: 25,
@@ -1531,10 +1436,9 @@
                 return;
             }
 
-            // 🔥 LIMPA O TBODY APENAS QUANDO TEM DADOS
             tbody.innerHTML = "";
 
-            produtos.forEach(p => {
+            produtosFiltrados.forEach(p => {
                 const estoque = parseInt(p.Estoque) || 0;
                 const vendidos = parseInt(p.Vendidos) || 0;
                 const saldoEstoque = parseInt(p["Saldo Estoque"]) || 0;
@@ -1572,7 +1476,10 @@
                     <td class="text-xs font-bold text-primary text-right">R$ ${parseFloat(p.Preço || 0).toFixed(2).replace(".", ",")}</td>
                     <td class="text-xs text-gray-600 max-w-[80px] truncate" title="${quantidade}">${quantidade}</td>
                     <td class="text-[10px]">
-                        <span class="bg-gray-100 px-1.5 py-0.5 rounded font-bold">${p.Categoria || '-'}</span>
+                        <span class="badge-categoria">${p.Categoria || '-'}</span>
+                    </td>
+                    <td class="text-[10px]">
+                        ${p.Subcategoria ? `<span class="badge-subcategoria">${p.Subcategoria}</span>` : '<span class="text-gray-300">-</span>'}
                     </td>
                     <td class="text-xs text-gray-600">${p.Tamanho || '-'}</td>
                     <td class="text-[10px]">
@@ -1607,8 +1514,8 @@
                 order: [[0, 'asc']],
                 language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
                 columnDefs: [
-                    { responsivePriority: 1, targets: [0, 1, 2, 4, 9, 11, 12, 13, 14] },
-                    { responsivePriority: 2, targets: [3, 5, 6, 7, 8, 10] }
+                    { responsivePriority: 1, targets: [0, 1, 2, 4, 10, 12, 13, 14, 15] },
+                    { responsivePriority: 2, targets: [3, 5, 6, 7, 8, 9, 11] }
                 ],
                 autoWidth: false
             });
@@ -1697,7 +1604,7 @@
             chartEstoque = new Chart(ctx2, {
                 type: 'bar',
                 data: {
-                    labels: top5.map(p => p["Nome do Produto"].substring(0, 15) + (p["Nome do Produto"].length > 15 ? '...' : '')),
+                    labels: top5.map(p => (p["Nome do Produto"] || '').substring(0, 15) + ((p["Nome do Produto"] || '').length > 15 ? '...' : '')),
                     datasets: [{
                         label: 'Estoque',
                         data: top5.map(p => p.Estoque || 0),
@@ -1719,26 +1626,17 @@
         }
 
         // ============================================
-        // CARREGAR VENDAS (ADMIN)
+        // VENDAS
         // ============================================
         async function carregarVendasAdmin() {
             try {
-                console.log("🔄 Carregando vendas...");
-
                 const data = await chamarAPI('listar_vendas');
 
-                console.log("📥 Dados de vendas:", data);
-
-                if (data.error) {
-                    throw new Error(data.error);
-                }
+                if (data.error) throw new Error(data.error);
 
                 vendas = data.vendas || [];
-
-                // Ordena por data (mais recente primeiro)
                 vendas.sort((a, b) => new Date(b.data) - new Date(a.data));
 
-                // Preenche o select de clientes
                 const clientesSelect = document.getElementById('filtro-cliente');
                 const clientesUnicos = [...new Set(vendas.map(v => v.cliente).filter(c => c))];
                 clientesSelect.innerHTML = '<option value="">Todos os clientes</option>';
@@ -1749,7 +1647,6 @@
                     clientesSelect.appendChild(option);
                 });
 
-                // Aplica os filtros
                 aplicarFiltros();
 
             } catch (error) {
@@ -1759,19 +1656,12 @@
                         <td colspan="9" class="text-center py-6 text-red-500 text-sm">
                             <i class="fas fa-exclamation-triangle text-2xl block mb-2"></i>
                             Erro ao carregar vendas: ${error.message}
-                            <br>
-                            <button onclick="carregarVendasAdmin()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold">
-                                <i class="fas fa-sync-alt mr-1"></i> Tentar novamente
-                            </button>
                         </td>
                     </tr>
                 `;
             }
         }
 
-        // ============================================
-        // APLICAR FILTROS
-        // ============================================
         function aplicarFiltros() {
             const dataInicio = document.getElementById('filtro-data-inicio').value;
             const dataFim = document.getElementById('filtro-data-fim').value;
@@ -1781,30 +1671,24 @@
 
             vendasFiltradas = vendas.filter(v => {
                 let incluir = true;
-
                 if (dataInicio) {
                     const dataVenda = new Date(v.data).toISOString().split('T')[0];
                     if (dataVenda < dataInicio) incluir = false;
                 }
-
                 if (dataFim && incluir) {
                     const dataVenda = new Date(v.data).toISOString().split('T')[0];
                     if (dataVenda > dataFim) incluir = false;
                 }
-
                 if (mes && incluir) {
                     const mesVenda = new Date(v.data).toISOString().substring(0, 7);
                     if (mesVenda !== mes) incluir = false;
                 }
-
                 if (cliente && incluir) {
                     if (v.cliente !== cliente) incluir = false;
                 }
-
                 if (status && incluir) {
                     if (v.status !== status) incluir = false;
                 }
-
                 return incluir;
             });
 
@@ -1812,9 +1696,6 @@
             atualizarResumoVendas();
         }
 
-        // ============================================
-        // LIMPAR FILTROS
-        // ============================================
         function limparFiltros() {
             document.getElementById('filtro-data-inicio').value = '';
             document.getElementById('filtro-data-fim').value = '';
@@ -1824,9 +1705,6 @@
             aplicarFiltros();
         }
 
-        // ============================================
-        // ATUALIZAR RESUMO VENDAS
-        // ============================================
         function atualizarResumoVendas() {
             const totalVendas = vendasFiltradas.reduce((s, v) => s + (parseFloat(v.total) || 0), 0);
             const totalPedidos = vendasFiltradas.length;
@@ -1840,9 +1718,6 @@
             document.getElementById('vendas-count').innerText = `${totalPedidos} registros`;
         }
 
-        // ============================================
-        // RENDERIZAR TABELA VENDAS
-        // ============================================
         function renderizarTabelaVendas() {
             const tbody = document.getElementById('vendas-tbody');
             if (!tbody) return;
@@ -1857,17 +1732,13 @@
                         </td>
                     </tr>
                 `;
-
                 if ($.fn.DataTable.isDataTable('#vendasTable')) {
                     $('#vendasTable').DataTable().clear().destroy();
                 }
                 dataTableVendasInstance = $('#vendasTable').DataTable({
                     responsive: true,
                     pageLength: 25,
-                    order: [[0, 'desc']],
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
-                    }
+                    language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' }
                 });
                 return;
             }
@@ -1876,7 +1747,6 @@
                 const statusClass = v.status === 'Pago' ? 'status-pago' : (v.status === 'Pendente' ? 'status-pendente' : 'status-cancelado');
                 const tr = document.createElement('tr');
                 tr.className = 'border-b hover:bg-gray-50';
-
                 const dataFormatada = formatarData(v.data);
                 const itensTexto = formatarItens(v.itens);
 
@@ -1902,9 +1772,7 @@
                 responsive: true,
                 pageLength: 25,
                 order: [[0, 'desc']],
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json'
-                },
+                language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
                 columnDefs: [
                     { responsivePriority: 1, targets: [0, 1, 2, 7, 8] },
                     { responsivePriority: 2, targets: [3, 4, 5, 6] }
@@ -1913,541 +1781,124 @@
             });
         }
 
-
         // ============================================
-        // GERAR PDF NO FORMATO DO CLIENTE - UM BOTÃO
+        // PDF
         // ============================================
         function gerarPDFFormatoCliente() {
             var dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
-
             if (dados.length === 0) {
-                alert('⚠️ Não há dados para gerar o PDF! Aplique um filtro primeiro.');
+                alert('⚠️ Não há dados para gerar o PDF!');
                 return;
             }
 
-            // 🔥 PEGA OS FILTROS APLICADOS
-            var dataInicio = document.getElementById('filtro-data-inicio').value;
-            var dataFim = document.getElementById('filtro-data-fim').value;
-            var mes = document.getElementById('filtro-mes').value;
-            var clienteSelecionado = document.getElementById('filtro-cliente').value;
-            var statusFiltro = document.getElementById('filtro-status').value;
-
-            // 🔥 DEFINE O TÍTULO DO RELATÓRIO
-            var tituloRelatorio = 'Relatório de Vendas';
-            if (clienteSelecionado) {
-                tituloRelatorio = 'Relatório de Vendas - Cliente: ' + clienteSelecionado.toUpperCase();
-            }
-
-            var subtitulo = '';
-            if (dataInicio && dataFim) {
-                var dataInicioFormatada = new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR');
-                var dataFimFormatada = new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR');
-                subtitulo += 'Período: ' + dataInicioFormatada + ' a ' + dataFimFormatada + ' | ';
-            } else if (dataInicio) {
-                var dataInicioFormatada = new Date(dataInicio + 'T00:00:00').toLocaleDateString('pt-BR');
-                subtitulo += 'A partir de: ' + dataInicioFormatada + ' | ';
-            } else if (dataFim) {
-                var dataFimFormatada = new Date(dataFim + 'T00:00:00').toLocaleDateString('pt-BR');
-                subtitulo += 'Até: ' + dataFimFormatada + ' | ';
-            }
-            if (mes) {
-                var partes = mes.split('-');
-                var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-                subtitulo += 'Mês: ' + meses[parseInt(partes[1]) - 1] + '/' + partes[0] + ' | ';
-            }
-            if (statusFiltro) {
-                subtitulo += 'Status: ' + statusFiltro + ' | ';
-            }
-            if (subtitulo === '') {
-                subtitulo = 'Todos os dados';
-            } else {
-                subtitulo = subtitulo.slice(0, -3);
-            }
-
-            // 🔥 CALCULA TOTAIS
             var totalVendas = 0;
-            for (var i = 0; i < dados.length; i++) {
-                totalVendas = totalVendas + (parseFloat(dados[i].total) || 0);
-            }
-            var totalPedidos = dados.length;
             var totalItens = 0;
-
-            // 🔥 EXTRAI ITENS AGRUPADOS
             var itensAgrupados = {};
+            
             for (var x = 0; x < dados.length; x++) {
+                totalVendas += parseFloat(dados[x].total) || 0;
                 var itens = extrairItens(dados[x]);
                 for (var y = 0; y < itens.length; y++) {
                     var item = itens[y];
                     var qtd = parseInt(item.quantidade) || 1;
-                    var nome = item.nome || 'Produto';
-                    var ref = item.referencia || '';
-                    var chave = nome + (ref ? ' (Ref: ' + ref + ')' : '');
-                    var preco = parseFloat(item.preco || 0);
-
-                    if (!itensAgrupados[chave]) {
-                        itensAgrupados[chave] = { qtd: 0, preco: preco };
-                    }
+                    var chave = (item.nome || 'Produto') + (item.referencia ? ' (Ref: ' + item.referencia + ')' : '');
+                    if (!itensAgrupados[chave]) itensAgrupados[chave] = { qtd: 0, preco: parseFloat(item.preco) || 0 };
                     itensAgrupados[chave].qtd += qtd;
-                    if (preco > 0) {
-                        itensAgrupados[chave].preco = preco;
-                    }
+                    if (parseFloat(item.preco) > 0) itensAgrupados[chave].preco = parseFloat(item.preco);
                     totalItens += qtd;
                 }
             }
 
-            // SE NÃO ENCONTROU ITENS, TENTA EXTRAIR DO TEXTO BRUTO
-            if (Object.keys(itensAgrupados).length === 0) {
-                for (var z = 0; z < dados.length; z++) {
-                    var textoBruto = dados[z].itens || '';
-                    if (textoBruto) {
-                        var partes = textoBruto.split(/\s*\|\s*/);
-                        for (var p = 0; p < partes.length; p++) {
-                            var parte = partes[p].trim();
-                            if (!parte) continue;
+            var html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Relatório</title>
+            <style>
+                body { font-family: Arial; padding: 20px; }
+                .header { background: linear-gradient(135deg, #2f6b4f, #1f4d38); color: white; padding: 25px; border-radius: 12px 12px 0 0; }
+                .header h1 { margin: 0; }
+                .info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; background: #f8faf8; padding: 15px; border-radius: 0 0 12px 12px; margin-bottom: 20px; }
+                .info .label { font-size: 10px; color: #6b7280; font-weight: 700; text-transform: uppercase; }
+                .info .value { font-size: 15px; font-weight: 700; color: #1f4d38; }
+                table { width: 100%; border-collapse: collapse; }
+                th { background: #2f6b4f; color: white; padding: 8px 12px; text-align: left; }
+                td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; }
+                .right { text-align: right; }
+                .center { text-align: center; }
+                .total-row { background: #eef4ef; font-weight: bold; }
+                .footer { margin-top: 30px; text-align: center; color: #999; font-size: 11px; }
+            </style></head><body>
+            <div class="header"><h1>💎 WRJ JOIAS</h1><p>Relatório de Vendas - Gerado em: ${new Date().toLocaleString('pt-BR')}</p></div>
+            <div class="info">
+                <div><div class="label">Total Vendas</div><div class="value">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div></div>
+                <div><div class="label">Pedidos</div><div class="value">${dados.length}</div></div>
+                <div><div class="label">Itens</div><div class="value">${totalItens}</div></div>
+                <div><div class="label">Ticket Médio</div><div class="value">R$ ${(dados.length > 0 ? totalVendas / dados.length : 0).toFixed(2).replace('.', ',')}</div></div>
+            </div>
+            <table><thead><tr><th>#</th><th>Produto</th><th class="center">Qtd</th><th class="right">Preço Unit.</th><th class="right">Total</th></tr></thead><tbody>`;
 
-                            var qtdMatch = parte.match(/^(\d+)x\s*/);
-                            var qtd = qtdMatch ? parseInt(qtdMatch[1]) : 1;
-                            var nome = parte.replace(/^\d+x\s*/, '').trim();
-
-                            if (nome) {
-                                var chave = nome;
-                                if (!itensAgrupados[chave]) {
-                                    itensAgrupados[chave] = { qtd: 0, preco: 0 };
-                                }
-                                itensAgrupados[chave].qtd += qtd;
-                                totalItens += qtd;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // 🔥 CONSTRÓI O HTML DO PDF
-            var html = `
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>${tituloRelatorio}</title>
-    <style>
-        body { 
-            font-family: 'Segoe UI', Arial, sans-serif; 
-            padding: 20px; 
-            max-width: 1100px; 
-            margin: 0 auto; 
-            background: white; 
-        }
-        .header-cliente {
-            background: linear-gradient(135deg, #2f6b4f, #1f4d38);
-            color: white;
-            padding: 25px 30px;
-            border-radius: 12px 12px 0 0;
-            margin-bottom: 0;
-        }
-        .header-cliente h1 {
-            margin: 0;
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        .header-cliente .sub {
-            font-size: 13px;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-        .header-cliente .data {
-            font-size: 12px;
-            opacity: 0.7;
-            margin-top: 3px;
-        }
-        .cliente-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 10px;
-            background: #f8faf8;
-            padding: 15px 20px;
-            border: 1px solid #e5e7eb;
-            border-top: none;
-            border-radius: 0 0 12px 12px;
-            margin-bottom: 25px;
-            font-size: 13px;
-        }
-        .cliente-info .label {
-            color: #6b7280;
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .cliente-info .value {
-            font-weight: 700;
-            color: #1f4d38;
-            font-size: 15px;
-        }
-        .resumo {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 20px 0 25px;
-        }
-        .resumo-item {
-            background: #f5f7f5;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid #e5e7eb;
-        }
-        .resumo-item .valor {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2f6b4f;
-        }
-        .resumo-item .label {
-            font-size: 10px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .table-title {
-            color: #1f4d38;
-            margin: 20px 0 10px;
-            font-size: 16px;
-        }
-        .relatorio-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .relatorio-table th {
-            background: #2f6b4f;
-            color: white;
-            padding: 8px 12px;
-            text-align: left;
-        }
-        .relatorio-table th.center { text-align: center; }
-        .relatorio-table th.right { text-align: right; }
-        .relatorio-table td {
-            padding: 7px 12px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-        .relatorio-table td.center { text-align: center; }
-        .relatorio-table td.right { text-align: right; }
-        .relatorio-table tr:nth-child(even) { background: #fafcfa; }
-        .relatorio-table .total-row { 
-            background: #eef4ef !important; 
-            font-weight: bold; 
-        }
-        .relatorio-table .total-row td { 
-            border-top: 2px solid #2f6b4f; 
-        }
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #999;
-            font-size: 11px;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 15px;
-        }
-        .text-right { text-align: right; }
-        .text-center { text-align: center; }
-        .font-bold { font-weight: bold; }
-        @media print { 
-            body { padding: 10px; } 
-        }
-        @media (max-width: 600px) {
-            .cliente-info { grid-template-columns: 1fr 1fr; }
-            .resumo { grid-template-columns: 1fr 1fr; }
-            .relatorio-table { font-size: 10px; }
-            .relatorio-table th, .relatorio-table td { padding: 4px 6px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="header-cliente">
-        <h1>💎 WRJ JOIAS</h1>
-        <div class="sub">${tituloRelatorio}</div>
-        <div class="data">📅 Gerado em: ${new Date().toLocaleString('pt-BR')}</div>
-        <div class="data" style="margin-top: 5px; font-size: 11px; opacity: 0.6;">Filtros: ${subtitulo}</div>
-    </div>
-
-    <div class="cliente-info">
-        <div>
-            <div class="label">TOTAL DE VENDAS</div>
-            <div class="value">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div>
-        </div>
-        <div>
-            <div class="label">TOTAL DE PEDIDOS</div>
-            <div class="value">${totalPedidos}</div>
-        </div>
-        <div>
-            <div class="label">TOTAL DE ITENS</div>
-            <div class="value">${totalItens}</div>
-        </div>
-        <div>
-            <div class="label">TICKET MÉDIO</div>
-            <div class="value">R$ ${(totalPedidos > 0 ? totalVendas / totalPedidos : 0).toFixed(2).replace('.', ',')}</div>
-        </div>
-    </div>
-
-    <div class="resumo">
-        <div class="resumo-item">
-            <div class="valor">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div>
-            <div class="label">Total Vendas</div>
-        </div>
-        <div class="resumo-item">
-            <div class="valor">${totalPedidos}</div>
-            <div class="label">Pedidos</div>
-        </div>
-        <div class="resumo-item">
-            <div class="valor">${totalItens}</div>
-            <div class="label">Itens</div>
-        </div>
-        <div class="resumo-item">
-            <div class="valor">R$ ${(totalPedidos > 0 ? totalVendas / totalPedidos : 0).toFixed(2).replace('.', ',')}</div>
-            <div class="label">Ticket Médio</div>
-        </div>
-    </div>
-
-    <h3 class="table-title">📋 ITENS POR PRODUTO</h3>
-    <table class="relatorio-table">
-        <thead>
-            <tr>
-                <th style="width: 50px;">#</th>
-                <th>PRODUTO</th>
-                <th class="center" style="width: 80px;">QUANTIDADE</th>
-                <th class="right" style="width: 100px;">PREÇO UNIT.</th>
-                <th class="right" style="width: 120px;">TOTAL</th>
-            </tr>
-        </thead>
-        <tbody>`;
-
-            var index = 0;
+            var idx = 0;
             var subtotalGeral = 0;
             var itensArray = Object.keys(itensAgrupados);
-
-            if (itensArray.length === 0) {
-                html += `<tr><td colspan="5" class="text-center" style="padding: 20px; color: #999;">Nenhum item encontrado</td></tr>`;
-            } else {
-                for (var key = 0; key < itensArray.length; key++) {
-                    index++;
-                    var chave = itensArray[key];
-                    var item = itensAgrupados[chave];
-                    var totalItem = item.qtd * item.preco;
-                    subtotalGeral += totalItem;
-
-                    html += `<tr>
-                <td>${index}</td>
-                <td>${chave}</td>
-                <td class="center">${item.qtd}</td>
-                <td class="right">R$ ${item.preco.toFixed(2).replace('.', ',')}</td>
-                <td class="right">R$ ${totalItem.toFixed(2).replace('.', ',')}</td>
-            </tr>`;
-                }
+            for (var k = 0; k < itensArray.length; k++) {
+                idx++;
+                var item = itensAgrupados[itensArray[k]];
+                var totalItem = item.qtd * item.preco;
+                subtotalGeral += totalItem;
+                html += `<tr><td>${idx}</td><td>${itensArray[k]}</td><td class="center">${item.qtd}</td><td class="right">R$ ${item.preco.toFixed(2).replace('.', ',')}</td><td class="right">R$ ${totalItem.toFixed(2).replace('.', ',')}</td></tr>`;
             }
 
-            html += `
-            <tr class="total-row">
-                <td colspan="4" class="right">SUBTOTAL</td>
-                <td class="right">R$ ${subtotalGeral.toFixed(2).replace('.', ',')}</td>
-            </tr>
-        </tbody>
-    </table>
+            html += `<tr class="total-row"><td colspan="4" class="right">SUBTOTAL</td><td class="right">R$ ${subtotalGeral.toFixed(2).replace('.', ',')}</td></tr></tbody></table><div class="footer">WRJ Joias - Relatório gerado automaticamente</div></body></html>`;
 
-    <div style="margin-top: 20px; padding: 15px; background: #f8faf8; border-radius: 10px; border: 1px solid #e5e7eb;">
-        <div style="display: flex; justify-content: flex-end; font-size: 14px;">
-            <div style="text-align: right;">
-                <p><strong>Total de Itens:</strong> ${totalItens}</p>
-                <p><strong>Total de Pedidos:</strong> ${totalPedidos}</p>
-                <p style="font-size: 18px; color: #2f6b4f; margin-top: 5px;"><strong>TOTAL GERAL: R$ ${totalVendas.toFixed(2).replace('.', ',')}</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>WRJ Joias - Relatório gerado automaticamente</p>
-        <p>© ${new Date().getFullYear()} Todos os direitos reservados</p>
-    </div>
-</body>
-</html>`;
-
-            // 🔥 CRIA UM CONTAINER PARA O PDF
             var container = document.createElement('div');
             container.style.position = 'fixed';
             container.style.left = '-9999px';
-            container.style.top = '0';
             container.style.width = '1100px';
-            container.style.background = 'white';
-            container.style.padding = '20px';
-            container.style.zIndex = '9999';
             container.innerHTML = html;
             document.body.appendChild(container);
 
-            // 🔥 USA html2pdf.js PARA GERAR O PDF
             html2pdf().set({
                 margin: 10,
-                filename: 'Relatorio_Vendas_WRJ_' + new Date().toISOString().slice(0, 10) + '.pdf',
+                filename: 'Relatorio_WRJ_' + new Date().toISOString().slice(0, 10) + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,
-                    letterRendering: true
-                },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
-                    orientation: 'portrait'
-                },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-            }).from(container).save().then(function () {
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).from(container).save().then(function() {
                 document.body.removeChild(container);
-                showToast('✅ PDF gerado com sucesso!', 'success');
-            }).catch(function (error) {
-                console.error('❌ Erro ao gerar PDF:', error);
+                showToast('✅ PDF gerado!', 'success');
+            }).catch(function(error) {
                 document.body.removeChild(container);
-                showToast('❌ Erro ao gerar PDF: ' + error.message, 'error');
+                showToast('❌ Erro: ' + error.message, 'error');
             });
         }
 
-        // 🔥 FUNÇÃO TOAST
         function showToast(message, type) {
             var toast = document.getElementById('toast');
             if (!toast) {
                 toast = document.createElement('div');
                 toast.id = 'toast';
-                toast.style.cssText = 'position:fixed;bottom:30px;right:30px;padding:16px 24px;border-radius:12px;color:white;font-weight:600;z-index:9999;transform:translateY(100px);opacity:0;transition:all 0.4s ease;';
+                toast.style.cssText = 'position:fixed;bottom:30px;right:30px;padding:16px 24px;border-radius:12px;color:white;font-weight:600;z-index:99999;transform:translateY(100px);opacity:0;transition:all 0.4s ease;';
                 document.body.appendChild(toast);
             }
             toast.textContent = message;
-            toast.style.background = type === 'error' ? '#dc2626' : type === 'info' ? '#2563eb' : '#16a34a';
+            toast.style.background = type === 'error' ? '#dc2626' : '#16a34a';
             toast.style.transform = 'translateY(0)';
             toast.style.opacity = '1';
-            setTimeout(function () {
+            setTimeout(() => {
                 toast.style.transform = 'translateY(100px)';
                 toast.style.opacity = '0';
             }, 4000);
         }
 
-        // ============================================
-        // IMPRIMIR RELATÓRIO COMPLETO
-        // ============================================
-        function imprimirRelatorioCompleto() {
-            const dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
-
-            if (dados.length === 0) {
-                alert('⚠️ Não há dados para imprimir!');
-                return;
-            }
-
-            const totalVendas = dados.reduce((s, v) => s + (parseFloat(v.total) || 0), 0);
-            const totalPedidos = dados.length;
-            const pendentes = dados.filter(v => v.status === 'Pendente').length;
-            const ticketMedio = totalPedidos > 0 ? totalVendas / totalPedidos : 0;
-
-            let html = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>Relatório de Vendas - WRJ Joias</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; }
-                        .header { text-align: center; border-bottom: 3px solid #2f6b4f; padding-bottom: 15px; margin-bottom: 20px; }
-                        .header h1 { color: #2f6b4f; margin: 0; }
-                        .resumo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; }
-                        .resumo-item { background: #f5f7f5; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #e5e7eb; }
-                        .resumo-item .valor { font-size: 22px; font-weight: bold; color: #2f6b4f; }
-                        .resumo-item .label { font-size: 11px; color: #666; text-transform: uppercase; }
-                        table { width: 100%; border-collapse: collapse; font-size: 12px; }
-                        th { background: #2f6b4f; color: white; padding: 8px 10px; text-align: left; }
-                        td { padding: 6px 10px; border-bottom: 1px solid #ddd; }
-                        .status-pago { color: #16a34a; background: #dcfce7; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
-                        .status-pendente { color: #ca8a04; background: #fef9c3; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
-                        .status-cancelado { color: #dc2626; background: #fee2e2; padding: 2px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
-                        .footer { margin-top: 30px; text-align: center; color: #999; font-size: 11px; border-top: 1px solid #ddd; padding-top: 15px; }
-                        .text-right { text-align: right; }
-                        .font-bold { font-weight: bold; }
-                        @media print { body { padding: 10px; } }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <h1>💎 WRJ Joias</h1>
-                        <p>Relatório de Vendas</p>
-                        <p>📅 Gerado em: ${new Date().toLocaleString('pt-BR')}</p>
-                    </div>
-                    <div class="resumo">
-                        <div class="resumo-item"><div class="valor">R$ ${totalVendas.toFixed(2).replace('.', ',')}</div><div class="label">Total Vendas</div></div>
-                        <div class="resumo-item"><div class="valor">${totalPedidos}</div><div class="label">Pedidos</div></div>
-                        <div class="resumo-item"><div class="valor">${pendentes}</div><div class="label">Pendentes</div></div>
-                        <div class="resumo-item"><div class="valor">R$ ${ticketMedio.toFixed(2).replace('.', ',')}</div><div class="label">Ticket Médio</div></div>
-                    </div>
-                    <table>
-                        <thead><tr>
-                            <th>#</th><th>Data</th><th>Cliente</th><th>Itens</th>
-                            <th class="text-right">Subtotal</th><th class="text-right">Frete</th>
-                            <th class="text-right">Total</th><th>Status</th>
-                        </tr></thead>
-                        <tbody>`;
-
-            dados.forEach((v, i) => {
-                const itensTexto = formatarItens(v.itens);
-                const dataFormatada = formatarData(v.data);
-                const statusClass = v.status === 'Pago' ? 'status-pago' : (v.status === 'Pendente' ? 'status-pendente' : 'status-cancelado');
-
-                html += `<tr>
-                    <td>${i + 1}</td>
-                    <td>${dataFormatada}</td>
-                    <td>${v.cliente || '-'}</td>
-                    <td>${itensTexto.substring(0, 60)}${itensTexto.length > 60 ? '...' : ''}</td>
-                    <td class="text-right">R$ ${(parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',')}</td>
-                    <td class="text-right">${parseFloat(v.frete) === 0 ? 'GRÁTIS' : `R$ ${(parseFloat(v.frete) || 0).toFixed(2).replace('.', ',')}`}</td>
-                    <td class="text-right font-bold">R$ ${(parseFloat(v.total) || 0).toFixed(2).replace('.', ',')}</td>
-                    <td><span class="${statusClass}">${v.status || 'Pendente'}</span></td>
-                </tr>`;
-            });
-
-            html += `
-                        </tbody>
-                    </table>
-                    <div class="footer">
-                        <p>WRJ Joias - Relatório gerado automaticamente | Total: ${dados.length} registros</p>
-                    </div>
-                    <script>
-                        window.onload = function() { window.print(); };
-                    <\/script>
-                </body>
-                </html>
-            `;
-
-            const win = window.open('', '_blank', 'width=1024,height=768');
-            win.document.write(html);
-            win.document.close();
-        }
-
-        // ============================================
-        // EXPORTAR CSV
-        // ============================================
         function exportarCSV() {
             const dados = vendasFiltradas.length > 0 ? vendasFiltradas : vendas;
-
             if (dados.length === 0) {
                 alert('⚠️ Não há dados para exportar!');
                 return;
             }
-
             let csv = 'Data;Cliente;Endereço;Itens;Subtotal;Frete;Total;Status\n';
-
             dados.forEach(v => {
                 const dataFormatada = formatarData(v.data);
                 const itensFormatados = formatarItens(v.itens).replace(/"/g, '""');
-                const subtotal = (parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',');
-                const frete = parseFloat(v.frete) === 0 ? 'GRÁTIS' : (parseFloat(v.frete) || 0).toFixed(2).replace('.', ',');
-                const total = (parseFloat(v.total) || 0).toFixed(2).replace('.', ',');
-
-                csv += `"${dataFormatada}";"${v.cliente || ''}";"${v.endereco || ''}";"${itensFormatados}";${subtotal};${frete};${total};${v.status || 'Pendente'}\n`;
+                csv += `"${dataFormatada}";"${v.cliente || ''}";"${v.endereco || ''}";"${itensFormatados}";${(parseFloat(v.subtotal) || 0).toFixed(2).replace('.', ',')};${parseFloat(v.frete) === 0 ? 'GRÁTIS' : (parseFloat(v.frete) || 0).toFixed(2).replace('.', ',')};${(parseFloat(v.total) || 0).toFixed(2).replace('.', ',')};${v.status || 'Pendente'}\n`;
             });
-
             const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -2470,6 +1921,7 @@
                 document.getElementById('Estoque').value = 0;
                 document.getElementById('Saldo Estoque').value = 0;
                 carregarCategoriasFixas();
+                document.getElementById('Subcategoria').value = "";
                 document.getElementById('modalProduto').classList.add('active');
                 document.body.style.overflow = 'hidden';
             } else if (tipo === 'modalVendas') {
@@ -2489,28 +1941,24 @@
         }
 
         // ============================================
-        // ADICIONAR CATEGORIA
+        // NOVA CATEGORIA
         // ============================================
         document.getElementById('btnNovaCategoria').addEventListener('click', async function () {
             const input = document.getElementById('novaCategoria');
             const nome = input.value.trim();
-
             if (!nome) {
                 alert('Digite o nome da nova categoria');
                 return;
             }
-
             if (categoriasCache.includes(nome)) {
                 alert('Esta categoria já existe!');
                 input.value = '';
                 return;
             }
-
             try {
                 const result = await chamarAPI('salvar_categoria', {
                     categoria: { nome: nome, ativo: 'sim' }
                 });
-
                 if (result.success) {
                     const select = document.getElementById('Categoria');
                     const option = document.createElement('option');
@@ -2520,21 +1968,13 @@
                     select.value = nome;
                     categoriasCache.push(nome);
                     input.value = '';
-                    alert('✅ Categoria adicionada com sucesso!');
+                    alert('✅ Categoria adicionada!');
                     document.getElementById('total-categorias').innerText = categoriasCache.length;
                 } else {
                     alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
                 }
             } catch (error) {
-                console.error('Erro ao salvar categoria:', error);
                 alert('❌ Erro ao salvar categoria.');
-            }
-        });
-
-        document.getElementById('novaCategoria').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                document.getElementById('btnNovaCategoria').click();
             }
         });
 
@@ -2550,6 +1990,7 @@
             const preco = document.getElementById('Preço').value.replace(',', '.');
             const quantidade = document.getElementById('Quantidade').value.trim();
             const categoria = document.getElementById('Categoria').value;
+            const subcategoria = document.getElementById('Subcategoria').value;
             const cores = document.getElementById('Cores').value.trim();
             const tamanho = document.getElementById('Tamanho').value.trim();
             const imagem = document.getElementById('Imagem').value.trim();
@@ -2558,18 +1999,10 @@
             const estoque = parseInt(document.getElementById('Estoque').value) || 0;
             const saldoEstoque = parseInt(document.getElementById('Saldo Estoque').value) || 0;
 
-            if (!nome) {
-                alert('Preencha o Nome do Produto');
-                return;
-            }
-            if (!categoria) {
-                alert('Selecione ou adicione uma Categoria');
-                return;
-            }
-            if (!preco || parseFloat(preco) <= 0) {
-                alert('Preencha um Preço válido');
-                return;
-            }
+            if (!nome) { alert('Preencha o Nome do Produto'); return; }
+            if (!referencia) { alert('Preencha a Referência'); return; }
+            if (!categoria) { alert('Selecione uma Categoria'); return; }
+            if (!preco || parseFloat(preco) <= 0) { alert('Preencha um Preço válido'); return; }
 
             const dados = {
                 ID: idEdicao || '',
@@ -2578,6 +2011,7 @@
                 Preço: parseFloat(preco) || 0,
                 Quantidade: quantidade,
                 Categoria: categoria,
+                Subcategoria: subcategoria,
                 Cores: cores,
                 Tamanho: tamanho,
                 Imagem: imagem,
@@ -2589,7 +2023,6 @@
             };
 
             const tipo = idEdicao ? "atualizar" : "cadastrar";
-
             const btnSubmit = document.querySelector('#formProduto button[type="submit"]');
             const textoOriginal = btnSubmit.innerHTML;
             btnSubmit.disabled = true;
@@ -2597,17 +2030,14 @@
 
             try {
                 const result = await chamarAPI(tipo, { produto: dados });
-
                 if (result.success) {
-                    let mensagem = result.message || 'Produto salvo com sucesso!';
+                    let mensagem = result.message || 'Produto salvo!';
                     if (result.acao === 'atualizado') {
-                        mensagem = `✅ Produto atualizado! Estoque: ${result.estoque_anterior} + ${result.estoque_adicionado} = ${result.estoque_novo}`;
+                        mensagem = `✅ Atualizado! Estoque: ${result.estoque_anterior} + ${result.estoque_adicionado} = ${result.estoque_novo}`;
                     }
                     alert(mensagem);
-
                     if (!idEdicao) {
                         document.getElementById('formProduto').reset();
-                        document.getElementById('ID').value = '';
                         document.getElementById('Disponível').checked = true;
                         document.getElementById('Estoque').value = 0;
                         document.getElementById('Saldo Estoque').value = 0;
@@ -2618,8 +2048,7 @@
                     alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
                 }
             } catch (error) {
-                console.error("Erro ao salvar:", error);
-                alert('❌ Erro ao salvar produto: ' + error.message);
+                alert('❌ Erro: ' + error.message);
             } finally {
                 btnSubmit.disabled = false;
                 btnSubmit.innerHTML = textoOriginal;
@@ -2631,7 +2060,6 @@
         // ============================================
         function editarProduto(id) {
             const p = produtos.find(prod => String(prod.ID) === String(id));
-
             if (!p) {
                 alert('Produto não encontrado!');
                 return;
@@ -2652,11 +2080,11 @@
             document.getElementById('Disponível').checked = p.Disponível === 'sim';
             document.getElementById('Destaque').checked = p.Destaque === 'sim';
 
-            const select = document.getElementById('Categoria');
+            const selectCat = document.getElementById('Categoria');
             if (p.Categoria) {
                 let exists = false;
-                for (let i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === p.Categoria) {
+                for (let i = 0; i < selectCat.options.length; i++) {
+                    if (selectCat.options[i].value === p.Categoria) {
                         exists = true;
                         break;
                     }
@@ -2665,9 +2093,16 @@
                     const option = document.createElement('option');
                     option.value = p.Categoria;
                     option.textContent = p.Categoria;
-                    select.appendChild(option);
+                    selectCat.appendChild(option);
                 }
-                select.value = p.Categoria;
+                selectCat.value = p.Categoria;
+            }
+
+            const selectSub = document.getElementById('Subcategoria');
+            if (p.Subcategoria) {
+                selectSub.value = p.Subcategoria;
+            } else {
+                selectSub.value = '';
             }
 
             document.getElementById('modalProduto').classList.add('active');
@@ -2681,7 +2116,7 @@
             if (confirm(`Tem certeza que deseja excluir o produto ID ${id}?`)) {
                 const result = await chamarAPI("excluir", { id: id });
                 if (result.success) {
-                    alert('Produto excluído com sucesso!');
+                    alert('Produto excluído!');
                     setTimeout(() => carregarProdutos(), 2000);
                 } else {
                     alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
@@ -2694,7 +2129,6 @@
         // ============================================
         document.getElementById('formBanner').onsubmit = async (e) => {
             e.preventDefault();
-
             const banner = {
                 imagem: document.getElementById('bannerImagem').value.trim(),
                 titulo: document.getElementById('bannerTitulo').value.trim(),
@@ -2702,15 +2136,13 @@
                 btnLink: document.getElementById('bannerBtnLink').value.trim(),
                 ativo: document.getElementById('bannerAtivo').checked ? 'sim' : 'nao'
             };
-
             if (!banner.imagem || !banner.titulo) {
-                alert('Preencha a imagem e o título do banner');
+                alert('Preencha a imagem e o título');
                 return;
             }
-
             const result = await chamarAPI("salvar_banner", { banner: banner });
             if (result.success) {
-                alert('Banner adicionado com sucesso!');
+                alert('Banner adicionado!');
                 document.getElementById('formBanner').reset();
                 document.getElementById('bannerAtivo').checked = true;
                 setTimeout(() => carregarProdutos(), 2000);
@@ -2720,10 +2152,10 @@
         };
 
         async function excluirBanner(index) {
-            if (confirm("Tem certeza que deseja excluir este banner?")) {
+            if (confirm("Excluir este banner?")) {
                 const result = await chamarAPI("excluir_banner", { index: index });
                 if (result.success) {
-                    alert('Banner excluído com sucesso!');
+                    alert('Banner excluído!');
                     setTimeout(() => carregarProdutos(), 2000);
                 } else {
                     alert('❌ Erro: ' + (result.error || 'Erro desconhecido'));
@@ -2741,7 +2173,7 @@
         }
 
         // ============================================
-        // FECHAR MODAL COM ESC
+        // ESC
         // ============================================
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
@@ -2756,10 +2188,13 @@
         // INICIALIZAÇÃO
         // ============================================
         document.addEventListener('DOMContentLoaded', function () {
-            console.log("🚀 Inicializando Admin WRJ Joias...");
+            console.log("🚀 Admin WRJ Joias inicializado");
             atualizarData();
             carregarProdutos();
             setInterval(atualizarData, 60000);
+
+            document.getElementById('Categoria').addEventListener('change', atualizarSubcategorias);
+            document.getElementById('filtro-subcategoria').addEventListener('input', renderizarTabelaProdutos);
         });
     </script>
 </body>
