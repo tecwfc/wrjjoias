@@ -4,8 +4,9 @@
   "description": "Joias e Acessórios de Luxo",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#b1936b",
-  "background_color": "#faf7f2",
+  "orientation": "portrait",
+  "theme_color": "#2f6b4f",
+  "background_color": "#f6f8f5",
   "icons": [
     {
       "src": "assets/logo_wrjoias.png",
