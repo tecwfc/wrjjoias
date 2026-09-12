@@ -14,10 +14,8 @@
 
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
     <!-- Chart.js -->
@@ -325,109 +323,6 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        @media (max-width: 640px) {
-            .card-dashboard .value { font-size: 20px; }
-            .card-dashboard { padding: 12px; }
-            .card-dashboard .icon { width: 36px; height: 36px; font-size: 16px; }
-            .modal-content { max-width: 100%; border-radius: 12px; max-height: 98vh; }
-            .filtros-container { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 480px) {
-            #produtosTable th:nth-child(4),
-            #produtosTable td:nth-child(4),
-            #produtosTable th:nth-child(6),
-            #produtosTable td:nth-child(6),
-            #produtosTable th:nth-child(8),
-            #produtosTable td:nth-child(8),
-            #produtosTable th:nth-child(9),
-            #produtosTable td:nth-child(9),
-            #produtosTable th:nth-child(10),
-            #produtosTable td:nth-child(10) {
-                display: none !important;
-            }
-
-            #produtosTable th,
-            #produtosTable td {
-                font-size: 8px !important;
-                padding: 2px 2px !important;
-                line-height: 1.2 !important;
-            }
-
-            #produtosTable td img {
-                width: 18px !important;
-                height: 18px !important;
-            }
-
-            .badge-estoque {
-                font-size: 7px !important;
-                padding: 1px 4px !important;
-                min-width: 24px !important;
-                gap: 1px !important;
-            }
-
-            .filtros-container { grid-template-columns: 1fr; }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            #produtosTable th:nth-child(4),
-            #produtosTable td:nth-child(4),
-            #produtosTable th:nth-child(8),
-            #produtosTable td:nth-child(8),
-            #produtosTable th:nth-child(9),
-            #produtosTable td:nth-child(9) {
-                display: none !important;
-            }
-
-            #produtosTable th,
-            #produtosTable td {
-                font-size: 9px !important;
-                padding: 3px 3px !important;
-            }
-
-            .badge-estoque {
-                font-size: 8px !important;
-                padding: 1px 6px !important;
-                min-width: 30px !important;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            #produtosTable th:nth-child(8),
-            #produtosTable td:nth-child(8),
-            #produtosTable th:nth-child(9),
-            #produtosTable td:nth-child(9) {
-                display: none !important;
-            }
-
-            #produtosTable th,
-            #produtosTable td {
-                font-size: 10px !important;
-                padding: 4px 4px !important;
-            }
-
-            .badge-estoque { font-size: 9px !important; padding: 2px 8px !important; }
-        }
-
-        @media (min-width: 1025px) {
-            #produtosTable th,
-            #produtosTable td {
-                font-size: 11px !important;
-                padding: 6px 5px !important;
-            }
-
-            .badge-estoque {
-                font-size: 11px !important;
-                padding: 2px 12px !important;
-                min-width: 45px !important;
-            }
-        }
-
-        @media (max-width: 600px) {
-            #produtosTable td:last-child .flex { gap: 2px !important; }
-            #produtosTable td:last-child button { padding: 3px !important; font-size: 9px !important; }
-        }
-
         .loading-overlay {
             position: fixed;
             inset: 0;
@@ -439,6 +334,115 @@
         }
 
         .loading-overlay.active { display: flex; }
+
+        /* ============================================
+           RESPONSIVIDADE INTELIGENTE POR COLUNA
+           ============================================ */
+
+        /* 📱 MOBILE PEQUENO (< 640px) — esconde: 6,7,8,9,10,12 */
+        @media (max-width: 639px) {
+            #produtosTable th:nth-child(6),
+            #produtosTable td:nth-child(6),
+            #produtosTable th:nth-child(7),
+            #produtosTable td:nth-child(7),
+            #produtosTable th:nth-child(8),
+            #produtosTable td:nth-child(8),
+            #produtosTable th:nth-child(9),
+            #produtosTable td:nth-child(9),
+            #produtosTable th:nth-child(10),
+            #produtosTable td:nth-child(10),
+            #produtosTable th:nth-child(12),
+            #produtosTable td:nth-child(12) {
+                display: none !important;
+            }
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 9px !important;
+                padding: 3px 2px !important;
+                line-height: 1.2 !important;
+            }
+
+            #produtosTable td img {
+                width: 22px !important;
+                height: 22px !important;
+            }
+
+            .badge-estoque {
+                font-size: 8px !important;
+                padding: 1px 5px !important;
+                min-width: 28px !important;
+                gap: 1px !important;
+            }
+
+            .badge-categoria,
+            .badge-subcategoria {
+                font-size: 8px !important;
+                padding: 1px 5px !important;
+            }
+
+            .dataTables_wrapper .dataTables_filter input {
+                max-width: 100% !important;
+            }
+
+            .filtros-container { grid-template-columns: 1fr; }
+
+            .modal-content { max-width: 100%; border-radius: 12px; max-height: 98vh; }
+            .card-dashboard .value { font-size: 20px; }
+            .card-dashboard { padding: 12px; }
+            .card-dashboard .icon { width: 36px; height: 36px; font-size: 16px; }
+        }
+
+        /* 📱 TABLET (640px - 1024px) — esconde: 6, 9, 10 */
+        @media (min-width: 640px) and (max-width: 1024px) {
+            #produtosTable th:nth-child(6),
+            #produtosTable td:nth-child(6),
+            #produtosTable th:nth-child(9),
+            #produtosTable td:nth-child(9),
+            #produtosTable th:nth-child(10),
+            #produtosTable td:nth-child(10) {
+                display: none !important;
+            }
+
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 10px !important;
+                padding: 4px 3px !important;
+            }
+
+            #produtosTable td img {
+                width: 30px !important;
+                height: 30px !important;
+            }
+
+            .badge-estoque {
+                font-size: 9px !important;
+                padding: 2px 8px !important;
+                min-width: 36px !important;
+            }
+
+            .filtros-container { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* 💻 DESKTOP (> 1024px) — todas as colunas */
+        @media (min-width: 1025px) {
+            #produtosTable th,
+            #produtosTable td {
+                font-size: 11px !important;
+                padding: 6px 5px !important;
+            }
+
+            #produtosTable td img {
+                width: 32px !important;
+                height: 32px !important;
+            }
+
+            .badge-estoque {
+                font-size: 11px !important;
+                padding: 2px 12px !important;
+                min-width: 45px !important;
+            }
+        }
     </style>
 </head>
 
@@ -575,15 +579,46 @@
             <div class="p-3 border-b bg-gray-50/50 flex flex-wrap justify-between items-center gap-2">
                 <h2 class="text-base font-bold text-gray-800"><i class="fas fa-table text-primary mr-2"></i>Produtos
                 </h2>
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                     <input type="text" id="filtro-subcategoria" placeholder="Filtrar por subcategoria..."
                         class="border rounded-lg px-3 py-1 text-xs outline-none focus:ring-2 focus:ring-primary"
                         style="max-width: 200px;">
+                    <button onclick="togglePainelColunas()" 
+                        class="bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-primary-dark transition flex items-center gap-1">
+                        <i class="fas fa-columns"></i> Colunas
+                    </button>
                     <span class="text-xs text-gray-400" id="total-registros">0 registros</span>
                 </div>
             </div>
+
+            <!-- 🔥 PAINEL DE COLUNAS -->
+            <div id="painel-colunas" class="hidden bg-white border-b p-4">
+                <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
+                    <h3 class="font-bold text-sm text-gray-700">
+                        <i class="fas fa-eye text-primary mr-2"></i>Escolha as colunas visíveis
+                    </h3>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="selecionarTodasColunas(true)" 
+                            class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-lg font-bold hover:bg-green-200">
+                            <i class="fas fa-eye mr-1"></i>Mostrar Todas
+                        </button>
+                        <button onclick="selecionarTodasColunas(false)" 
+                            class="text-xs bg-red-100 text-red-700 px-3 py-1 rounded-lg font-bold hover:bg-red-200">
+                            <i class="fas fa-eye-slash mr-1"></i>Esconder Todas
+                        </button>
+                        <button onclick="resetarColunas()" 
+                            class="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-lg font-bold hover:bg-gray-200">
+                            <i class="fas fa-undo mr-1"></i>Padrão
+                        </button>
+                    </div>
+                </div>
+                <div id="checkboxes-colunas" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                    <!-- Preenchido via JS -->
+                </div>
+            </div>
+
             <div class="p-1 md:p-2 overflow-x-auto">
-                <table id="produtosTable" class="display responsive nowrap w-full" style="width:100%">
+                <table id="produtosTable" class="display nowrap w-full" style="width:100%">
                     <thead>
                         <tr>
                             <th class="text-center" style="min-width: 40px;">ID</th>
@@ -967,9 +1002,8 @@
 
         const SVG_PLACEHOLDER = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Crect width="100" height="100" fill="%23f3f4f6"/%3E%3Ctext x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dy=".3em" fill="%239ca3af"%3ESem Imagem%3C/text%3E%3C/svg%3E`;
 
-        // 🔥 LISTA DE CATEGORIAS OFICIAIS (com Dourado/Prateado)
+        // 🔥 LISTA DE CATEGORIAS OFICIAIS
         const CATEGORIAS_OFICIAIS = [
-            // DOURADO
             "Brinco de Pressão Dourado",
             "Argolas Dourada",
             "Brinco de Moda Dourado",
@@ -989,7 +1023,6 @@
             "Tornozeleiras Feminina Dourado",
             "Tornozeleiras Infantil Dourado",
             "Escapulário Dourado",
-            // PRATEADO
             "Brinco de Pressão Prateado",
             "Argolas Prateada",
             "Brinco de Moda Prateado",
@@ -1017,11 +1050,8 @@
             "Brinco de Pressão Prateado": ["Brinco de pressão"],
             "Brinco de Moda Dourado": ["Brincos de moda"],
             "Brinco de Moda Prateado": ["Brincos de moda"],
-            
-            // ✅ ARGOLAS — Subcategorias por TAMANHO
             "Argolas Dourada": ["Pequena", "Média", "Grande", "Click"],
             "Argolas Prateada": ["Pequena", "Média", "Grande", "Click"],
-            
             "Correntes Feminina Dourado": ["Feminina"],
             "Correntes Masculina Dourado": ["Masculina"],
             "Correntes Feminina Prateado": ["Feminina"],
@@ -1066,6 +1096,142 @@
         let categoriasCache = [];
         let chartCategorias = null;
         let chartEstoque = null;
+
+        // ============================================
+        // 🔥 SISTEMA DE COLUNAS VISÍVEIS
+        // ============================================
+        const COLUNAS_TODAS = [
+            { id: 1, nome: 'ID' },
+            { id: 2, nome: 'Img' },
+            { id: 3, nome: 'Nome' },
+            { id: 4, nome: 'Referência' },
+            { id: 5, nome: 'Preço' },
+            { id: 6, nome: 'Quantidade' },
+            { id: 7, nome: 'Categoria' },
+            { id: 8, nome: 'Subcategoria' },
+            { id: 9, nome: 'Tamanho' },
+            { id: 10, nome: 'Imagem' },
+            { id: 11, nome: 'Disponível' },
+            { id: 12, nome: 'Destaque' },
+            { id: 13, nome: 'Estoque' },
+            { id: 14, nome: 'Vendidos' },
+            { id: 15, nome: 'Saldo' },
+            { id: 16, nome: 'Ações' }
+        ];
+
+        // 🔥 Colunas padrão para mobile (as mais importantes)
+        const COLUNAS_PADRAO_MOBILE = [1, 2, 3, 4, 5, 11, 13, 14, 15, 16];
+        const COLUNAS_PADRAO_DESKTOP = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+        let colunasVisiveis = JSON.parse(localStorage.getItem('wrj_colunas_visiveis')) || null;
+
+        function isMobile() {
+            return window.innerWidth < 640;
+        }
+
+        // Inicializa colunas visíveis
+        function inicializarColunas() {
+            if (!colunasVisiveis || colunasVisiveis.length === 0) {
+                colunasVisiveis = isMobile() 
+                    ? [...COLUNAS_PADRAO_MOBILE] 
+                    : [...COLUNAS_PADRAO_DESKTOP];
+                localStorage.setItem('wrj_colunas_visiveis', JSON.stringify(colunasVisiveis));
+            }
+        }
+
+        // 🔥 Renderiza o painel de checkboxes
+        function renderizarPainelColunas() {
+            const container = document.getElementById('checkboxes-colunas');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            COLUNAS_TODAS.forEach(col => {
+                const ativo = colunasVisiveis.includes(col.id);
+                const label = document.createElement('label');
+                label.className = `flex items-center gap-2 p-2 rounded-lg cursor-pointer transition ${ativo ? 'bg-primary/10 border border-primary/30' : 'bg-gray-50 border border-gray-200 hover:bg-gray-100'}`;
+                label.innerHTML = `
+                    <input type="checkbox" ${ativo ? 'checked' : ''} 
+                        onchange="toggleColuna(${col.id}, this.checked)"
+                        class="w-4 h-4 text-primary rounded focus:ring-primary">
+                    <span class="text-xs font-semibold ${ativo ? 'text-primary' : 'text-gray-600'}">${col.nome}</span>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        // 🔥 Liga/desliga coluna
+        function toggleColuna(id, visivel) {
+            if (visivel) {
+                if (!colunasVisiveis.includes(id)) colunasVisiveis.push(id);
+            } else {
+                // Não deixa esconder Ações (última)
+                if (id === 16) {
+                    alert('A coluna "Ações" é obrigatória!');
+                    renderizarPainelColunas();
+                    return;
+                }
+                colunasVisiveis = colunasVisiveis.filter(c => c !== id);
+            }
+            colunasVisiveis.sort((a, b) => a - b);
+            localStorage.setItem('wrj_colunas_visiveis', JSON.stringify(colunasVisiveis));
+            aplicarColunasVisiveis();
+            renderizarPainelColunas();
+        }
+
+        // 🔥 Aplica visibilidade nas colunas
+        function aplicarColunasVisiveis() {
+            // Aplica nos headers
+            COLUNAS_TODAS.forEach(col => {
+                const visivel = colunasVisiveis.includes(col.id);
+                const th = document.querySelector(`#produtosTable thead th:nth-child(${col.id})`);
+                if (th) th.style.display = visivel ? '' : 'none';
+            });
+            
+            // Aplica nas linhas do tbody
+            document.querySelectorAll('#produtosTable tbody tr').forEach(tr => {
+                COLUNAS_TODAS.forEach(col => {
+                    const td = tr.querySelector(`td:nth-child(${col.id})`);
+                    if (td) td.style.display = colunasVisiveis.includes(col.id) ? '' : 'none';
+                });
+            });
+        }
+
+        // 🔥 Toggle painel
+        function togglePainelColunas() {
+            const painel = document.getElementById('painel-colunas');
+            painel.classList.toggle('hidden');
+            if (!painel.classList.contains('hidden')) {
+                renderizarPainelColunas();
+            }
+        }
+
+        // 🔥 Mostrar/esconder todas
+        function selecionarTodasColunas(mostrar) {
+            if (mostrar) {
+                colunasVisiveis = COLUNAS_TODAS.map(c => c.id);
+            } else {
+                colunasVisiveis = [16]; // só Ações
+            }
+            localStorage.setItem('wrj_colunas_visiveis', JSON.stringify(colunasVisiveis));
+            aplicarColunasVisiveis();
+            renderizarPainelColunas();
+        }
+
+        // 🔥 Resetar para padrão
+        function resetarColunas() {
+            colunasVisiveis = isMobile() 
+                ? [...COLUNAS_PADRAO_MOBILE]
+                : [...COLUNAS_PADRAO_DESKTOP];
+            localStorage.setItem('wrj_colunas_visiveis', JSON.stringify(colunasVisiveis));
+            aplicarColunasVisiveis();
+            renderizarPainelColunas();
+        }
+
+        window.togglePainelColunas = togglePainelColunas;
+        window.toggleColuna = toggleColuna;
+        window.selecionarTodasColunas = selecionarTodasColunas;
+        window.resetarColunas = resetarColunas;
 
         // ============================================
         // FUNÇÕES AUXILIARES
@@ -1278,7 +1444,7 @@
             document.getElementById('total-categorias').innerText = categoriasCache.length;
         }
 
-        // 🔥 AUTO-PREENCHER SUBCATEGORIA baseado na categoria
+        // 🔥 AUTO-PREENCHER SUBCATEGORIA
         function atualizarSubcategorias() {
             const categoria = document.getElementById('Categoria').value;
             const selectSub = document.getElementById('Subcategoria');
@@ -1290,13 +1456,11 @@
 
             const subs = SUBCATEGORIAS_POR_CATEGORIA[categoria] || [];
             
-            // Se só tem 1 subcategoria, auto-seleciona
             if (subs.length === 1) {
                 selectSub.value = subs[0];
             } else if (subs.length === 0) {
                 selectSub.value = '';
             } else {
-                // Tem várias — limpa para o usuário escolher
                 selectSub.value = '';
             }
             
@@ -1352,8 +1516,8 @@
                             Cores: p.Cores || p.cores,
                             Tamanho: p.Tamanho || p.tamanho,
                             Imagem: p.Imagem || p.imagem,
-                            Disponível: p.Disponível || p.disponivel,
-                            Destaque: p.Destaque || p.destaque,
+                            Disponível: String(p.Disponível || p.disponivel || '').toLowerCase().trim(),
+                            Destaque: String(p.Destaque || p.destaque || '').toLowerCase().trim(),
                             Estoque: p.Estoque || p.estoque || 0,
                             Vendidos: p.Vendidos || p.vendidos || 0,
                             "Saldo Estoque": p["Saldo Estoque"] || p.saldo_estoque || 0
@@ -1428,7 +1592,7 @@
                     $('#produtosTable').DataTable().destroy();
                 }
                 dataTableInstance = $('#produtosTable').DataTable({
-                    responsive: true,
+                    responsive: false,
                     pageLength: 25,
                     order: [[0, 'asc']],
                     language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' }
@@ -1485,8 +1649,8 @@
                     <td class="text-[10px]">
                         ${p.Imagem ? `<a href="${p.Imagem}" target="_blank" class="text-blue-500 hover:text-blue-700" title="Ver imagem"><i class="fas fa-external-link-alt"></i></a>` : '-'}
                     </td>
-                    <td class="text-center">${p.Disponível === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
-                    <td class="text-center">${p.Destaque === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : '<i class="fas fa-star text-gray-300 text-sm"></i>'}</td>
+                    <td class="text-center">${String(p.Disponível || '').toLowerCase().trim() === 'sim' ? '<i class="fas fa-check-circle text-green-500 text-sm"></i>' : '<i class="fas fa-times-circle text-red-400 text-sm"></i>'}</td>
+                    <td class="text-center">${String(p.Destaque || '').toLowerCase().trim() === 'sim' ? '<i class="fas fa-star text-yellow-500 text-sm"></i>' : '<i class="fas fa-star text-gray-300 text-sm"></i>'}</td>
                     <td class="text-center">
                         <span class="badge-estoque ${statusClass} text-[10px] md:text-xs font-bold px-2 py-1 rounded-full border inline-flex items-center gap-1 whitespace-nowrap">
                             ${statusIcon} ${estoque}
@@ -1509,16 +1673,15 @@
             }
 
             dataTableInstance = $('#produtosTable').DataTable({
-                responsive: true,
+                responsive: false,
                 pageLength: 25,
                 order: [[0, 'asc']],
                 language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/pt-BR.json' },
-                columnDefs: [
-                    { responsivePriority: 1, targets: [0, 1, 2, 4, 10, 12, 13, 14, 15] },
-                    { responsivePriority: 2, targets: [3, 5, 6, 7, 8, 9, 11] }
-                ],
                 autoWidth: false
             });
+
+            // 🔥 Aplica colunas visíveis DEPOIS de renderizar
+            setTimeout(() => aplicarColunasVisiveis(), 50);
         }
 
         // ============================================
@@ -2077,8 +2240,8 @@
             document.getElementById('Tamanho').value = p.Tamanho || '';
             document.getElementById('Imagem').value = p.Imagem || '';
             document.getElementById('Saldo Estoque').value = p["Saldo Estoque"] || 0;
-            document.getElementById('Disponível').checked = p.Disponível === 'sim';
-            document.getElementById('Destaque').checked = p.Destaque === 'sim';
+            document.getElementById('Disponível').checked = String(p.Disponível || '').toLowerCase().trim() === 'sim';
+            document.getElementById('Destaque').checked = String(p.Destaque || '').toLowerCase().trim() === 'sim';
 
             const selectCat = document.getElementById('Categoria');
             if (p.Categoria) {
@@ -2187,16 +2350,31 @@
         // ============================================
         // INICIALIZAÇÃO
         // ============================================
-        document.addEventListener('DOMContentLoaded', function () {
+      
+        document.addEventListener('DOMContentLoaded', function () {   // ⬅️ ABRE
             console.log("🚀 Admin WRJ Joias inicializado");
+            
+            inicializarColunas();
+            
             atualizarData();
             carregarProdutos();
             setInterval(atualizarData, 60000);
 
             document.getElementById('Categoria').addEventListener('change', atualizarSubcategorias);
             document.getElementById('filtro-subcategoria').addEventListener('input', renderizarTabelaProdutos);
-        });
+            
+            setTimeout(() => aplicarColunasVisiveis(), 500);
+            
+            // 🔥 Ajusta quando redimensionar
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    aplicarColunasVisiveis();
+                }, 300);
+            });
+        });  
+
     </script>
 </body>
-
 </html>
